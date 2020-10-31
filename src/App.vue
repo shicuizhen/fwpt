@@ -81,6 +81,7 @@ export default {
     height: 56px;
     width: 100%;
     background-color: #000000;
+    z-index: 999
   }
   .nav div{
     height: 56px;
