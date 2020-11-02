@@ -12,34 +12,40 @@
       </div>
     </div>
     <div class="menu">
-      <ul>
-          <li v-for="(item ,index) in menuLinks" :key="item.content" @click="pushRoute(item.address,index)">
-            <a :class="(selected == index) ? 'current' : ''">{{item.content}}</a>
-          </li>
-      </ul>
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="首页" name="first">
+          <Home></Home>
+        </el-tab-pane>
+        <el-tab-pane label="问题咨询" name="second">
+          <Question></Question>
+        </el-tab-pane>
+        <el-tab-pane label="失物招领" name="third">
+          <Lost></Lost>
+        </el-tab-pane>
+        <el-tab-pane label="心情话板" name="fourth">
+          <Mood></Mood>
+        </el-tab-pane>
+      </el-tabs>
     </div>
-    <router-view/>
     <div class="bottom"></div>
   </div>
 </template>
 <script>
+import Question from './views/Question'
+import Home from './views/Home'
+import Lost from './views/Lost'
+import Mood from './views/Mood'
 export default {
   name: 'App',
+  components: { Mood, Lost, Home, Question },
   data: function () {
     return {
-      selected: 0,
-      menuLinks: [
-        { content: '首页', address: '/home' },
-        { content: '问题咨询', address: '/question' },
-        { content: '失物招领', address: '/lost' },
-        { content: '心情话板', address: '/mood' }
-      ]
+      activeName: 'first'
     }
   },
   methods: {
-    pushRoute (address, index) {
-      this.$router.push(address)
-      this.selected = index
+    handleClick (tab, event) {
+      console.log(tab, event)
     }
   }
 }
@@ -54,20 +60,36 @@ export default {
     background-color: #FFFFFF;
     padding: 0 10px;
   }
-  .menu a{
-    color: #101010;
+  .menu .el-tabs__nav-scroll {
+    padding-left: 10px;
+  }
+  .menu .el-tabs__item {
+    height: 66px;
     line-height: 85px;
-    margin: 0 16px;
-    padding: 5px 2px;
+    font-size: 16px;
+    color: #303030;
   }
-  .menu a:hover{
-    color: #6ABD6E;
-    transition: all 0.3s ease-out
+  .menu .el-tabs__item:hover {
+    color: #4baf50;
+    cursor: pointer;
   }
-  .menu .current{
-    color: #6ABD6E;
-    border-bottom: solid 2px #4BAF50;
-    box-shadow: 0px 1px 0px 0px #94CE53;
+  .menu .el-tabs__item.is-active {
+    color: #4baf50;
+  }
+  .menu .el-tabs__active-bar {
+    height: 3px;
+    background-color: #4baf50;
+    transition: transform .3s cubic-bezier(.645,.045,.355,1);
+    box-shadow: 0px 3px 0px 0px #94CE53;
+  }
+  /*
+  view样式-路由跳转
+  */
+  .view{
+    height: 512px;
+    width: 100%;
+    background-color: rgba(141,214,224,0.2);
+    overflow: hidden;
   }
   /**
  当前页面样式

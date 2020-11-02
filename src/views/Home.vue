@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <el-carousel :interval="4000" type="card" height="200px">
+    <el-carousel :interval="4000" type="card" height="450px">
       <el-carousel-item v-for="item in images" :key="item.img">
         <img :src="item.img">
       </el-carousel-item>
@@ -24,9 +24,12 @@ export default {
 }
 </script>
 <style>
-  .home{
-    height: 512px;
-    background-color: #8DD6E0;
+  .home img{
+    object-fit: cover;
+  }
+  .el-carousel {
+    position: relative;
+    top: 18px;
   }
   .el-carousel__container{
     height: 512px;
@@ -43,5 +46,18 @@ export default {
   }
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
+  }
+  .home .el-carousel--horizontal {
+    overflow-x: visible;
+  }
+  .home .el-carousel__indicators--outside {
+    position: absolute;
+  }
+  .home .el-carousel__indicators--horizontal {
+    bottom: -33px;
+    left: 43.8%;
+  }
+  .home .el-carousel__indicators--outside button {
+    background-color: #4BAF50;
   }
 </style>
