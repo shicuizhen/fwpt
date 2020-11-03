@@ -31,7 +31,7 @@
   </div>
 </template>
 <script>
-import Question from './views/Question'
+import Question from './views/question/Question'
 import Home from './views/Home'
 import Lost from './views/Lost'
 import Mood from './views/Mood'

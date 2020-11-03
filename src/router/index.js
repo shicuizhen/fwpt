@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Lost from '../views/Lost.vue'
 import Mood from '../views/Mood.vue'
-import Question from '../views/Question'
+import Question from '../views/question/Question'
+import QuestionDetail from '../views/question/QuestionDetail'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/question',
     name: 'Question',
     component: Question
+  },
+  {
+    path: '/question_detail',
+    name: 'QuestionDetail',
+    component: QuestionDetail
   }
 ]
 
