@@ -1,3 +1,13 @@
+/*字体图标公共样式*/
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 22px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*小铃铛*/
 @font-face {font-family: "iconfont";
   src: url('iconfont.eot?t=1604311685193'); /* IE9 */
   src: url('iconfont.eot?t=1604311685193#iefix') format('embedded-opentype'), /* IE6-IE8 */
@@ -7,14 +17,21 @@
   url('iconfont.svg?t=1604311685193#iconfont') format('svg'); /* iOS 4.1- */
 }
 
-.iconfont {
-  font-family: "iconfont" !important;
-  font-size: 22px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/*实心点赞图标--写在后面会覆盖上面的空心点赞图标*/
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1604407712567'); /* IE9 */
+  src: url('iconfont.eot?t=1604407712567#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAALoAAsAAAAABogAAAKaAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCCcAqBEIEXATYCJAMICwYABCAFhG0HMRu+BciuMQbXG0RCFETaM93c0qOxvMj+x+IqBPHw39i3+2bm2/wVUyBuBa9qkUMik6liiRCXEvDQt9FFm8l9+7U581Dn9fN4SRBN2ldmv/jsgFdKJkRSuhAhURk45yowSmCNsyTbHq1vreQo8NTmCzcfNuBII4kS4YFPwEjc+nJtFDTeY0nUJWfANfUT6EF+cUBz7KKopKQAHA9oNO/ANdmmMt8wdsELPE+gmjNVO+Jf30FXYU8LxPV4oKBbCCgKS7eFZsPaIh5qaKdb6Q48iL4fH62DIGlkdtWJaycWtm90suDaf64EhCABbW4gYw9QiDONiWMagnENNdG0BI5VHrzx/z+wi6NaBPvr7NIeMAOlzyTz5I86JIHiyTu3Jj2MPD0AFqnJo7GoP6+NpxM7O8ZAujnSu3kyffnrUcL17bG6bPoJqfZstdt8HNarn3d/ZHv5yxKno5zPTVdqbnvTx99ecKCPv2r6qcBvyLXe3oH0ADgA8P9X3mRCILineib21zZdwOufRhP+/ypAbqO9f2fwn2QD24qhsG2paLJGbfpJivPXVBX/2Z4hv1ONozeVCW2jt+Zqmc2Qta2Qhd2Dhq4tNLXtR7Xb2eauYawhSge7fAKEAd9I+rxANuBAFvYHDWP+0TQQMKpzwezZtRZxyimQErKoXzEyRe5ch/Tj8hsKHlPFeUXEPxD7KIwrRSunzygnXmKBfwrWIg4dFxmegssoTQssuYjJyDwUKTcLNWx609wUGfQdxogiiIW0VyhiFHIu6C36lc/fIIFHKYU7WuqSDwjzosHRytxyAHmmzQe1PMo13pPAmhAOclghg07BKJJKFVDZPCpGDDEXToiVNhZONzdUO99en/3dPqhsUwqnKmtdjav8zbUAAAAA') format('woff2'),
+  url('iconfont.woff?t=1604407712567') format('woff'),
+  url('iconfont.ttf?t=1604407712567') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1604407712567#iconfont') format('svg'); /* iOS 4.1- */
 }
 
+.icon-dianzan:before {
+  content: "\e668";
+}
+
+/*空心点赞图标*/
 .icon-dianzan:before {
   content: "\f010d";
 }
@@ -31,5 +48,4 @@
 .icon-fangdajing:before {
   content: "\e627";
 }
-
 

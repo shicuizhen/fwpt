@@ -70,6 +70,7 @@ export default {
 <style scoped>
   .question{
     width: 100%;
+    background-color: #E6F6F8;
   }
   .que_show{
     width: 100%;
@@ -111,7 +112,7 @@ export default {
     border: 1px solid #BBBBBB;
     padding: 20px 0px 12px 25px;
     position: relative;
-    background-color: #E6F6F8;
+    background-color: #8DD6E0;
   }
   .que_show_r li h3{
     font-size: 18px;
@@ -148,12 +149,14 @@ export default {
     position: absolute;
     bottom: 15px;
     right: 30px;
+    color: #101010;
   }
   .que_show_r .page{
     position: absolute;
     bottom: 15px;
     width: 100%;
     text-align: center;
+    background-color: #E6F6F8;
   }
   /*修改element分页框颜色*/
   /deep/ .el-pager li.active {
@@ -170,5 +173,20 @@ export default {
   }
   /deep/ .el-input__inner:focus {
     border-color: #4BAF50;
+  }
+  /deep/ .el-pagination button:disabled {
+    background-color: #E6F6F8;
+  }
+  /deep/ .el-dialog {
+    background: #E6F6F8;
+  }
+  /deep/ .el-pager li {
+    background: #E6F6F8;
+  }
+  /deep/ .el-pagination .btn-next, .el-pagination .btn-prev {
+    background-color: #E6F6F8;
+  }
+  /deep/ .el-pagination .btn-prev {
+    background-color: #E6F6F8;
   }
 </style>
