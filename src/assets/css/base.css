@@ -24,6 +24,9 @@
       margin: 0 9.6%;
       overflow: hidden;
   }
+ul{
+  position: relative;
+}
 ul li{
     list-style-type: none;
     float: left;

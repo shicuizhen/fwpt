@@ -35,13 +35,36 @@
             <span class="iconfont icon-dianzan"></span>
           </li>
         </ul>
+        <div class="page">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
+            :page-size="3"
+            layout="total, prev, pager, next, jumper"
+            :total="100">
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: 'Question'
+  name: 'Question',
+  methods: {
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+    },
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
+    }
+  },
+  data () {
+    return {
+      currentPage: 1
+    }
+  }
 }
 </script>
 <style scoped>
@@ -53,6 +76,7 @@ export default {
     height: 512px;
     position: relative;
     overflow: hidden;
+    /*background-color: burlywood;*/
   }
   .que_show_l{
     height: 410px;
@@ -69,28 +93,28 @@ export default {
     right: 3%;
     width: 68%;
     height: 512px;
-    /*background-color: lightyellow;*/
-    padding: 20px 0;
+    /*background-color: yellow;*/
   }
   .que_show_r .search{
-    margin: 12px 0 5px 0;
+    margin-top: 22px;
   }
   .que_show_r .search .icon-fangdajing{
     color: #4BAF50;
     font-weight: bold;
+    line-height: 36px;
+  }
+  .que_show_r ul{
   }
   .que_show_r li{
     height: 66px;
-    width: 100%;
     margin: 16px 0;
     border: 1px solid #BBBBBB;
-    padding: 20px 0 12px 25px;
+    padding: 20px 0px 12px 25px;
     position: relative;
     background-color: #E6F6F8;
   }
   .que_show_r li h3{
     font-size: 18px;
-    line-height: 30px;
     color: #3A3637;
     width: 88%;
     letter-spacing: 3px;
@@ -99,9 +123,6 @@ export default {
     text-overflow: clip;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-  }
-  .que_show_r li h3::after{
-    content:"";
   }
   .que_show_r li .created{
     font-size: 12px;
@@ -127,5 +148,27 @@ export default {
     position: absolute;
     bottom: 15px;
     right: 30px;
+  }
+  .que_show_r .page{
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    text-align: center;
+  }
+  /*修改element分页框颜色*/
+  /deep/ .el-pager li.active {
+    color: #4BAF50;
+  }
+  /deep/ .el-pager li:hover {
+    color: #4BAF50;
+  }
+  /deep/ .el-pagination button:hover {
+    color: #4BAF50;
+  }
+  /deep/ .el-input.is-active .el-input__inner {
+    border-color: #4BAF50;
+  }
+  /deep/ .el-input__inner:focus {
+    border-color: #4BAF50;
   }
 </style>
