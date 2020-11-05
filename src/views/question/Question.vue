@@ -7,31 +7,13 @@
           <span class="iconfont icon-fangdajing"></span>
         </div>
         <ul>
-          <li>
-            <h3>这是一个问题这个是一个问题一个问题问题就是那个问题的内容？这是一个问题这个是一个问题一个问题问题就是那个问题的内容这是一个问题这个是一个问题一个问题问题就是那个问题的内容这是一个问题这个是一个问题一个问题问题就是那个问题的内容</h3>
+          <li v-for="item in question" :key="item.text">
+            <h3>{{item.text}}</h3>
             <div class="created">
-              <span>created by 用户甲</span>
-              <span>2020-09-23</span>
+              <span>created by {{item.createBy}}</span>
+              <span>{{item.createTime}}</span>
             </div>
-            <div class="answer">2答</div>
-            <span class="iconfont icon-dianzan"></span>
-          </li>
-          <li>
-            <h3>这是一个问题这个是一个问题一个问题问题就是那个问题的内容？这是一个问题这个是一个问题一个问题问题就是那个问题的内容这是一个问题这个是一个问题一个问题问题就是那个问题的内容这是一个问题这个是一个问题一个问题问题就是那个问题的内容</h3>
-            <div class="created">
-              <span>created by 用户甲</span>
-              <span>2020-09-23</span>
-            </div>
-            <div class="answer">2答</div>
-            <span class="iconfont icon-dianzan"></span>
-          </li>
-          <li>
-            <h3>这是一个问题这个是一个问题一个问题问题就是那个问题的内容？这是一个问题这个是一个问题一个问题问题就是那个问题的内容这是一个问题这个是一个问题一个问题问题就是那个问题的内容这是一个问题这个是一个问题一个问题问题就是那个问题的内容</h3>
-            <div class="created">
-              <span>created by 用户甲</span>
-              <span>2020-09-23</span>
-            </div>
-            <div class="answer">2答</div>
+            <div class="answer">{{item.answer}}答</div>
             <span class="iconfont icon-dianzan"></span>
           </li>
         </ul>
@@ -42,7 +24,7 @@
             :current-page.sync="currentPage"
             :page-size="3"
             layout="total, prev, pager, next, jumper"
-            :total="100">
+            :total="totalNum">
           </el-pagination>
         </div>
       </div>
@@ -62,7 +44,30 @@ export default {
   },
   data () {
     return {
-      currentPage: 1
+      currentPage: 1,
+      // 传递的question就是如下格式，每次只传三个，因为每页只能展示三个
+      // tatalNum必须是数字
+      totalNum: 98,
+      question: [
+        {
+          text: '问题1',
+          createBy: '路人甲',
+          createTime: '2020-10-13',
+          answer: '32'
+        },
+        {
+          text: '问题1',
+          createBy: '路人甲',
+          createTime: '2020-10-13',
+          answer: '32'
+        },
+        {
+          text: '问题1',
+          createBy: '路人甲',
+          createTime: '2020-10-13',
+          answer: '32'
+        }
+      ]
     }
   }
 }
@@ -113,6 +118,7 @@ export default {
     padding: 20px 0px 12px 25px;
     position: relative;
     background-color: #8DD6E0;
+    width: 97.5%;
   }
   .que_show_r li h3{
     font-size: 18px;
