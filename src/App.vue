@@ -55,8 +55,8 @@ export default {
   菜单栏样式
   */
   .menu{
-    margin-top: 56px;
-    height: 66px;
+    margin-top: 52px;
+    height: 46px;
     background-color: #FFFFFF;
     padding: 0 10px;
   }
@@ -64,10 +64,13 @@ export default {
     padding-left: 10px;
   }
   .menu .el-tabs__item {
-    height: 66px;
-    line-height: 85px;
+    height: 46px;
+    line-height: 55px;
     font-size: 16px;
     color: #303030;
+  }
+  .menu .el-tabs__header {
+    margin: 0 0 10px;
   }
   .menu .el-tabs__item:hover {
     color: #4baf50;
@@ -85,12 +88,12 @@ export default {
   /*
   view样式-路由跳转
   */
-  .view{
-    height: 512px;
-    width: 100%;
-    background-color: rgba(141,214,224,0.2);
-    overflow: hidden;
-  }
+  //.view{
+  //  height: 512px;
+  //  width: 100%;
+  //  background-color: rgba(141,214,224,0.2);
+  //  overflow: hidden;
+  //}
   /**
  当前页面样式
   */
@@ -100,13 +103,13 @@ export default {
     position: fixed;
     left: 0;
     top: 0;
-    height: 56px;
+    height: 52px;
     width: 100%;
     background-color: #000000;
     z-index: 999
   }
   .nav div{
-    height: 56px;
+    height: 52px;
     position: relative;
   }
   .nav p{
@@ -114,7 +117,7 @@ export default {
     left: 25px;
     top: 0;
     width: 50%;
-    line-height: 56px;
+    line-height: 52px;
     color: #F9F9F9;
     font-size: 22px;
   }
@@ -122,10 +125,10 @@ export default {
     position: absolute;
     right: 25px;
     top: 0;
-    height: 56px;
+    height: 52px;
   }
   .nav li a{
-    line-height: 56px;
+    line-height: 52px;
     color: #F9F9F9;
     font-size: 14px;
     padding: 0 12px;
