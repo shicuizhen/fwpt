@@ -1,6 +1,6 @@
 <template>
   <div class="mood">
-    mood
+    mood有一个好心情
   </div>
 </template>
 
