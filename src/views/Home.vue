@@ -24,12 +24,9 @@ export default {
 }
 </script>
 <style>
-  .home img{
-    object-fit: cover;
-  }
-  .el-carousel {
-    position: relative;
-    top: 18px;
+  .home{
+    height: 512px;
+    background-color: #8DD6E0;
   }
   .el-carousel__container{
     height: 512px;
