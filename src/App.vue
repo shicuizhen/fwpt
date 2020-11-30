@@ -1,95 +1,65 @@
 <template>
   <div id="app">
+    <!--顶部标签栏-->
     <div class="nav">
       <div class="cen nav_cen">
         <p>sjzxyshfwpt</p>
-        <ul>
-          <li><a href="">后台管理</a></li>
-          <li><a href="">个人中心</a></li>
-          <li><a href=""><span class="el-icon-bell" aria-hidden="true"></span></a></li>
-          <li><a href="">游客，请登录！</a></li>
+        <ul class="bql">
+          <li><router-link to="/home">首页</router-link></li>
+          <li><router-link to="/question">问题咨询</router-link></li>
+          <li><router-link to="/lost">失物招领</router-link></li>
+          <li><router-link to="/mood">心情话板</router-link></li>
         </ul>
+        <a href="">后台管理</a>
+        <div class="login">
+          <a href="" >登录</a>
+          <ul class="xlk">
+            <span class="el-icon-caret-top" aria-hidden="true"></span>
+            <li>
+              <i class="el-icon-user" aria-hidden="true"></i>
+              <a href="">我的主页</a>
+            </li>
+            <li>
+              <i class="el-icon-chat-dot-square" aria-hidden="true"></i>
+              <a href="">我的消息</a>
+            </li>
+            <li>
+              <i class="el-icon-setting" aria-hidden="true"></i>
+              <a href="">个人设置</a>
+            </li>
+            <li>
+              <i class="el-icon-switch-button" aria-hidden="true"></i>
+              <a href="">退出</a>
+            </li>
+          </ul>
+        </div>
+
       </div>
     </div>
-    <div class="menu">
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="首页" name="first">
-          <Home></Home>
-        </el-tab-pane>
-        <el-tab-pane label="问题咨询" name="second">
-          <Question></Question>
-        </el-tab-pane>
-        <el-tab-pane label="失物招领" name="third">
-          <Lost></Lost>
-        </el-tab-pane>
-        <el-tab-pane label="心情话板" name="fourth">
-          <Mood></Mood>
-        </el-tab-pane>
-      </el-tabs>
+    <div class="content">
+      <router-view></router-view>
     </div>
     <div class="bottom"></div>
   </div>
 </template>
 <script>
-import Question from './views/question/Question'
-import Home from './views/Home'
-import Lost from './views/Lost'
-import Mood from './views/Mood'
 export default {
   name: 'App',
-  components: { Mood, Lost, Home, Question },
   data: function () {
     return {
-      activeName: 'first'
     }
   },
   methods: {
-    handleClick (tab, event) {
-      console.log(tab, event)
-    }
   }
 }
 </script>
 <style lang="scss">
-  /**
-  菜单栏样式
-  */
+  /**菜单栏样式*/
   .menu{
     margin-top: 56px;
     height: 66px;
     background-color: #FFFFFF;
     padding: 0 10px;
-  }
-  .menu .el-tabs__nav-scroll {
-    padding-left: 10px;
-  }
-  .menu .el-tabs__item {
-    height: 66px;
-    line-height: 85px;
-    font-size: 16px;
-    color: #303030;
-  }
-  .menu .el-tabs__item:hover {
-    color: #4baf50;
-    cursor: pointer;
-  }
-  .menu .el-tabs__item.is-active {
-    color: #4baf50;
-  }
-  .menu .el-tabs__active-bar {
-    height: 3px;
-    background-color: #4baf50;
-    transition: transform .3s cubic-bezier(.645,.045,.355,1);
-    box-shadow: 0px 3px 0px 0px #94CE53;
-  }
-  /*
-  view样式-路由跳转
-  */
-  .view{
-    height: 512px;
-    width: 100%;
-    background-color: rgba(141,214,224,0.2);
-    overflow: hidden;
   }
   /**
  当前页面样式
@@ -103,13 +73,14 @@ export default {
     height: 56px;
     width: 100%;
     background-color: #000000;
-    z-index: 999
+    z-index: 10
   }
-  .nav div{
+  .nav_cen{
     height: 56px;
     position: relative;
   }
-  .nav p{
+  /*标题*/
+  .nav_cen p{
     position: absolute;
     left: 25px;
     top: 0;
@@ -118,20 +89,69 @@ export default {
     color: #F9F9F9;
     font-size: 22px;
   }
-  .nav ul{
+  /*中间标签栏bql*/
+  .nav .bql{
     position: absolute;
-    right: 25px;
+    right: 50%;
     top: 0;
     height: 56px;
   }
-  .nav li a{
+  .bql li{
+    float: left;
+  }
+  .bql li a{
     line-height: 56px;
     color: #F9F9F9;
     font-size: 14px;
     padding: 0 12px;
     display: inline-block;
   }
-  .nav li:nth-child(3) a{
+  /*右侧后台管理和个人中心*/
+  .nav_cen>a,.nav_cen .login>a{
+    position: absolute;
+    right: 80px;
+    top: 0;
+    line-height: 56px;
+    color: #F9F9F9;
+    font-size: 14px;
+  }
+  /*个人中心按钮*/
+  .nav_cen .login>a{
+    right: 36px;
+  }
+  /*下拉框*/
+  .xlk{
+    display: none;
+    position: absolute;
+    top: 46px;
+    right: 10px;
+    background-color: #242424;
+    width: 82px;
+  }
+  .xlk span{
+    position: absolute;
+    top: -11px;
+    left: 34px;
+    color: #525252;
     font-size: 16px;
+  }
+  .xlk li{
+    -webkit-transition: 1s all;
+  }
+  .xlk li:hover{
+    background-color: #525252;
+  }
+  .xlk li i{
+    color: #fff;
+    margin: auto 6px;
+    font-size: 12px;
+  }
+  .xlk li a{
+    line-height: 40px;
+    color: #F9F9F9;
+    font-size: 12px;
+  }
+  .nav_cen .login:hover .xlk{
+    display: block;
   }
 </style>

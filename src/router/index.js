@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Lost from '../views/Lost.vue'
-import Mood from '../views/Mood.vue'
+import Lost from '../views/lost/Lost.vue'
+import Mood from '../views/mood/Mood.vue'
 import Question from '../views/question/Question'
 import QuestionDetail from '../views/question/QuestionDetail'
 

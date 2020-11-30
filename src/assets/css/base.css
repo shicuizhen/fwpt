@@ -6,32 +6,30 @@
     padding: 0;
 }
 /*html是背景板*/
-  html{
-      height: 2024px;
-      background-color: #F5F5F5;
-  }
+html{
+    height: 2024px;
+    background-color: #F5F5F5;
+}
 /*body是中心部分*/
-  body{
-      height: 1024px;
-      background-color: #FFFFFF;
-      /*124/1280=0.0968*/
-      margin: 0 9.6%;
-  }
+body{
+    height: 1024px;
+    background-color: #FFFFFF;
+    /*124/1280=0.0968*/
+    margin: 0 9.6%;
+    z-index: -1;
+}
 /*单独设置超出中间位置的元素中的内容，使其不超出下下层的中间位置。*/
 /*center只有一个作用*/
-  .cen{
-      /*124/1280=0.0968*/
-      margin: 0 9.6%;
-      overflow: hidden;
-  }
-ul{
-  position: relative;
-}
-ul li{
-    list-style-type: none;
-    float: left;
+.cen{
+    /*124/1280=0.0968*/
+    margin: 0 9.6%;
+    /*overflow-x: hidden;*/
 }
 a{
     text-decoration: none;
 }
+ul li{
+    list-style-type: none;
+}
+
 
