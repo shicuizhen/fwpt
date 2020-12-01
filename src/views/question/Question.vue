@@ -177,7 +177,7 @@ export default {
   .sort_xlk>a{
     position: absolute;
     /*left: 150px;*/
-    left: 11.8%;
+    left: 12.8%;
     top: 0;
     line-height: 42px;
     font-size: 14px;
@@ -185,7 +185,7 @@ export default {
   .sort_xlk>i{
     position: absolute;
     /*left: 210px;*/
-    left: 16.6%;
+    left: 18.6%;
     top: 15px;
     font-size: 12px;
     font-weight: bold;
