@@ -11,7 +11,7 @@
           <li><router-link to="/mood">心情话板</router-link></li>
         </ul>
         <a href="">后台管理</a>
-        <div class="login">
+        <div class="xlk_content">
           <a href="" >登录</a>
           <ul class="xlk">
             <span class="el-icon-caret-top" aria-hidden="true"></span>
@@ -54,16 +54,12 @@ export default {
 }
 </script>
 <style lang="scss">
-  /**菜单栏样式*/
-  .menu{
+  /**中心部分样式*/
+  .content{
     margin-top: 56px;
-    height: 66px;
     background-color: #FFFFFF;
-    padding: 0 10px;
   }
-  /**
- 当前页面样式
-  */
+  /**当前页面样式*/
   .nav{
     //position定位是依据于浏览器的位置
     //使用定位使当前元素超过上一级固定的中间位置区域
@@ -106,8 +102,8 @@ export default {
     padding: 0 12px;
     display: inline-block;
   }
-  /*右侧后台管理和个人中心*/
-  .nav_cen>a,.nav_cen .login>a{
+  /*右侧后台管理按钮*/
+  .nav_cen>a{
     position: absolute;
     right: 80px;
     top: 0;
@@ -115,12 +111,22 @@ export default {
     color: #F9F9F9;
     font-size: 14px;
   }
-  /*个人中心按钮*/
-  .nav_cen .login>a{
+  /*登录按钮，个人中心按钮*/
+  .nav_cen .xlk_content>a{
+    position: absolute;
     right: 36px;
+    top: 0;
+    color: #F9F9F9;
   }
-  /*下拉框*/
-  .xlk{
+  /*公共部分---下拉框开始*/
+  .xlk_content>a{
+    position: absolute;
+    right: 0;
+    top: 0;
+    line-height: 56px;
+    font-size: 14px;
+  }
+  .nav .xlk{
     display: none;
     position: absolute;
     top: 46px;
@@ -151,7 +157,8 @@ export default {
     color: #F9F9F9;
     font-size: 12px;
   }
-  .nav_cen .login:hover .xlk{
+  .xlk_content:hover .xlk{
     display: block;
   }
+  /*下拉框结束*/
 </style>
