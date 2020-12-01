@@ -45,32 +45,28 @@
         </li>
       </ul>
     </div>
-    <div class="search cen2">
-      <p>平台最新问题</p>
-      <div class="sort_xlk">
-        <a href="" >选择分类</a>
-        <i @click="icon_down()" class="el-icon-arrow-down" :class="{hidden : downState}" aria-hidden="true"></i>
-        <i @click="icon_up()" class="el-icon-arrow-up" :class="{hidden : state}" aria-hidden="true"></i>
-        <ul :class="{xlk : true, hidden : state}">
-<!--          <span class="el-icon-caret-top" aria-hidden="true"></span>-->
-          <li>全部</li>
-          <li>生活类问题</li>
-          <li>学习类问题</li>
-          <li>退出</li>
-        </ul>
-      </div>
-      <input type="text" value="搜索" onfocus="if (value == '搜索'){value =''}" onblur="if (value ==''){value='搜索'}">
-      <div class="no_solve butt">
-        仅看未解决&nbsp;
-        <el-button type="success" icon="el-icon-check" circle></el-button>
-      </div>
-    </div>
-    <div class="center">
+    <div class="cen2">
       <div class="left">
-
+        <p>平台最新问题</p>
+        <div class="sort_xlk">
+          <a href="" >选择分类</a>
+          <i @click="icon_down()" class="el-icon-arrow-down" :class="{hidden : downState}" aria-hidden="true"></i>
+          <i @click="icon_up()" class="el-icon-arrow-up" :class="{hidden : state}" aria-hidden="true"></i>
+          <ul :class="{xlk : true, hidden : state}">
+            <!--          <span class="el-icon-caret-top" aria-hidden="true"></span>-->
+            <li>全部</li>
+            <li>生活类问题</li>
+            <li>学习类问题</li>
+            <li>退出</li>
+          </ul>
+        </div>
+        <input type="text" value="搜索" onfocus="if (value == '搜索'){value =''}" onblur="if (value ==''){value='搜索'}">
+        <div class="no_solve butt">
+          仅看未解决&nbsp;
+          <el-button type="success" icon="el-icon-check" circle></el-button>
+        </div>
       </div>
       <div class="right">
-
       </div>
     </div>
     <div class="bottom"></div>
@@ -166,13 +162,13 @@ export default {
   }
   /*上部top结束*/
   /*搜索部分search---开始*/
-  .search{
+  .left{
     position: relative;
     height: 42px;
     background-color: #D3EBD5;
     margin-top: 52px;
   }
-  .search p{
+  .left p{
     /*margin-left: 15px;*/
     margin-left: 1.2%;
     line-height: 42px;
@@ -219,7 +215,7 @@ export default {
     font-weight: bold;
   }
   /*搜索框*/
-  .search input{
+  .left input{
     height: 22px;
     width: 180px;
     position: absolute;
