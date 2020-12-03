@@ -1,0 +1,92 @@
+/*.question{*/
+/*    width: 100%;*/
+/*    background-color: #E6F6F8;*/
+/*}*/
+/*.que_show{*/
+/*    width: 100%;*/
+/*    height: 512px;*/
+/*    position: relative;*/
+/*    overflow: hidden;*/
+/*    !*background-color: burlywood;*!*/
+/*}*/
+/*.que_show_l{*/
+/*    height: 410px;*/
+/*    width: 22.6%;*/
+/*    position: absolute;*/
+/*    top: 52px;*/
+/*    left: 3%;*/
+/*    border: 1px solid #BBBBBB;*/
+/*    background-color: #fff;*/
+/*}*/
+/*.que_show_r{*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    right: 3%;*/
+/*    width: 68%;*/
+/*    height: 512px;*/
+/*    !*background-color: yellow;*!*/
+/*}*/
+/*.que_show_r .search{*/
+/*    margin-top: 22px;*/
+/*}*/
+/*.que_show_r .search .icon-fangdajing{*/
+/*    color: #4BAF50;*/
+/*    font-weight: bold;*/
+/*    line-height: 36px;*/
+/*}*/
+/*.que_show_r ul{*/
+/*}*/
+/*.que_show_r li{*/
+/*    height: 66px;*/
+/*    margin: 16px 0;*/
+/*    border: 1px solid #BBBBBB;*/
+/*    padding: 20px 0px 12px 25px;*/
+/*    position: relative;*/
+/*    background-color: #8DD6E0;*/
+/*    width: 97.5%;*/
+/*}*/
+/*.que_show_r li h3{*/
+/*    font-size: 18px;*/
+/*    color: #3A3637;*/
+/*    width: 88%;*/
+/*    letter-spacing: 3px;*/
+/*    overflow: hidden;*/
+/*    -webkit-line-clamp: 1;*/
+/*    text-overflow: clip;*/
+/*    display: -webkit-box;*/
+/*    -webkit-box-orient: vertical;*/
+/*}*/
+/*.que_show_r li .created{*/
+/*    font-size: 12px;*/
+/*    letter-spacing: 1px;*/
+/*    position: absolute;*/
+/*    bottom: 13px;*/
+/*    left: 25px;*/
+/*}*/
+/*.que_show_r .created span{*/
+/*    margin-right: 20px;*/
+/*}*/
+/*.que_show_r li .answer{*/
+/*    position: absolute;*/
+/*    top: 20px;*/
+/*    right: 20px;*/
+/*    border: 1px solid #BBBBBB;*/
+/*    border-radius: 25px;*/
+/*    padding: 3px 10px;*/
+/*    background-color: #FFFFFF;*/
+/*    font-size: 14px;*/
+/*}*/
+/*.que_show_r li .icon-dianzan {*/
+/*    position: absolute;*/
+/*    bottom: 15px;*/
+/*    right: 30px;*/
+/*    color: #101010;*/
+/*}*/
+/*.que_show_r .page{*/
+/*    position: absolute;*/
+/*    bottom: 15px;*/
+/*    width: 100%;*/
+/*    text-align: center;*/
+/*    background-color: #E6F6F8;*/
+/*}*/
+

@@ -6,6 +6,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/base.css'
 import './assets/fonts/iconfont.css'
+import './assets/css/question.css'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
