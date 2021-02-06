@@ -9,6 +9,7 @@
 html{
     height: 2024px;
     background-color: #F5F5F5;
+    padding-top: 56px;
 }
 /*body是中心部分*/
 body{
@@ -23,10 +24,6 @@ body{
 .cen{
     /*124/1280=0.0968*/
     margin: 0 9.6%;
-}
-/*问题页面用到的*/
-.cen2{
-    margin: 0 4.3%;
 }
 a{
     color: #000;
