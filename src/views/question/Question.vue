@@ -87,41 +87,54 @@
             </div>
             <!--以下部分一开始不存在，点击后才显示-->
             <form class="reply" action="">
-              <textarea rows="10" cols="10" onfocus=this.blur()>写下你关于这个问题的想法吧</textarea>
+              <span class="el-icon-caret-top" aria-hidden="true"></span>
+              <textarea @scroll="areaOnScroll()" rows="5"
+                        v-model="reply_data"
+                        onfocus="if (value == '写下你关于这个问题的想法吧'){value =''}"
+                        onblur="if (value ==''){value='写下你关于这个问题的想法吧'}"
+              ></textarea>
+              <input type="file" name="file" id="img"
+                     @change="addImg" ref="inputer"
+                     multiple accept="image/png, image/jpeg, image/gif, image/jpg"/>
+              <label for="img">上传图片</label>
+              <button>提交</button>
             </form>
+            <ul class="upload-imgs">
+              <li v-for='(value,key) in imgs' v-bind:key="key">
+                <img :src="getObjectURL(value)">
+                <a class="close" @click="delImg(key)">×</a>
+              </li>
+            </ul>
             <ul class="reply_detail">
               <li>
                 <div class="det_show">
-                  <p>这是回答的内容</p>
+                  <p>这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容</p>
                   <div>
-                    <img src="" alt="">
+                    <img class="reply_img" src="../../assets/images/1.jpeg" alt="">
                     <span>用户乙</span>
                     <span>一个小时前发布</span>
                     <!--button评论对应的是class="comment"-->
-                    <button>评论</button>
+                    <button class="to_comm">评论</button>
                     <svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
-                    <div>
-                      <input type="text">
-                      <button>添加图片</button>
+                    <div class="comm">
+                      <span class="el-icon-caret-top" aria-hidden="true"></span>
+                      <input type="text" value="写下你的评论" onfocus="if (value == '写下你的评论'){value =''}" onblur="if (value ==''){value='写下你的评论'}">
                       <button>提交</button>
                     </div>
                   </div>
                 </div>
-                <div class="comment"></div>
-                <ul class="comment_detail">
+                <ul class="comment_detail det_show">
                   <li>
-                    <img src="" alt="">
-                    <span>用户乙</span>
-                    <p>我认为</p>
-                    <span>一个小时前发布</span>
-                    回复<svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
-                  </li>
-                  <li>
-                    <img src="" alt="">
-                    <span>用户乙</span>
-                    <p>我认为</p>
-                    <span>一个小时前发布</span>
-                    回复<svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
+                    <img src="../../assets/images/1.jpeg" alt="">
+                    <span>
+                      <p class="nick">用户乙:</p>
+                      <p>我认为。。。</p>
+                    </span>
+                    <div>
+                      <span>一个小时前发布</span>
+                      <a href="">回复</a>
+                      <svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
+                    </div>
                   </li>
                 </ul>
               </li>
@@ -226,7 +239,11 @@ export default {
     return {
       downState: false,
       state: true,
-      inp_val: '搜索'
+      inp_val: '搜索',
+      reply_data: '写下你关于这个问题的想法吧',
+      formData: new FormData(),
+      imgs: {},
+      imgLen: 0
     }
   },
   methods: {
@@ -237,6 +254,61 @@ export default {
     icon_up () {
       this.downState = false
       this.state = true
+    },
+    areaOnScroll () {
+      console.log('reply_data:' + this.reply_data)
+      console.log('reply_data:' + this.reply_data.length)
+      this.reply_data = this.reply_data.slice(0, 200)
+      alert('请在五行内输入')
+    },
+    // ----------------
+    addImg (event) {
+      const inputDOM = this.$refs.inputer
+      // 通过DOM取文件数据
+      this.fil = inputDOM.files
+      // 目前已有的图片的数量
+      const oldLen = this.imgLen
+      // 新的图片数量
+      const len = this.fil.length + oldLen
+      if (len > 4) {
+        alert('最多可上传4张，您还可以上传' + (4 - oldLen) + '张')
+        return false
+      }
+      for (let i = 0; i < this.fil.length; i++) {
+        const size = Math.floor(this.fil[i].size / 1024)
+        if (size > 5 * 1024 * 1024) {
+          alert('请选择5M以内的图片！')
+          return false
+        }
+        this.imgLen++
+        this.$set(this.imgs, this.fil[i].name + '?' + new Date().getTime() + i, this.fil[i])
+      }
+    },
+    getObjectURL (file) {
+      var url = null
+      if (window.createObjectURL !== undefined) { // basic
+        url = window.URL.createObjectURL(file)
+      } else if (window.URL !== undefined) { // mozilla(firefox)
+        url = window.URL.createObjectURL(file)
+      } else if (window.webkitURL !== undefined) { // webkit or chrome
+        url = window.webkitURL.createObjectURL(file)
+      }
+      return url
+    },
+    delImg (key) {
+      this.$delete(this.imgs, key)
+      this.imgLen--
+    },
+    submit () {
+      for (const key in this.imgs) {
+        const name = key.split('?')[0]
+        this.formData.append('multipartFiles', this.imgs[key], name)
+      }
+      this.$http.post('/opinion/feedback', this.formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }).then(res => {
+        this.alertShow = true
+      })
     }
   }
 }
