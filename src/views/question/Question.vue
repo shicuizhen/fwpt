@@ -2,7 +2,7 @@
   <div class="question">
     <div class="top">
       <a href="">我要提问</a>
-      <ul class="sort cen2">
+      <ul class="sort center">
         <li>
           <a href="">
             <span>分类</span>
@@ -78,15 +78,15 @@
               </div>
               <p>这是问题的内容这是问题的内容这是问题的内容，这是问题的内容，243242432，这是问题的内容，这是问题的内容，这是问题的内容，这是问题的</p>
               <!--button对应的是class="reply"部分-->
-              <button>回答</button>
+              <button class="reply_btn" @click="reply_btn()">回答</button>
               <!--div展开对应的是ul class="reply_detail"-->
-              <a class="open">
+              <a @click="reply_detail()" class="open">
                 <span>展开</span>
                 <svg t="1612623150622" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4154" width="200" height="200"><path d="M927.804 352.193l-415.804 415.632-415.803-415.632 63.616-63.445 352.209 352.017 352.102-352.017z" p-id="4155"></path></svg>
               </a>
             </div>
             <!--以下部分一开始不存在，点击后才显示-->
-            <form class="reply" action="">
+            <form class="reply" v-if="showReply" action="">
               <span class="el-icon-caret-top" aria-hidden="true"></span>
               <textarea @scroll="areaOnScroll()" rows="5"
                         v-model="reply_data"
@@ -105,7 +105,7 @@
                 <a class="close" @click="delImg(key)">×</a>
               </li>
             </ul>
-            <ul class="reply_detail">
+            <ul class="reply_detail" v-if="showReplyDetail" >
               <li>
                 <div class="det_show">
                   <p>这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容</p>
@@ -241,6 +241,8 @@ export default {
       state: true,
       inp_val: '搜索',
       reply_data: '写下你关于这个问题的想法吧',
+      showReply: false,
+      showReplyDetail: false,
       formData: new FormData(),
       imgs: {},
       imgLen: 0
@@ -260,6 +262,20 @@ export default {
       console.log('reply_data:' + this.reply_data.length)
       this.reply_data = this.reply_data.slice(0, 200)
       alert('请在五行内输入')
+    },
+    reply_btn () {
+      if (this.showReply) {
+        this.showReply = false
+      } else {
+        this.showReply = true
+      }
+    },
+    reply_detail () {
+      if (this.showReplyDetail) {
+        this.showReplyDetail = false
+      } else {
+        this.showReplyDetail = true
+      }
     },
     // ----------------
     addImg (event) {
