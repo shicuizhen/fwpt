@@ -3,8 +3,8 @@
     <div class="top">
       <a href="">我要提问</a>
       <div class="sort_lbt center">
-        <ul class="sort" :style="{transform:'translateX('+currentOffset*205+'px)',transition:'2s ease'}">
-          <li  v-for = "(item) in quesSort" v-bind:key="item.name">
+        <ul class="sort" :style="{transform:'translateX('+currentOffset*226+'px)'}">
+          <li v-for = "(item) in quesSort" v-bind:key="item.name">
             <a href="">
               <span>分类</span>
               <p>{{ item.name }}</p>
@@ -14,8 +14,8 @@
           </li>
         </ul>
       </div>
-      <svg @click="left" t="1612847143655" class="icon left_icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="32021" width="200" height="200"><path d="M64 512c0 247.039 200.961 448 448 448s448-200.961 448-448S759.039 64 512 64 64 264.961 64 512zM355.135 501.149c0.033-0.127 0.193-0.256 0.256-0.384 1.536-3.616 3.649-7.072 6.592-10.048 0.033-0.031 0.065-0.031 0.096-0.064s0.031-0.064 0.064-0.096l158.912-159.359c12.48-12.511 32.735-12.576 45.248-0.064 12.511 12.48 12.544 32.735 0.064 45.248L430.079 513.055l137.408 135.904c12.576 12.447 12.673 32.672 0.256 45.248-6.239 6.336-14.496 9.504-22.751 9.504-8.128 0-16.258-3.103-22.497-9.248L362.24 535.968C352.768 526.592 350.399 512.767 355.135 501.149z" p-id="32022" fill="#bfbfbf"></path></svg>
-      <svg @click="right" t="1612847179103" class="icon right_icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="32262" width="200" height="200"><path d="M512 64c-247.039484 0-448 200.960516-448 448S264.960516 960 512 960 960 759.039484 960 512 759.039484 64 512 64zM661.760516 535.967531l-160.25545 158.495686c-6.239161 6.14455-14.368821 9.247789-22.496761 9.247789-8.255235 0-16.512189-3.168606-22.751351-9.504099-12.416396-12.576374-12.320065-32.800753 0.25631-45.248112l137.407768-135.904314-136.287918-136.671523c-12.480043-12.512727-12.447359-32.768069 0.063647-45.248112 12.512727-12.512727 32.768069-12.447359 45.248112 0.063647l158.911974 159.359226c0.032684 0.032684 0.032684 0.063647 0.063647 0.096331s0.063647 0.032684 0.096331 0.063647c2.94326 2.975944 5.055665 6.431824 6.591802 10.047682 0.063647 0.127295 0.223626 0.25631 0.25631 0.383604C673.600645 512.767209 671.231931 526.592447 661.760516 535.967531z" p-id="32263" fill="#bfbfbf"></path></svg>
+      <svg @click="right" t="1612847143655" class="icon left_icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="32021" width="200" height="200"><path d="M64 512c0 247.039 200.961 448 448 448s448-200.961 448-448S759.039 64 512 64 64 264.961 64 512zM355.135 501.149c0.033-0.127 0.193-0.256 0.256-0.384 1.536-3.616 3.649-7.072 6.592-10.048 0.033-0.031 0.065-0.031 0.096-0.064s0.031-0.064 0.064-0.096l158.912-159.359c12.48-12.511 32.735-12.576 45.248-0.064 12.511 12.48 12.544 32.735 0.064 45.248L430.079 513.055l137.408 135.904c12.576 12.447 12.673 32.672 0.256 45.248-6.239 6.336-14.496 9.504-22.751 9.504-8.128 0-16.258-3.103-22.497-9.248L362.24 535.968C352.768 526.592 350.399 512.767 355.135 501.149z" p-id="32022" fill="#bfbfbf"></path></svg>
+      <svg @click="left" t="1612847179103" class="icon right_icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="32262" width="200" height="200"><path d="M512 64c-247.039484 0-448 200.960516-448 448S264.960516 960 512 960 960 759.039484 960 512 759.039484 64 512 64zM661.760516 535.967531l-160.25545 158.495686c-6.239161 6.14455-14.368821 9.247789-22.496761 9.247789-8.255235 0-16.512189-3.168606-22.751351-9.504099-12.416396-12.576374-12.320065-32.800753 0.25631-45.248112l137.407768-135.904314-136.287918-136.671523c-12.480043-12.512727-12.447359-32.768069 0.063647-45.248112 12.512727-12.512727 32.768069-12.447359 45.248112 0.063647l158.911974 159.359226c0.032684 0.032684 0.032684 0.063647 0.063647 0.096331s0.063647 0.032684 0.096331 0.063647c2.94326 2.975944 5.055665 6.431824 6.591802 10.047682 0.063647 0.127295 0.223626 0.25631 0.25631 0.383604C673.600645 512.767209 671.231931 526.592447 661.760516 535.967531z" p-id="32263" fill="#bfbfbf"></path></svg>
     </div>
     <div class="center">
       <div class="left">
@@ -38,35 +38,34 @@
           <el-button type="success" icon="el-icon-check" circle></el-button>
         </div>
         <ul class="ques_detail">
-          <li>
+          <li v-for = "(item) in quesInformation" v-bind:key="item.id" :qid="item.id">
             <div class="det_show">
-              <h3>这是一个问题的标题！</h3>
+              <h3>{{item.title}}</h3>
               <div>
                 <img src="../../assets/images/1.jpeg" alt="">
-                <span>用户乙</span>
-                <span>一个小时前发布</span>
-                <span>问题类别</span>
+                <span>{{item.createBy}}</span>
+                <span>{{ item.createTime }}前发布</span>
+                <span>{{ item.sortName }}</span>
                 <svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
               </div>
-              <p>这是问题的内容这是问题的内容这是问题的内容，这是问题的内容，243242432，这是问题的内容，这是问题的内容，这是问题的内容，这是问题的</p>
+              <p>{{ item.content }}</p>
               <!--button对应的是class="reply"部分-->
               <button class="reply_btn" @click="reply_btn()">回答</button>
               <!--div展开对应的是ul class="reply_detail"-->
-              <a @click="reply_detail()" class="open">
+              <a @click="reply_detail(item.id)" class="open">
                 <span>展开</span>
                 <svg t="1612623150622" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4154" width="200" height="200"><path d="M927.804 352.193l-415.804 415.632-415.803-415.632 63.616-63.445 352.209 352.017 352.102-352.017z" p-id="4155"></path></svg>
               </a>
             </div>
             <!--以下部分一开始不存在，点击后才显示-->
-            <form class="reply" v-if="showReply" action="">
+            <form class="reply " v-if="showReply" action="">
               <span class="el-icon-caret-top" aria-hidden="true"></span>
               <textarea @scroll="areaOnScroll()" rows="5"
                         v-model="reply_data"
                         onfocus="if (value == '写下你关于这个问题的想法吧'){value =''}"
                         onblur="if (value ==''){value='写下你关于这个问题的想法吧'}"
               ></textarea>
-              <input type="file" name="file" id="img"
-                     @change="addImg" ref="inputer"
+              <input type="file" name="file" id="img" class="upload" @change="addImg" ref="inputer"
                      multiple accept="image/png, image/jpeg, image/gif, image/jpg"/>
               <label for="img">上传图片</label>
               <button>提交</button>
@@ -78,13 +77,13 @@
               </li>
             </ul>
             <ul class="reply_detail" v-if="showReplyDetail" >
-              <li>
+              <li v-for = "(item2) in quesReply" v-bind:key="item2.id">
                 <div class="det_show">
-                  <p>这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容这是回答的内容</p>
+                  <p>{{ item2.content }}</p>
                   <div>
                     <img class="reply_img" src="../../assets/images/1.jpeg" alt="">
-                    <span>用户乙</span>
-                    <span>一个小时前发布</span>
+                    <span>{{ item2.createBy }}</span>
+                    <span>{{ item2.createTime }}前发布</span>
                     <!--button评论对应的是class="comm"-->
                     <button @click="comm_detail()" class="to_comm">评论</button>
                     <svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
@@ -96,14 +95,14 @@
                   </div>
                 </div>
                 <ul class="comment_detail det_show">
-                  <li>
-                    <img src="../../assets/images/1.jpeg" alt="">
+                  <li v-for = "(item) in quesComment" v-bind:key="item.id">
+                    <img :src="item.photo" alt="">
                     <span>
-                      <p class="nick">用户乙:</p>
-                      <p>我认为。。。</p>
+                      <p class="nick">{{ item.createBy }}:</p>
+                      <p>{{ item.content }}</p>
                     </span>
                     <div>
-                      <span>一个小时前发布</span>
+                      <span>{{ item.createTime }}前发布</span>
                       <a href="">回复</a>
                       <svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
                     </div>
@@ -221,7 +220,10 @@ export default {
       imgs: {},
       imgLen: 0,
       quesSort: {},
-      currentOffset: 0
+      currentOffset: 0,
+      quesInformation: {},
+      quesReply: [],
+      quesComment: {}
     }
   },
   methods: {
@@ -234,10 +236,8 @@ export default {
       this.state = true
     },
     areaOnScroll () {
-      console.log('reply_data:' + this.reply_data)
-      console.log('reply_data:' + this.reply_data.length)
       this.reply_data = this.reply_data.slice(0, 200)
-      alert('请在五行内输入')
+      alert('请在4行内输入')
     },
     reply_btn () {
       if (this.showReply) {
@@ -246,7 +246,9 @@ export default {
         this.showReply = true
       }
     },
-    reply_detail () {
+    reply_detail (qid) {
+      console.log('qid:' + qid)
+      this.loadQuesReply(qid)
       if (this.showReplyDetail) {
         this.showReplyDetail = false
       } else {
@@ -273,16 +275,7 @@ export default {
       this.currentOffset = this.currentOffset - 1
       console.log('left:currentOffset:' + this.currentOffset)
     },
-    // axios调用后端数据，在前端展示
-    loadData () {
-      axios.get('http://localhost:8180/quesSort/datas').then(function (response) {
-        var data = response.data
-        this.quesSort = data
-      }).catch(function (error) {
-        console.log(error)
-      })
-    },
-    // ----------------
+    // 图片上传及预览----------------
     addImg (event) {
       const inputDOM = this.$refs.inputer
       // 通过DOM取文件数据
@@ -314,6 +307,7 @@ export default {
       } else if (window.webkitURL !== undefined) { // webkit or chrome
         url = window.webkitURL.createObjectURL(file)
       }
+      console.log('url:' + url)
       return url
     },
     delImg (key) {
@@ -331,32 +325,78 @@ export default {
         this.alertShow = true
       })
     },
-
     // axios
     loadQuesSort () {
-      console.log('-------------')
       var _this = this
-      this.$axios.get('http://localhost:8180/quesSort/datas').then(resp => {
-        console.log('resp:' + resp)
-        console.log('resp.data.code:' + resp.data.code)
+      axios({
+        method: 'get',
+        url: 'http://localhost:8180/quesSort/datas'
+      }).then(resp => {
         if (resp.data.code === 200) {
           _this.quesSort = resp.data.data
-          console.log('_this.quesSort :' + _this.quesSort)
         }
+      }).catch(error => error)
+    },
+    // 统一处理axios请求
+    async getAxiosData (method, url) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: method,
+          url: url
+        }).then((res) => {
+          resolve(res)
+        }).catch((err) => {
+          reject(err)
+        })
       })
+    },
+    async loadQuesSort1 () {
+      this.quesSort = (await this.getHistoryData()).data.data
+      console.log('---------------this.quesSort:' + this.quesSort)
+    },
+    loadQuesInformation () {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'http://localhost:8180/quesInformation/datas'
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          _this.quesInformation = resp.data.data
+        }
+      }).catch(error => error)
+    },
+    loadQuesReply (qid) {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'http://localhost:8180/quesReply/datas/%7Bqid%7D?qid='
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          console.log('--------------------------------------------')
+          _this.quesReply[qid] = resp.data.data
+          console.log('id:' + qid)
+          console.log('_this.quesReply[qid]:' + _this.quesReply[qid].data)
+        }
+      }).catch(error => error)
+    },
+    loadQuesComment () {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'http://localhost:8180/quesComment/datas/%7Brid%7D?rid='
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          _this.quesComment = resp.data.data
+        }
+      }).catch(error => error)
     }
   },
-  // mounted () {
-  //   axios.get('http://localhost:8180/quesSort/datas').then(function (response) {
-  //     var data = response.data
-  //     console.log('data:' + data[0])
-  //     this.quesSort = data
-  //   }).catch(function (error) {
-  //     console.log(error)
-  //   })
-  // },
   mounted: function () {
     this.loadQuesSort()
+    this.loadQuesInformation()
+    // this.loadQuesReply()
+  },
+  async created () {
   }
 }
 </script>

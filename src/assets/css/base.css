@@ -16,7 +16,7 @@ body{
     height: 100%;
     background-color: #FFFFFF;
     /*124/1280=0.0968*/
-    margin: 0 9.6%;
+    margin: 0 5.6%;
     z-index: -1;
 }
 /*单独设置超出中间位置的元素中的内容，使其不超出下下层的中间位置。*/
