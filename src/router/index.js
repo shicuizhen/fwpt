@@ -5,6 +5,7 @@ import Lost from '../views/lost/Lost.vue'
 import Mood from '../views/mood/Mood.vue'
 import Question from '../views/question/Question'
 import QuestionDetail from '../views/question/QuestionDetail'
+import LostPublish from '@/views/lost/LostPublish'
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,11 @@ const routes = [
     path: '/question_detail',
     name: 'QuestionDetail',
     component: QuestionDetail
+  },
+  {
+    path: '/lost_publish',
+    name: 'LostPublish',
+    component: LostPublish
   }
 ]
 
