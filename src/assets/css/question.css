@@ -319,7 +319,7 @@
 }
 /*回答内容展示*/
 .reply_detail{
-    margin-top: 12px;
+    padding-top: 15px;
 }
 .reply_detail>li{
     margin-bottom: 6px;

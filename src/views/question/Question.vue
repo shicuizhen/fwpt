@@ -37,6 +37,7 @@
           仅看未解决&nbsp;
           <el-button type="success" icon="el-icon-check" circle></el-button>
         </div>
+<!--1.问题信息展示========================================================================-->
         <ul class="ques_detail">
           <li v-for = "(item) in quesInformation" v-bind:key="item.id" :qid="item.id">
             <div class="det_show">
@@ -52,11 +53,13 @@
               <!--button对应的是class="reply"部分-->
               <button class="reply_btn" @click="reply_btn()">回答</button>
               <!--div展开对应的是ul class="reply_detail"-->
-              <a @click="reply_detail(item.id)" class="open">
+<!--              <a @click="reply_detail(item.id)" class="open">-->
+              <a @click="reply_detail()" class="open">
                 <span>展开</span>
                 <svg t="1612623150622" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4154" width="200" height="200"><path d="M927.804 352.193l-415.804 415.632-415.803-415.632 63.616-63.445 352.209 352.017 352.102-352.017z" p-id="4155"></path></svg>
               </a>
             </div>
+<!--   点击回答问题按钮出现-----开始----======================================================-->
             <!--以下部分一开始不存在，点击后才显示-->
             <form class="reply " v-if="showReply" action="">
               <span class="el-icon-caret-top" aria-hidden="true"></span>
@@ -76,6 +79,8 @@
                 <a class="close" @click="delImg(key)">×</a>
               </li>
             </ul>
+<!--    点击回答问题按钮出现-----结束----======================================================-->
+<!--2.回答信息展示----点击“展开”按钮就显示----===========================================================-->
             <ul class="reply_detail" v-if="showReplyDetail" >
               <li v-for = "(item2) in quesReply" v-bind:key="item2.id">
                 <div class="det_show">
@@ -181,43 +186,8 @@ export default {
     }
   },
   methods: {
-    icon_down () {
-      this.downState = true
-      this.state = false
-    },
-    icon_up () {
-      this.downState = false
-      this.state = true
-    },
-    areaOnScroll () {
-      this.reply_data = this.reply_data.slice(0, 200)
-      alert('请在4行内输入')
-    },
-    reply_btn () {
-      if (this.showReply) {
-        this.showReply = false
-      } else {
-        this.showReply = true
-      }
-    },
-    reply_detail (qid) {
-      console.log('qid:' + qid)
-      this.loadQuesReply(qid)
-      if (this.showReplyDetail) {
-        this.showReplyDetail = false
-      } else {
-        this.showReplyDetail = true
-      }
-    },
-    comm_detail () {
-      if (this.showCommDetail) {
-        this.showCommDetail = false
-      } else {
-        this.showCommDetail = true
-      }
-    },
+    // 页面上面部分-分类轮播
     right () {
-      console.log('right:currentOffset:' + this.currentOffset)
       if (this.currentOffset < 0) {
         this.currentOffset++
       }
@@ -227,9 +197,30 @@ export default {
         return
       }
       this.currentOffset = this.currentOffset - 1
-      console.log('left:currentOffset:' + this.currentOffset)
     },
-    // 图片上传及预览----------------
+    // 选择分类下拉框
+    icon_down () {
+      this.downState = true
+      this.state = false
+    },
+    icon_up () {
+      this.downState = false
+      this.state = true
+    },
+    // 回答问题的按钮
+    reply_btn () {
+      if (this.showReply) {
+        this.showReply = false
+      } else {
+        this.showReply = true
+      }
+    },
+    // 回答问题的输入框
+    areaOnScroll () {
+      this.reply_data = this.reply_data.slice(0, 200)
+      alert('请在4行内输入')
+    },
+    // 写回答，图片上传及预览-------------开始--------------------------
     addImg (event) {
       const inputDOM = this.$refs.inputer
       // 通过DOM取文件数据
@@ -279,7 +270,26 @@ export default {
         this.alertShow = true
       })
     },
-    // axios
+    // 写回答，图片上传及预览-------------结束----------------
+    // 回答信息展示--------点击“展开”按钮
+    reply_detail (qid) {
+      // 在点击“展开”按钮的时候，除了改变回答的显隐状态，也将qid穿进去把数据加载出来
+      // this.loadQuesReply(qid)
+      if (this.showReplyDetail) {
+        this.showReplyDetail = false
+      } else {
+        this.showReplyDetail = true
+      }
+    },
+    // 评论信息展示-------点击“评论”按钮
+    comm_detail () {
+      if (this.showCommDetail) {
+        this.showCommDetail = false
+      } else {
+        this.showCommDetail = true
+      }
+    },
+    // axios----------加载后台数据------------------------
     loadHotQues () {
       var _this = this
       axios({
@@ -302,7 +312,57 @@ export default {
         }
       }).catch(error => error)
     },
-    // 统一处理axios请求
+    loadQuesInformation () {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'http://localhost:8180/quesInformation/datas'
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          _this.quesInformation = resp.data.data
+        }
+      }).catch(error => error)
+    },
+    // 加载回答信息，但是无法将问题id传入该函数，异步执行，没有办法及时获取数据？？？？？？============================
+    loadQuesReply (qid) {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'http://localhost:8180/quesReply/datas/%7Bqid%7D?qid=' + qid
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          console.log('-----------------loadQuesReply (qid) ---------------------------')
+          _this.quesReply[qid] = resp.data.data
+          console.log('id:' + qid)
+          console.log('_this.quesReply[qid]:' + _this.quesReply[qid].data)
+        }
+      }).catch(error => error)
+    },
+    loadQuesReply02 () {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'http://localhost:8180/quesReply/datas/%7Bqid%7D?qid=1'
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          console.log('---------------------loadQuesReply02 ()-----------------------')
+          _this.quesReply = resp.data.data
+          console.log('_this.quesReply:' + _this.quesReply.data)
+        }
+      }).catch(error => error)
+    },
+    loadQuesComment () {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'http://localhost:8180/quesComment/datas/%7Brid%7D?rid='
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          _this.quesComment = resp.data.data
+        }
+      }).catch(error => error)
+    },
+    // 统一处理axios请求========================最后将axios请求进行封装，简化代码，待完成====================
     async getAxiosData (method, url) {
       return new Promise((resolve, reject) => {
         axios({
@@ -317,48 +377,13 @@ export default {
     },
     async loadQuesSort1 () {
       this.quesSort = (await this.getHistoryData()).data.data
-    },
-    loadQuesInformation () {
-      var _this = this
-      axios({
-        method: 'get',
-        url: 'http://localhost:8180/quesInformation/datas'
-      }).then(resp => {
-        if (resp.data.code === 200) {
-          _this.quesInformation = resp.data.data
-        }
-      }).catch(error => error)
-    },
-    loadQuesReply (qid) {
-      var _this = this
-      axios({
-        method: 'get',
-        url: 'http://localhost:8180/quesReply/datas/%7Bqid%7D?qid='
-      }).then(resp => {
-        if (resp.data.code === 200) {
-          console.log('--------------------------------------------')
-          _this.quesReply[qid] = resp.data.data
-          console.log('id:' + qid)
-          console.log('_this.quesReply[qid]:' + _this.quesReply[qid].data)
-        }
-      }).catch(error => error)
-    },
-    loadQuesComment () {
-      var _this = this
-      axios({
-        method: 'get',
-        url: 'http://localhost:8180/quesComment/datas/%7Brid%7D?rid='
-      }).then(resp => {
-        if (resp.data.code === 200) {
-          _this.quesComment = resp.data.data
-        }
-      }).catch(error => error)
     }
   },
   mounted: function () {
     this.loadHotQues()
     this.loadQuesSort()
     this.loadQuesInformation()
+    this.loadQuesReply02()
     // this.loadQuesReply()
   },
   async created () {
