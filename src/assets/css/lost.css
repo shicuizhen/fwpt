@@ -1,0 +1,210 @@
+/*启事信息展示*/
+.show .title{
+    margin: 25px 0 12px;
+}
+.show .title svg{
+    font-size: 38px;
+}
+.show .title h3{
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+    color: #303030;
+    font-family: "YouYuan";
+    margin-left: 8px;
+}
+.show .card li{
+    position: relative;
+    padding: 10px 12px;
+    width: 16.9%;
+    float: left;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-right: 8px;
+    margin-bottom: 10px;
+}
+.show .card li:nth-child(5n){
+    margin-right: 0;
+}
+.card li svg{
+    font-size: 30px;
+    position: absolute;
+    top: 3px;
+    right: 8px;
+}
+.card li h3{
+    color: #3A3637;
+    font-family: 隶书;
+    padding-right: 35px;
+    text-align: right;
+    font-weight: 400;
+    font-size: 16px;
+    color: #888;
+}
+.card li h4{
+    font-size: 15px;
+    font-weight: 600;
+    margin: 10px 0;
+    font-family: "微软雅黑";
+}
+.card li p{
+    font-size: 13px;
+    margin-top: 5px;
+}
+/*轮播*/
+.lunbo{
+    position: relative;
+    border: 1px solid #D6D6D6;
+    width: 91.3%;
+    height: 32px;
+    margin-left: 8.5%;
+}
+.lunbo svg{
+    font-size: 28px;
+    vertical-align: middle;
+    margin: 0 3px 3px;
+}
+.lunbo h3{
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 34px;
+    height: 34px;
+    vertical-align: middle;
+}
+.lunbo .marquee-box{
+    margin-left: 8px;
+    overflow: hidden;
+    position: absolute;
+    left: 100px;
+    top: 0;
+    display:flex;
+    width: 86%;
+    height: 32px;
+    font-size:.26rem;
+    align-items:center;
+}
+/* 以下代码与滚动相关 */
+.lunbo .marquee-ul{
+    position:absolute;
+    top: 50%;
+    transform:translateY(-50%);
+    display:flex;
+    white-space:nowrap;/* 规定段落中的文本不换行 */
+}
+.lunbo .marquee-list{
+    margin-right:30px; /* 此处“px”方便回到起点 */
+}
+.lunbo a{
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    top: -1px;
+    left: -93px;
+    padding: 0 5px;
+    text-align: center;
+    background-color: #D29FF9;
+    border: 2px solid #D6D6D6;
+    font-size: 14px;
+}
+.lunbo a:hover{
+    border: 2px solid #000000;
+}
+/*搜索*/
+/*关键字搜索*/
+.search{
+    position: relative;
+    margin-top: 15px;
+}
+.search .key-search{
+    height: 24px;
+}
+.key-search input{
+    height: 22px;
+    width: 180px;
+    float: left;
+    margin-left: 92px;
+    outline: #fff;
+    border: 1px solid #888888;
+    color: #888888;
+    font-size: 12px;
+    padding: 0 5px;
+}
+.key-search p{
+    float: left;
+    margin-left: 30px;
+    font-size: 12px;
+    /*font-family: "Microsoft YaHei UI Light";*/
+    height: 22px;
+    line-height: 22px;
+}
+.key-search ul{
+    float: left;
+    height: 22px;
+}
+.key-search ul li{
+    float: left;
+    font-size: 12px;
+    margin-right: 10px;
+    line-height: 22px;
+}
+.key-search li a:hover{
+    color: crimson;
+}
+/*分类类型搜索*/
+/*选择类别查询的列表*/
+.selector{
+    margin-top: 15px;
+    position: relative;
+    border-top: 1px solid #E4E4E4;
+}
+.selector .row{
+    width: 99.8%;
+    border: 1px solid #E4E4E4;
+    border-top: 0;
+    height: 100%;
+    background-color: #F1F1F1;
+}
+.row .key{
+    float: left;
+    display: inline-block;
+    padding: 12px 15px;
+    width: 50px;
+    height: 100%;
+    color: #333333;
+    /*color: #3B3B3B;*/
+    font-size: 12px;
+}
+.row .value{
+    float: left;
+    width: 90.6%;
+    border-left: 1px solid #E4E4E4;
+    height: 100%;
+    padding-left: 20px;
+    background-color: #fff;
+}
+.row .value li{
+    height: 100%;
+    width: 110px;
+    float: left;
+}
+.row .value a{
+    display: inline-block;
+    /*color: #555555;*/
+    color: #3B3B3B;
+    font-size: 12px;
+    padding: 12px 0;
+}
+.row .value a:hover{
+    color: #42BB85;
+    cursor: pointer;
+}
+.row .value{
+    font-size: 12px;
+    color: #555555;
+}
+.row .value input{
+    outline:none;
+    margin: 8px 0;
+    color: #555555;
+}

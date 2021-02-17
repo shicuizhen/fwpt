@@ -99,6 +99,7 @@
                     </div>
                   </div>
                 </div>
+<!--     3.评论信息展示           -->
                 <ul class="comment_detail det_show">
                   <li v-for = "(item) in quesComment" v-bind:key="item.id">
                     <img :src="item.photo" alt="">
