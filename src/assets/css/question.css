@@ -218,6 +218,8 @@
     outline: #AAA auto 1px;
 }
 .det_show .open{
+    width: 45px;
+    height: 20px;
     cursor: default;
     position: relative;
     float: right;

@@ -39,7 +39,7 @@
         </div>
 <!--1.问题信息展示========================================================================-->
         <ul class="ques_detail">
-          <li v-for = "(item) in quesInformation" v-bind:key="item.id" :qid="item.id">
+          <li v-for = "(item, index) in quesInformation" v-bind:key="index" :qid="item.id">
             <div class="det_show">
               <h3>{{item.title}}</h3>
               <div>
@@ -54,7 +54,7 @@
               <button class="reply_btn" @click="reply_btn()">回答</button>
               <!--div展开对应的是ul class="reply_detail"-->
 <!--              <a @click="reply_detail(item.id)" class="open">-->
-              <a @click="reply_detail()" class="open">
+              <a @click="reply_detail(item.id, index)" class="open">
                 <span>展开</span>
                 <svg t="1612623150622" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4154" width="200" height="200"><path d="M927.804 352.193l-415.804 415.632-415.803-415.632 63.616-63.445 352.209 352.017 352.102-352.017z" p-id="4155"></path></svg>
               </a>
@@ -81,8 +81,10 @@
             </ul>
 <!--    点击回答问题按钮出现-----结束----======================================================-->
 <!--2.回答信息展示----点击“展开”按钮就显示----===========================================================-->
-            <ul class="reply_detail" v-if="showReplyDetail" >
-              <li v-for = "(item2) in quesReply" v-bind:key="item2.id">
+            <ul class="reply_detail" v-if="currentReply.li === index">
+<!--              <ul class="reply_detail" v-if="showReplyDetail" >-->
+<!--              :class="{showReplyDetailCla: replyLi === index}"-->
+              <li v-for="(item2) in quesReply" v-bind:key="item2.id">
                 <div class="det_show">
                   <p>{{ item2.content }}</p>
                   <div>
@@ -181,9 +183,12 @@ export default {
       quesSort: {},
       currentOffset: 0,
       quesInformation: {},
-      quesReply: [],
+      quesReply: {},
       quesComment: {},
-      hotQues: {}
+      hotQues: {},
+      currentReply: [
+        { li: -1 }
+      ]
     }
   },
   methods: {
@@ -273,12 +278,19 @@ export default {
     },
     // 写回答，图片上传及预览-------------结束----------------
     // 回答信息展示--------点击“展开”按钮
-    reply_detail (qid) {
-      // 在点击“展开”按钮的时候，除了改变回答的显隐状态，也将qid穿进去把数据加载出来
-      // this.loadQuesReply(qid)
+    reply_detail (qid, index) {
+      // 如果点击的li不是上一个li，就先将showReplyDetail置false，即收起子li，不然还以为是开着的，点的这一下白点，这一下就成收起了。
+      if (this.currentReply.li !== index) {
+        this.showReplyDetail = false
+      }
+      this.$set(this.currentReply, 'li', index)
+      // showReplyDetail 代表是否展开回答的li，如果已经展开，就置null收起，并把数据quesReply置null
       if (this.showReplyDetail) {
+        this.quesReply = null
         this.showReplyDetail = false
       } else {
+        // 在点击“展开”按钮的时候，除了改变回答的显隐状态，也将qid穿进去把数据加载出来
+        this.loadQuesReply(qid)
         this.showReplyDetail = true
       }
     },
@@ -295,7 +307,7 @@ export default {
       var _this = this
       axios({
         method: 'get',
-        url: 'http://localhost:8180/quesInformation/hotdatas'
+        url: 'quesInformation/hotdatas'
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.hotQues = resp.data.data
@@ -306,7 +318,7 @@ export default {
       var _this = this
       axios({
         method: 'get',
-        url: 'http://localhost:8180/quesSort/datas'
+        url: 'quesSort/datas'
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.quesSort = resp.data.data
@@ -317,38 +329,25 @@ export default {
       var _this = this
       axios({
         method: 'get',
-        url: 'http://localhost:8180/quesInformation/datas'
+        url: 'quesInformation/datas'
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.quesInformation = resp.data.data
         }
       }).catch(error => error)
     },
-    // 加载回答信息，但是无法将问题id传入该函数，异步执行，没有办法及时获取数据？？？？？？============================
+    // 加载回答信息，但是无法将问题id传入该函数，异步执行，没有办法及时获取数据============================
     loadQuesReply (qid) {
       var _this = this
       axios({
         method: 'get',
-        url: 'http://localhost:8180/quesReply/datas/%7Bqid%7D?qid=' + qid
-      }).then(resp => {
-        if (resp.data.code === 200) {
-          console.log('-----------------loadQuesReply (qid) ---------------------------')
-          _this.quesReply[qid] = resp.data.data
-          console.log('id:' + qid)
-          console.log('_this.quesReply[qid]:' + _this.quesReply[qid].data)
+        url: 'quesReply/datas/%7Bqid%7D',
+        params: {
+          qid: qid
         }
-      }).catch(error => error)
-    },
-    loadQuesReply02 () {
-      var _this = this
-      axios({
-        method: 'get',
-        url: 'http://localhost:8180/quesReply/datas/%7Bqid%7D?qid=1'
       }).then(resp => {
         if (resp.data.code === 200) {
-          console.log('---------------------loadQuesReply02 ()-----------------------')
           _this.quesReply = resp.data.data
-          console.log('_this.quesReply:' + _this.quesReply.data)
         }
       }).catch(error => error)
     },
@@ -384,10 +383,24 @@ export default {
     this.loadHotQues()
     this.loadQuesSort()
     this.loadQuesInformation()
-    this.loadQuesReply02()
     // this.loadQuesReply()
+  },
+  watch: {
+    type: {
+      handler: function () {
+      }
+    }
   },
   async created () {
   }
 }
 </script>
+<style>
+.reply_detail li{
+  /*visibility: hidden;*/
+}
+.reply_detail .showReplyDetailCla{
+  visibility: visible;
+  background-color: #00ffff;
+}
+</style>
