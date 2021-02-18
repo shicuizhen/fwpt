@@ -165,15 +165,16 @@
 }
 .ques_detail>li{
     margin-bottom: 6px;
-    border: 1px solid #D3EBD5;
-    padding: 18px 15px 15px;
+    /*border: 1px solid #D3EBD5;*/
+    border: 1px solid #424542;
+    padding: 18px 15px 10px;
 }
 .det_show h3{
     font-size: 15px;
     margin-bottom: 16px;
 }
 .det_show{
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 .det_show div{
     position: relative;
@@ -194,7 +195,7 @@
 .det_show svg{
     position: absolute;
     top: 2px;
-    right: 5px;
+    right: 21px;
 }
 .det_show p{
     /*padding-left: 10px;*/
@@ -223,6 +224,9 @@
     cursor: default;
     position: relative;
     float: right;
+}
+.reply_detail .det_show .open{
+    width: 15px;
 }
 .open span{
     width: 25px;
@@ -321,80 +325,17 @@
 }
 /*回答内容展示*/
 .reply_detail{
-    padding-top: 15px;
+    /*padding-top: 15px;*/
+}
+.reply_detail>li:nth-child(1){
+    margin-top: 32px;
 }
 .reply_detail>li{
-    margin-bottom: 6px;
-    border: 1px solid #C9C9C9;
-    width: 99%;
-    padding: 0 5px 0 15px;
-}
-.det_show .to_comm{
-    position: absolute;
-    top: 0px;
-    right: 56px;
-}
-/*提交评论*/
-.reply_detail .comm{
-    position: relative;
-    padding-top: 10px;
-    height: 30px;
-}
-.comm span{
-    position: absolute;
-    top: 2px;
-    right: 70px;
-}
-.comm input{
-    position: relative;
-    color: #525252;
-    outline: #fff;
-    float: right;
-    border: 1px solid #D6D6D6;
-    height: 28px;
-    width: 89.6%;
-    padding-left: 3px;
-    padding-right: 50px;
-}
-.comm button{
-    position: absolute;
-    top: 13px;
-    right: 3px;
-}
-/*评论详情comment_detail*/
-.comment_detail{
-    margin-left: 22px;
-    padding-right: 10px;
-    margin-top: 15px;
-}
-.comment_detail li{
-    padding: 6px;
-    position: relative;
-    border-top: 1px solid #D6D6D6;
-}
-.comment_detail span{
     margin-top: 8px;
-    margin-bottom: 10px;
-}
-.comment_detail span p{
-    margin: 0;
-    vertical-align: top;
-    width: 80%;
-}
-.comment_detail img{
-    top: 14px;
-}
-.comment_detail span>p{
-    display: inline;
-    font-size: 12px;
-    font-weight: 500;
-}
-.comment_detail span .nick{
-    font-family: "微软雅黑";
-}
-.comment_detail div a{
-    font-size: 12px;
-    margin-left: 50px;
+    /*margin-bottom: 6px;*/
+    border: 1px solid #C9C9C9;
+    width: 97.4%;
+    padding: 0 5px 0 15px;
 }
 /**/
 /*左侧-中间部分center---结束*/

@@ -53,7 +53,6 @@
               <!--button对应的是class="reply"部分-->
               <button class="reply_btn" @click="reply_btn()">回答</button>
               <!--div展开对应的是ul class="reply_detail"-->
-<!--              <a @click="reply_detail(item.id)" class="open">-->
               <a @click="reply_detail(item.id, index)" class="open">
                 <span>展开</span>
                 <svg t="1612623150622" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4154" width="200" height="200"><path d="M927.804 352.193l-415.804 415.632-415.803-415.632 63.616-63.445 352.209 352.017 352.102-352.017z" p-id="4155"></path></svg>
@@ -81,9 +80,7 @@
             </ul>
 <!--    点击回答问题按钮出现-----结束----======================================================-->
 <!--2.回答信息展示----点击“展开”按钮就显示----===========================================================-->
-            <ul class="reply_detail" v-if="currentReply.li === index">
-<!--              <ul class="reply_detail" v-if="showReplyDetail" >-->
-<!--              :class="{showReplyDetailCla: replyLi === index}"-->
+            <ul class="reply_detail" v-if="currentLiIndex.replay === index">
               <li v-for="(item2) in quesReply" v-bind:key="item2.id">
                 <div class="det_show">
                   <p>{{ item2.content }}</p>
@@ -91,31 +88,9 @@
                     <img class="reply_img" src="../../assets/images/1.jpeg" alt="">
                     <span>{{ item2.createBy }}</span>
                     <span>{{ item2.createTime }}前发布</span>
-                    <!--button评论对应的是class="comm"-->
-                    <button @click="comm_detail()" class="to_comm">评论</button>
                     <svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
-                    <div v-if="showCommDetail" class="comm">
-                      <span class="el-icon-caret-top" aria-hidden="true"></span>
-                      <input type="text" value="写下你的评论" onfocus="if (value == '写下你的评论'){value =''}" onblur="if (value ==''){value='写下你的评论'}">
-                      <button>提交</button>
-                    </div>
                   </div>
                 </div>
-<!--     3.评论信息展示           -->
-                <ul class="comment_detail det_show">
-                  <li v-for = "(item) in quesComment" v-bind:key="item.id">
-                    <img :src="item.photo" alt="">
-                    <span>
-                      <p class="nick">{{ item.createBy }}:</p>
-                      <p>{{ item.content }}</p>
-                    </span>
-                    <div>
-                      <span>{{ item.createTime }}前发布</span>
-                      <a href="">回复</a>
-                      <svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
-                    </div>
-                  </li>
-                </ul>
               </li>
             </ul>
           </li>
@@ -186,8 +161,9 @@ export default {
       quesReply: {},
       quesComment: {},
       hotQues: {},
-      currentReply: [
-        { li: -1 }
+      currentLiIndex: [
+        { replay: -1 },
+        { comm: -1 }
       ]
     }
   },
@@ -280,10 +256,10 @@ export default {
     // 回答信息展示--------点击“展开”按钮
     reply_detail (qid, index) {
       // 如果点击的li不是上一个li，就先将showReplyDetail置false，即收起子li，不然还以为是开着的，点的这一下白点，这一下就成收起了。
-      if (this.currentReply.li !== index) {
+      if (this.currentLiIndex.replay !== index) {
         this.showReplyDetail = false
       }
-      this.$set(this.currentReply, 'li', index)
+      this.$set(this.currentLiIndex, 'replay', index)
       // showReplyDetail 代表是否展开回答的li，如果已经展开，就置null收起，并把数据quesReply置null
       if (this.showReplyDetail) {
         this.quesReply = null
@@ -294,8 +270,24 @@ export default {
         this.showReplyDetail = true
       }
     },
+    comm_detail (rid, index) {
+      // 如果点击的li不是上一个li，就先将showReplyDetail置false，即收起子li，不然还以为是开着的，点的这一下白点，这一下就成收起了。
+      if (this.currentLiIndex.comm !== index) {
+        this.showCommDetail = false
+      }
+      this.$set(this.currentLiIndex, 'comm', index)
+      // showReplyDetail 代表是否展开回答的li，如果已经展开，就置null收起，并把数据quesReply置null
+      if (this.showCommDetail) {
+        this.quesReply = null
+        this.showCommDetail = false
+      } else {
+        // 在点击“展开”按钮的时候，除了改变回答的显隐状态，也将qid穿进去把数据加载出来
+        this.loadQuesComment(rid)
+        this.showCommDetail = true
+      }
+    },
     // 评论信息展示-------点击“评论”按钮
-    comm_detail () {
+    comm_btn () {
       if (this.showCommDetail) {
         this.showCommDetail = false
       } else {
@@ -351,11 +343,14 @@ export default {
         }
       }).catch(error => error)
     },
-    loadQuesComment () {
+    loadQuesComment (rid) {
       var _this = this
       axios({
         method: 'get',
-        url: 'http://localhost:8180/quesComment/datas/%7Brid%7D?rid='
+        url: 'quesComment/datas/%7Brid%7D',
+        params: {
+          rid: rid
+        }
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.quesComment = resp.data.data
