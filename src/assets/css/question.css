@@ -102,7 +102,7 @@
     display: none;
     visibility: hidden;
 }
-.sort_xlk>a{
+.sort_xlk>span{
     position: absolute;
     left: 16%;
     top: 0;
@@ -122,6 +122,7 @@
     top: 38px;
     left: 13.7%;
     width: 90px;
+    z-index: 100;
 }
 .xlk li{
     text-align: center;
@@ -129,6 +130,7 @@
     color: #101010;
     line-height: 32px;
     font-size: 12px;
+    cursor: pointer;
 }
 .xlk li:hover{
     background-color: #F9F9F9;
@@ -196,6 +198,35 @@
     position: absolute;
     top: 2px;
     right: 21px;
+}
+.det_show i{
+    /*cursor: pointer;*/
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 22px;
+    font-weight: 800;
+    color: #555555;
+    margin-bottom: 5px;
+}
+.det_show a{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 1px;
+    right: 21px;
+    font-size: 22px;
+    font-weight: 800;
+    color: #555555;
+    /*color: #D81E06;*/
+}
+.det_show .likeShow{
+    display: block;
+    position: absolute;
+    top: -6px;
+    right: 42px;
+    font-size: 10px;
 }
 .det_show p{
     /*padding-left: 10px;*/
@@ -281,10 +312,31 @@
 }
 .reply button{
     position: absolute;
-    bottom: 30px;
-    right: 8px;
+    top: -40px;
+    left: 60px;
     border-radius: 0;
     padding: 3px 5px;
+}
+.reply div{
+    font-size: 14px;
+    padding: 0;
+    /*background-color: red;*/
+    background-color: #EFEFEF;
+    border: 2px solid #767676;
+    width: 40px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    position: absolute;
+    top: -40px;
+    left: 60px;
+    border-radius: 0;
+    /*padding: 3px 5px;*/
+}
+.reply div:hover{
+    border: 2px solid #212121;
+    border-radius: 3px;
+    cursor: pointer;
 }
 /*!*图片上传及预览*!*/
 .upload-imgs {
@@ -324,11 +376,8 @@
     color: #aaa;
 }
 /*回答内容展示*/
-.reply_detail{
-    /*padding-top: 15px;*/
-}
 .reply_detail>li:nth-child(1){
-    margin-top: 32px;
+    margin-top: 12px;
 }
 .reply_detail>li{
     margin-top: 8px;

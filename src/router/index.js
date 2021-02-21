@@ -36,7 +36,7 @@ const routes = [
     component: Question
   },
   {
-    path: '/question_detail',
+    path: '/question_detail/:qid',
     name: 'QuestionDetail',
     component: QuestionDetail
   },

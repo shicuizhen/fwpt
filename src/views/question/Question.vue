@@ -21,7 +21,7 @@
       <div class="left">
         <p>平台最新问题</p>
         <div class="sort_xlk">
-          <a href="" >选择分类</a>
+          <span>选择分类</span>
           <i @click="icon_down()" class="el-icon-arrow-down" :class="{hidden : downState}" aria-hidden="true"></i>
           <i @click="icon_up()" class="el-icon-arrow-up" :class="{hidden : state}" aria-hidden="true"></i>
           <ul :class="{xlk : true, hidden : state}">
@@ -39,45 +39,66 @@
         </div>
 <!--1.问题信息展示========================================================================-->
         <ul class="ques_detail">
-          <li v-for = "(item, index) in quesInformation" v-bind:key="index" :qid="item.id">
+          <li v-for = "(item, index) in quesInformation"
+              v-bind:key="index" :qid="item.id"
+              @click="toQuesDetail(item.id)">
+<!--            :onclick="() => toQuesDetail(item.id)">-->
             <div class="det_show">
               <h3>{{item.title}}</h3>
               <div>
                 <img src="../../assets/images/1.jpeg" alt="">
+<!--                <img src="file:///F:/images/1.jpeg" alt="">-->
+<!--                <img src="require('../../assets/images/'+'F:/图片/8180.jpg')"  width="112" height="112">-->
                 <span>{{item.createBy}}</span>
                 <span>{{ item.createTime }}前发布</span>
                 <span>{{ item.sortName }}</span>
-                <svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
+                <i class="icon iconfont" style="color: #000000;right: 18px;">&#xe638;</i>
+                <p class="likeShow">{{ item.replyNum }}</p>
               </div>
               <p>{{ item.content }}</p>
               <!--button对应的是class="reply"部分-->
-              <button class="reply_btn" @click="reply_btn()">回答</button>
+              <button class="reply_btn" @click.stop="reply_btn(item.id, index)">回答</button>
               <!--div展开对应的是ul class="reply_detail"-->
-              <a @click="reply_detail(item.id, index)" class="open">
+              <a @click.stop="reply_detail(item.id, index)" class="open">
                 <span>展开</span>
                 <svg t="1612623150622" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4154" width="200" height="200"><path d="M927.804 352.193l-415.804 415.632-415.803-415.632 63.616-63.445 352.209 352.017 352.102-352.017z" p-id="4155"></path></svg>
               </a>
             </div>
 <!--   点击回答问题按钮出现-----开始----======================================================-->
             <!--以下部分一开始不存在，点击后才显示-->
-            <form class="reply " v-if="showReply" action="">
+            <div class="reply" v-if="currentLiIndex.writeReplay === index">
               <span class="el-icon-caret-top" aria-hidden="true"></span>
               <textarea @scroll="areaOnScroll()" rows="5"
                         v-model="reply_data"
                         onfocus="if (value == '写下你关于这个问题的想法吧'){value =''}"
                         onblur="if (value ==''){value='写下你关于这个问题的想法吧'}"
+                        @click.stop=""
               ></textarea>
-              <input type="file" name="file" id="img" class="upload" @change="addImg" ref="inputer"
-                     multiple accept="image/png, image/jpeg, image/gif, image/jpg"/>
-              <label for="img">上传图片</label>
-              <button>提交</button>
-            </form>
-            <ul class="upload-imgs">
-              <li v-for='(value,key) in imgs' v-bind:key="key">
-                <img :src="getObjectURL(value)">
-                <a class="close" @click="delImg(key)">×</a>
-              </li>
-            </ul>
+<!--              <div :onclick="submitReply(item.id)">提交</div>-->
+              <button @click.stop="submitReply(item.id)">提交</button>
+<!-- 图片上传及预览=======开始=========================================================-->
+<!--
+              <el-upload
+                action="http://localhost:8180/imgUpload"
+                list-type="picture-card"
+                accept="image/*"
+                :limit="imgLimit"
+                :file-list="productImgs"
+                :multiple="isMultiple"
+                :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+                :on-exceed="handleExceed"
+                :on-error="imgUploadError">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="dialogImageUrl">
+              </el-dialog>
+                -->
+<!-- 图片上传及预览=====结束===========================================================-->
+            </div>
 <!--    点击回答问题按钮出现-----结束----======================================================-->
 <!--2.回答信息展示----点击“展开”按钮就显示----===========================================================-->
             <ul class="reply_detail" v-if="currentLiIndex.replay === index">
@@ -88,7 +109,10 @@
                     <img class="reply_img" src="../../assets/images/1.jpeg" alt="">
                     <span>{{ item2.createBy }}</span>
                     <span>{{ item2.createTime }}前发布</span>
-                    <svg t="1612612804700" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3030" width="200" height="200"><path d="M277.333333 981.333333a42.666667 42.666667 0 0 1-42.666666-42.666666V405.333333a42.666667 42.666667 0 0 1 85.333333 0v533.333334a42.666667 42.666667 0 0 1-42.666667 42.666666z" fill="#d81e06" p-id="3031" data-spm-anchor-id="a313x.7781069.0.i3" class="selected"></path><path d="M734.933333 981.333333H170.666667a128 128 0 0 1-128-128V490.666667a128 128 0 0 1 128-128h94.933333l27.946667-16.426667A199.68 199.68 0 0 0 391.04 192a164.693333 164.693333 0 1 1 325.546667 47.36L692.053333 362.666667h232.96a85.333333 85.333333 0 0 1 82.133334 108.373333l-107.946667 385.706667a170.666667 170.666667 0 0 1-164.266667 124.586666zM170.666667 448a42.666667 42.666667 0 0 0-42.666667 42.666667v362.666666a42.666667 42.666667 0 0 0 42.666667 42.666667h564.266666a85.333333 85.333333 0 0 0 82.133334-62.293333L925.013333 448H692.053333a85.333333 85.333333 0 0 1-83.626666-101.973333l24.533333-123.093334a79.36 79.36 0 1 0-157.013333-22.613333 285.653333 285.653333 0 0 1-139.093334 219.52l-27.946666 16.426667a85.333333 85.333333 0 0 1-42.666667 11.733333z" fill="#d81e06" p-id="3032" data-spm-anchor-id="a313x.7781069.0.i4" class="selected"></path></svg>
+                    <p class="likeShow" v-if="item2.likeNum>0">{{ item2.likeNum }}</p>
+                    <a @click.stop="hasExisted(item2.id) ? delLikeNum(item2.id) : addLikeNum(item2.id)">
+                      <i id="likeIcon" class="icon iconfont" :class="hasExisted(item2.id) ? 'likeRed' : 'likeNo'">&#xe61e;</i>
+                    </a>
                   </div>
                 </div>
               </li>
@@ -159,12 +183,26 @@ export default {
       currentOffset: 0,
       quesInformation: {},
       quesReply: {},
-      quesComment: {},
       hotQues: {},
       currentLiIndex: [
         { replay: -1 },
-        { comm: -1 }
-      ]
+        { comm: -1 },
+        { writeReplay: -1 }
+      ],
+      // 图片上传
+      dialogImageUrl: '',
+      dialogVisible: false,
+      productImgs: [],
+      isMultiple: true,
+      imgLimit: 3,
+      // 图片上传结束
+      imgUrlStr: '',
+      // 存放点赞后的回答id
+      hasLike: [],
+      QuesDetailURL: 'http://localhost:8080/question_detail'
+    //   onclick="javascript:window.location.href='URL'"
+    //   onclick="location='URL'"
+    //   onclick="window.location.href='URL?id=11'"
     }
   },
   methods: {
@@ -190,9 +228,14 @@ export default {
       this.state = true
     },
     // 回答问题的按钮
-    reply_btn () {
+    reply_btn (id, index) {
+      if (this.currentLiIndex.writeReplay !== index) {
+        this.showReply = false
+      }
+      this.$set(this.currentLiIndex, 'writeReplay', index)
       if (this.showReply) {
         this.showReply = false
+        this.$set(this.currentLiIndex, 'writeReplay', null)
       } else {
         this.showReply = true
       }
@@ -202,61 +245,11 @@ export default {
       this.reply_data = this.reply_data.slice(0, 200)
       alert('请在4行内输入')
     },
-    // 写回答，图片上传及预览-------------开始--------------------------
-    addImg (event) {
-      const inputDOM = this.$refs.inputer
-      // 通过DOM取文件数据
-      this.fil = inputDOM.files
-      // 目前已有的图片的数量
-      const oldLen = this.imgLen
-      // 新的图片数量
-      const len = this.fil.length + oldLen
-      if (len > 4) {
-        alert('最多可上传4张，您还可以上传' + (4 - oldLen) + '张')
-        return false
-      }
-      for (let i = 0; i < this.fil.length; i++) {
-        const size = Math.floor(this.fil[i].size / 1024)
-        if (size > 5 * 1024 * 1024) {
-          alert('请选择5M以内的图片！')
-          return false
-        }
-        this.imgLen++
-        this.$set(this.imgs, this.fil[i].name + '?' + new Date().getTime() + i, this.fil[i])
-      }
-    },
-    getObjectURL (file) {
-      var url = null
-      if (window.createObjectURL !== undefined) { // basic
-        url = window.URL.createObjectURL(file)
-      } else if (window.URL !== undefined) { // mozilla(firefox)
-        url = window.URL.createObjectURL(file)
-      } else if (window.webkitURL !== undefined) { // webkit or chrome
-        url = window.webkitURL.createObjectURL(file)
-      }
-      console.log('url:' + url)
-      return url
-    },
-    delImg (key) {
-      this.$delete(this.imgs, key)
-      this.imgLen--
-    },
-    submit () {
-      for (const key in this.imgs) {
-        const name = key.split('?')[0]
-        this.formData.append('multipartFiles', this.imgs[key], name)
-      }
-      this.$http.post('/opinion/feedback', this.formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }).then(res => {
-        this.alertShow = true
-      })
-    },
-    // 写回答，图片上传及预览-------------结束----------------
     // 回答信息展示--------点击“展开”按钮
     reply_detail (qid, index) {
       // 如果点击的li不是上一个li，就先将showReplyDetail置false，即收起子li，不然还以为是开着的，点的这一下白点，这一下就成收起了。
       if (this.currentLiIndex.replay !== index) {
+        this.quesReply = null
         this.showReplyDetail = false
       }
       this.$set(this.currentLiIndex, 'replay', index)
@@ -264,34 +257,11 @@ export default {
       if (this.showReplyDetail) {
         this.quesReply = null
         this.showReplyDetail = false
+        this.$set(this.currentLiIndex, 'replay', null)
       } else {
         // 在点击“展开”按钮的时候，除了改变回答的显隐状态，也将qid穿进去把数据加载出来
         this.loadQuesReply(qid)
         this.showReplyDetail = true
-      }
-    },
-    comm_detail (rid, index) {
-      // 如果点击的li不是上一个li，就先将showReplyDetail置false，即收起子li，不然还以为是开着的，点的这一下白点，这一下就成收起了。
-      if (this.currentLiIndex.comm !== index) {
-        this.showCommDetail = false
-      }
-      this.$set(this.currentLiIndex, 'comm', index)
-      // showReplyDetail 代表是否展开回答的li，如果已经展开，就置null收起，并把数据quesReply置null
-      if (this.showCommDetail) {
-        this.quesReply = null
-        this.showCommDetail = false
-      } else {
-        // 在点击“展开”按钮的时候，除了改变回答的显隐状态，也将qid穿进去把数据加载出来
-        this.loadQuesComment(rid)
-        this.showCommDetail = true
-      }
-    },
-    // 评论信息展示-------点击“评论”按钮
-    comm_btn () {
-      if (this.showCommDetail) {
-        this.showCommDetail = false
-      } else {
-        this.showCommDetail = true
       }
     },
     // axios----------加载后台数据------------------------
@@ -328,12 +298,12 @@ export default {
         }
       }).catch(error => error)
     },
-    // 加载回答信息，但是无法将问题id传入该函数，异步执行，没有办法及时获取数据============================
+    // 加载回答信息============================
     loadQuesReply (qid) {
       var _this = this
       axios({
         method: 'get',
-        url: 'quesReply/datas/%7Bqid%7D',
+        url: 'quesReply/data/%7Bqid%7D',
         params: {
           qid: qid
         }
@@ -343,59 +313,228 @@ export default {
         }
       }).catch(error => error)
     },
-    loadQuesComment (rid) {
+    // 图片上传及预览--------------------开始----------------------------------------
+    handleRemove (file, fileList) { // 移除图片
+      console.log(file, fileList)
+    },
+    handlePictureCardPreview (file) { // 预览图片时调用
+      console.log(file)
+      this.dialogImageUrl = file.url
+      this.dialogVisible = true
+    },
+    beforeAvatarUpload (file) { // 文件上传之前调用做一些拦截限制
+      console.log(file)
+      const isJPG = true
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        this.$message.error('上传图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    },
+    handleAvatarSuccess (res, file) { // 图片上传成功
+      console.log('this.imgUrlStr:' + this.imgUrlStr)
+      this.imgUrlStr = ';' + res.data
+      console.log('this.imgUrlStr----:' + this.imgUrlStr)
+      this.imageUrl = URL.createObjectURL(file.raw)
+      console.log('imageUrl:' + this.imageUrl)
+    },
+    handleExceed (files, fileList) { // 图片上传超过数量限制
+      this.$message.error('上传图片不能超过3张!')
+      console.log(files, fileList)
+    },
+    imgUploadError (err, file, fileList) { // 图片上传失败调用
+      console.log(err)
+      this.$message.error('上传图片失败!')
+    },
+    // 图片上传及预览----------结束-------------------------
+    // 提交回答
+    submitReply (qid) {
       var _this = this
+      if ((_this.reply_data === '写下你关于这个问题的想法吧') || (_this.reply_data.trim() === '')) {
+        alert('您还没有给出任何建议呢！')
+        return
+      }
+      var jsonData = {
+        content: _this.reply_data,
+        createBy: 0, // 当前用户id
+        qid: qid,
+        createTime: null,
+        id: null
+      }
+      axios({
+        method: 'post',
+        url: 'quesReply',
+        data: jsonData
+      }).then(resp => {
+        if (resp.data.code !== 200) {
+          alert('出现了一点小问题，请重新给出建议！')
+        }
+      }).catch(error => error)
+      this.reply_data = ''
+    },
+    // 点赞
+    // 初始化点赞信息
+    initLike (uid) {
+      var _this = this
+      // 根据当前用户id查询他所有的点赞评论id，并将他的点赞评论id存放到hasLike
       axios({
         method: 'get',
-        url: 'quesComment/datas/%7Brid%7D',
+        url: 'quesLike/rid/%7Buid%7D',
         params: {
-          rid: rid
+          uid: 111
         }
       }).then(resp => {
         if (resp.data.code === 200) {
-          _this.quesComment = resp.data.data
+          _this.hasLike = resp.data.data
         }
       }).catch(error => error)
     },
-    // 统一处理axios请求========================最后将axios请求进行封装，简化代码，待完成====================
-    async getAxiosData (method, url) {
-      return new Promise((resolve, reject) => {
-        axios({
-          method: method,
-          url: url
-        }).then((res) => {
-          resolve(res)
-        }).catch((err) => {
-          reject(err)
-        })
-      })
+    // 将回答id作为参数传入，判断当前回答id是否在该数组中
+    hasExisted (rid) {
+      var set = new Set(this.hasLike)
+      if (set.has(rid)) {
+        console.log('存在')
+        return true
+      } else {
+        console.log('没有')
+        return false
+      }
     },
-    async loadQuesSort1 () {
-      this.quesSort = (await this.getHistoryData()).data.data
+    // 新增点赞，将当前回答id存进数组,并调用后台方法，存入当前回答的用户点赞记录
+    addLikeNum (rid) {
+      console.log('变红===================')
+      document.getElementById('likeIcon').className = 'icon iconfont likeRed'
+      this.hasLike.push(rid)
+      console.log('新增后的this.hasLike:' + this.hasLike)
+      axios({
+        method: 'post',
+        url: 'quesLike',
+        data: {
+          createTime: '',
+          id: null,
+          qid: null,
+          rid: rid,
+          uid: 111
+        }
+      }).then(resp => {
+        if (resp.data.code !== 200) {
+          alert('没点上，重新支持一下吧！')
+        }
+      }).catch(error => error)
+    },
+    delLikeNum (rid) {
+      console.log('变灰----------------------')
+      document.getElementById('likeIcon').className = 'icon iconfont likeNo'
+      this.hasLike.pop(rid)
+      console.log('删除后的this.hasLike:' + this.hasLike)
+      axios({
+        method: 'post',
+        url: 'quesLike/delQuesLike',
+        data: {
+          createTime: '',
+          id: null,
+          qid: null,
+          rid: rid,
+          uid: 111
+        }
+      }).then(resp => {
+        if (resp.data.code !== 200) {
+          alert('没点上！')
+        }
+      }).catch(error => error)
+    },
+    // 路由跳转
+    toQuesDetail (qid) {
+      localStorage.setItem('qid', JSON.stringify(qid))
+      this.$router.push({
+        path: '/question_detail/' + qid
+      })
     }
   },
   mounted: function () {
     this.loadHotQues()
     this.loadQuesSort()
     this.loadQuesInformation()
-    // this.loadQuesReply()
-  },
-  watch: {
-    type: {
-      handler: function () {
-      }
-    }
-  },
-  async created () {
+    this.initLike()
   }
 }
 </script>
 <style>
-.reply_detail li{
-  /*visibility: hidden;*/
+/*回答点赞*/
+.reply_detail .det_show .likeRed{
+  color: red;
+}
+.reply_detail .det_show .likeNo{
+  color: #555;
 }
 .reply_detail .showReplyDetailCla{
   visibility: visible;
   background-color: #00ffff;
+}
+/*------图片预览-------*/
+.gallery-window-map{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 10px;
+}
+.house-pic-item {
+  position: relative;
+  display: inline-block;
+  margin-right: 13px;
+  width: 120px;
+  height: 90px;
+  background-color: #e3e3e3;
+}
+.pic-box {
+  width: 100%;
+  text-align: center;
+}
+.icon-zengjia {
+  position: relative;
+  top: 12px;
+  font-size: 26px;
+  color: #b2b2b2;
+}
+.btn-tit {
+  height: 38px;
+  line-height: 38px;
+  font-size: 12px;
+  color: #999;
+}
+.mask {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(34, 34, 34, 0.6);
+}
+.font-btn {
+  display: inline-block;
+  height: 40px;
+  width: 50%;
+  padding: 0 20px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.font-btn:last-child {
+  position: relative;
+}
+.icon-fangda,
+.icon-shanchu {
+  font-size: 22px;
+  color: #fff;
+}
+.line {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 1px;
+  height: 20px;
+  background: #fff;
 }
 </style>
