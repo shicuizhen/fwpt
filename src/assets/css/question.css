@@ -433,7 +433,11 @@
     margin-top: 10px;
 }
 .right .hot_ques li{
+    position: relative;
     padding-top: 20px;
+}
+.hot_ques li a{
+    display: inline-block;
 }
 .hot_ques span{
     font-family: "YouYuan";
