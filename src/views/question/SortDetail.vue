@@ -65,21 +65,6 @@ export default {
     QuesShow
   },
   methods: {
-    // loadQuesInformation (sid) {
-    //   console.log('sid:' + sid)
-    //   var _this = this
-    //   axios({
-    //     method: 'get',
-    //     url: 'quesInformation/sort/%7Bsid%7D',
-    //     params: {
-    //       sid: sid
-    //     }
-    //   }).then(resp => {
-    //     if (resp.data.code === 200) {
-    //       _this.quesInformation = resp.data.data
-    //     }
-    //   }).catch(error => error)
-    // },
     // axios----------加载后台数据------------------------
     loadHotQues () {
       var _this = this
@@ -123,7 +108,6 @@ export default {
     this.sid = JSON.parse(localStorage.getItem('sid'))
   },
   mounted: function () {
-    // this.loadQuesInformation(this.sid)
     this.loadQuesSort()
     this.loadHotQues()
   }

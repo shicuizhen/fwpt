@@ -82,7 +82,8 @@
         <div class="all_sort">
           <h3>所有分类</h3>
           <ul>
-            <li v-for = "(item, index) in quesSort" v-bind:key="item.name">
+            <li @click="toSortDetail(item.id)"
+                v-for = "(item, index) in quesSort" v-bind:key="item.name">
               <a href="" id="get_icon">
                 <i v-if="index == 0" class="el-icon-reading"></i>
                 <i v-if="index == 1" class="el-icon-magic-stick"></i>
@@ -295,12 +296,17 @@ export default {
       this.$router.push({
         path: '/question_detail/' + qid
       })
+    },
+    toSortDetail (sid) {
+      localStorage.setItem('sid', JSON.stringify(sid))
+      this.$router.push({
+        path: '/sort_detail/' + sid
+      })
     }
   },
   created () {
     this.qid = this.$route.query.qid
     this.qid = JSON.parse(localStorage.getItem('qid'))
-    // localStorage.setItem('qid', null)
   },
   mounted: function () {
     this.loadHotQues()

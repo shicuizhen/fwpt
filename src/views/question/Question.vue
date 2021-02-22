@@ -115,6 +115,15 @@ export default {
       }
       this.currentOffset = this.currentOffset - 1
     },
+    // 选择分类下拉框
+    icon_down () {
+      this.downState = true
+      this.state = false
+    },
+    icon_up () {
+      this.downState = false
+      this.state = true
+    },
     // axios----------加载后台数据------------------------
     loadHotQues () {
       var _this = this

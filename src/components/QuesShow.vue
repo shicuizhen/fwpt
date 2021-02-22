@@ -120,15 +120,6 @@ export default {
     }
   },
   methods: {
-    // 选择分类下拉框
-    icon_down () {
-      this.downState = true
-      this.state = false
-    },
-    icon_up () {
-      this.downState = false
-      this.state = true
-    },
     // 回答问题的按钮
     reply_btn (id, index) {
       if (this.currentLiIndex.writeReplay !== index) {
@@ -342,7 +333,7 @@ export default {
       }).then(resp => {
         if (resp.data.code === 401) {
           alert('目前该分类下无问题')
-          this.$router.go(-1)
+          this.$router.back()
         } else if (resp.data.code === 200) {
           _this.quesInformation = resp.data.data
         }
@@ -354,8 +345,6 @@ export default {
     this.sid = JSON.parse(localStorage.getItem('sid'))
   },
   mounted: function () {
-    console.log('============sid')
-    console.log(this.sid)
     if (this.sid !== null) {
       this.loadQuesInformationBySid(this.sid)
     } else {
