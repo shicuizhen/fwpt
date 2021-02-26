@@ -2,7 +2,7 @@
   <div class="lost center">
     <div style="height: 18px;background-color:#fff;"></div>
     <div class="lunbo" >
-      <a href="http://localhost:8080/lost_publish">发布信息</a>
+      <a href="/lost_publish">发布信息</a>
       <svg t="1613185669871" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4561" width="200" height="200"><path d="M260.7 431.1h60.4v258.2h-60.4zM634.3 795.5l-190.9-88.4c-8.1-3.7-13.2-11.5-13.2-19.9V442.4c0-8.5 5.1-16.2 13.2-19.9l190.9-88.4c15.6-7.2 33.9 3.5 33.9 19.9v421.5c0 16.5-18.3 27.2-33.9 20z" fill="#25B195" p-id="4562"></path><path d="M290.5 709.4h-50.3c-26.6 0-48.2-21.6-48.2-48.2V407.8c0-26.6 21.6-48.2 48.2-48.2h50.3c26.6 0 48.2 21.6 48.2 48.2v253.4c-0.1 26.6-21.7 48.2-48.2 48.2z m-50.4-317.7c-8.9 0-16.1 7.2-16.1 16.1v253.4c0 8.9 7.2 16.1 16.1 16.1h50.3c8.9 0 16.1-7.2 16.1-16.1V407.8c0-8.9-7.2-16.1-16.1-16.1h-50.3zM644 815c-7.1 0-14.2-1.4-20.8-4.1l-236.8-98.6c-17.7-7.4-29.1-23.6-29.1-41.3V398.1c0-17.8 11.4-34 29.1-41.3l236.8-98.6c16.5-6.9 35.7-5.1 50.3 4.7 12.9 8.6 20.3 22 20.3 36.6v470.1c0 14.7-7.4 28-20.3 36.6-8.7 5.8-19.1 8.8-29.5 8.8z m0-519.6c-1.6 0-3.2 0.3-4.9 1L402.3 395c-2.7 1.1-3.6 2.7-3.6 3.1V671c0 0.4 0.9 2 3.6 3.1l236.8 98.6c4.3 1.8 8.9 0.8 11.5-0.9 0.9-0.6 1.9-1.6 1.9-2.2V299.5c0-0.7-1-1.6-1.9-2.2-1.6-1.1-4-1.9-6.6-1.9zM718.4 517h149.1v41.9H718.4zM725.412 383.092L830.84 277.663l29.628 29.628L755.039 412.72zM755.047 663.173l105.429 105.429-29.628 29.628L725.42 692.8z" fill="#595857" p-id="4563"></path></svg>
       <h3>
         最新播报：
@@ -114,10 +114,10 @@
           <svg t="1613353417192" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="17018" width="200" height="200"><path d="M553 222.3v-32c0-28-16.7-48-40-48-20 0-40 20-40 48v32" fill="#f4ea2a" p-id="17019" data-spm-anchor-id="a313x.7781069.0.i26" class="selected"></path><path d="M563 222.3h-20v-32c0-22.4-12.3-38-30-38s-30 20-30 38v32h-20v-32c0-15.6 5.3-30.2 15-41.1 9.5-10.7 22.2-16.9 35-16.9 29 0 50 24.4 50 58v32z" fill="#6D5346" p-id="17020"></path><path d="M473 402.3v60" fill="#FFF061" p-id="17021"></path><path d="M463 402.3h20v60h-20z" fill="#6D5346" p-id="17022"></path><path d="M553 462.3v-60" fill="#FFF061" p-id="17023"></path><path d="M543 402.3h20v60h-20z" fill="#6D5346" p-id="17024"></path><path d="M473 389.6v492.7h80V389.6" fill="#f4ea2a" p-id="17025" data-spm-anchor-id="a313x.7781069.0.i24" class="selected"></path><path d="M563 892.3H463V389.6h20v482.7h60V389.6h20z" fill="#6D5346" p-id="17026"></path><path d="M771.7 402.3H213l32.5-90.9-32.5-89.1h558.7L893 311.4z" fill="#d81e06" p-id="17027" data-spm-anchor-id="a313x.7781069.0.i22" class=""></path><path d="M775 412.3H198.8l36-100.9-36.1-99.1H775l134.8 99-134.8 101z m-547.8-20h541.2l107.9-80.9-107.8-79.1H227.3l28.8 79-28.9 81z" fill="#6D5346" p-id="17028"></path><path d="M254.3 462.3H813l-32.5 80 32.5 80H254.3l-121.3-80z" fill="#d81e06" p-id="17029" data-spm-anchor-id="a313x.7781069.0.i23" class=""></path><path d="M827.8 632.3H251.3l-136.5-90 136.5-90h576.5l-36.5 90 36.5 90z m-570.5-20h540.8l-28.4-70 28.4-70H257.3l-106.1 70 106.1 70z" fill="#6D5346" p-id="17030"></path></svg>
           <h3>寻物启事</h3>
           <h4>{{ item.createBy }}丢失了{{ item.description }}</h4>
-          <p>类型：证件类-银行卡</p>
-          <p>时间：2020年10月23日</p>
-          <p>地点：尚学楼301教室</p>
-          <p>联系方式：张三</p>
+          <p>类型：{{ item.kindId }}-{{ item.name }}</p>
+          <p>时间：{{ item.lostTime }}</p>
+          <p>地点：{{ item.placeId }}</p>
+          <p>联系方式：{{ item.telephone }}</p>
         </li>
         <div style="clear: both"></div>
       </ul>
@@ -132,11 +132,7 @@ export default {
   data: function () {
     return {
       lostInformation: {},
-      socketPush: [
-        { data: '全球新冠肺炎确诊病例超，死亡人数破<span>2万</span>！' },
-        { data: '222222222222222222222222222222' },
-        { data: '333333333333333333333333' }
-      ]
+      socketPush: []
     }
   },
   // 页面加载时触发的函数
@@ -146,6 +142,8 @@ export default {
       this.runMarquee()
     }, 3000)
     this.loadLostInformation()
+    // 加载轮播滚动中的数据
+    this.loadlunboData()
   },
   methods: {
     loadLostInformation () {
@@ -175,6 +173,19 @@ export default {
         // marquee.style.transform = 'translateX(' + disx + 'px)'
         marquee.style.left = disx + 'px'
       }, 30) // 滚动速度
+    },
+    loadlunboData () {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'lostInformation/lunbodata'
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          _this.socketPush = resp.data.data
+          console.log('_this.socketPush:')
+          console.log(_this.socketPush)
+        }
+      }).catch(error => error)
     }
   }
 }

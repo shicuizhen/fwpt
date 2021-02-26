@@ -7,6 +7,9 @@ import Question from '../views/question/Question'
 import QuestionDetail from '../views/question/QuestionDetail'
 import LostPublish from '@/views/lost/LostPublish'
 import SortDetail from '@/views/question/SortDetail'
+import QuesPublish from '@/views/question/QuesPublish'
+import Login from '@/views/login/Login'
+import Register from '@/views/register/Register'
 
 Vue.use(VueRouter)
 
@@ -15,6 +18,16 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
   },
   {
     path: '/home',
@@ -50,6 +63,11 @@ const routes = [
     path: '/lost_publish',
     name: 'LostPublish',
     component: LostPublish
+  },
+  {
+    path: '/ques_publish',
+    name: 'QuesPublish',
+    component: QuesPublish
   }
 ]
 

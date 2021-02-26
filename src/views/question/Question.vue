@@ -1,7 +1,7 @@
 <template>
   <div class="question">
     <div class="top">
-      <a href="">我要提问</a>
+      <a href="http://localhost:8080/ques_publish">我要提问</a>
       <div class="sort_lbt center">
         <ul class="sort" :style="{transform:'translateX('+currentOffset*226+'px)'}">
           <li v-for = "(item) in quesSort" v-bind:key="item.name">
