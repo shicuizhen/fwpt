@@ -47,17 +47,17 @@
             <li @click="toSortDetail(item.id)"
               v-for = "(item, index) in quesSort" v-bind:key="item.name">
               <a href="" id="get_icon">
-                <i v-if="index == 0" class="el-icon-reading"></i>
-                <i v-if="index == 1" class="el-icon-magic-stick"></i>
-                <i v-if="index == 2" class="el-icon-office-building"></i>
-                <i v-if="index == 3" class="el-icon-present"></i>
-                <i v-if="index == 4" class="el-icon-camera"></i>
-                <i v-if="index == 5" class="el-icon-table-lamp"></i>
-                <i v-if="index == 6" class="el-icon-office-building"></i>
-                <i v-if="index == 7" class="el-icon-position"></i>
-                <i v-if="index == 8" class="el-icon-ship"></i>
-                <i v-if="index == 9" class="el-icon-sunrise"></i>
-                <i v-if="index == 10" class="el-icon-lollipop"></i>
+                <i v-if="index === 0" class="el-icon-reading"></i>
+                <i v-if="index === 1" class="el-icon-magic-stick"></i>
+                <i v-if="index === 2" class="el-icon-office-building"></i>
+                <i v-if="index === 3" class="el-icon-present"></i>
+                <i v-if="index === 4" class="el-icon-camera"></i>
+                <i v-if="index === 5" class="el-icon-table-lamp"></i>
+                <i v-if="index === 6" class="el-icon-office-building"></i>
+                <i v-if="index === 7" class="el-icon-position"></i>
+                <i v-if="index === 8" class="el-icon-ship"></i>
+                <i v-if="index === 9" class="el-icon-sunrise"></i>
+                <i v-if="index === 10" class="el-icon-lollipop"></i>
                 <p>{{ item.name }}</p>
                 <i class="el-icon-right"></i>
               </a>

@@ -10,13 +10,13 @@ import Nav from './components/Nav'
 import Bottom from '@/components/Bottom'
 export default {
   name: 'App',
-  components: {
-    Nav,
-    Bottom
-  },
   data: function () {
     return {
     }
+  },
+  components: {
+    Nav,
+    Bottom
   },
   methods: {
   }

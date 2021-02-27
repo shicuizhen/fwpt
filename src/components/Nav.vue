@@ -11,8 +11,22 @@
       </ul>
       <a href="">后台管理</a>
       <div class="xlk_content">
-        <a href="" >登录</a>
-        <ul class="xlk">
+        <a v-if="uid === null" href="/login">登录</a>
+        <a v-if="uid" style="
+           width: 23px;
+           height: 23px;display: inline;
+           position: absolute;
+           right: 40px;
+           top: 18px;">
+          <img src="../assets/images/1.jpeg" alt="" style="
+           width: 23px;
+           height: 23px;
+           display: inline-block;
+           position: absolute;
+           right: 0px;
+           top: 0px;border-radius: 50%">
+        </a>
+        <ul class="xlk" v-if="uid">
           <span class="el-icon-caret-top" aria-hidden="true"></span>
           <li>
             <i class="el-icon-user" aria-hidden="true"></i>
@@ -39,7 +53,32 @@
 
 <script>
 export default {
-  name: 'Nav'
+  name: 'Nav',
+  data () {
+    return {
+      login: '登录',
+      uid: null
+    }
+  },
+  methods: {
+    loadUid () {
+      console.log('-----id:' + this.uid)
+      this.uid = localStorage.getItem('id')
+      console.log('id:' + this.uid)
+    }
+  },
+  // mounted: function () {
+  //   this.loadUid()
+  // }
+  watch: {
+    'localStorage.id' () {
+      console.log('内存发生变化:')
+      console.log(localStorage.getItem('id'))
+    }
+  },
+  created () {
+    this.loadUid()
+  }
 }
 </script>
 
@@ -102,6 +141,11 @@ export default {
   font-size: 14px;
 }
 /*登录按钮，个人中心按钮*/
+.nav_cen .xlk_content{
+  //width: 100%;
+  //height: 100%;
+  position: relative;
+}
 .nav_cen .xlk_content>a{
   position: absolute;
   right: 36px;
@@ -110,17 +154,17 @@ export default {
 }
 /*公共部分---下拉框开始*/
 .xlk_content>a{
-  position: absolute;
-  right: 0;
-  top: 0;
+  //position: absolute;
+  //right: 0;
+  //top: 0;
   line-height: 56px;
   font-size: 14px;
 }
 .nav .xlk{
   display: none;
   position: absolute;
-  top: 46px;
-  right: 10px;
+  top: 50px;
+  right: 11px;
   background-color: #242424;
   width: 82px;
 }
@@ -135,7 +179,8 @@ export default {
   -webkit-transition: 1s all;
 }
 .xlk li:hover{
-  background-color: #525252;
+  //background-color: #525252;
+  background-color: red;
 }
 .xlk li i{
   color: #fff;

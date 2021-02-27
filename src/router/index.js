@@ -14,11 +14,11 @@ import Register from '@/views/register/Register'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
+  // {
+  //   path: '/',
+  //   name: 'Vue',
+  //   component: Vue
+  // },
   {
     path: '/login',
     name: 'Login',
@@ -79,7 +79,7 @@ const router = new VueRouter({
 
 export default router
 
-const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+// const originalPush = VueRouter.prototype.push
+// VueRouter.prototype.push = function push (location) {
+//   return originalPush.call(this, location).catch(err => err)
+// }

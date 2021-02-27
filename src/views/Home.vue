@@ -12,6 +12,7 @@ export default {
   name: 'Home',
   data: function () {
     return {
+      refresh: 1,
       images: [
         { img: require('../assets/images/1.jpeg') },
         { img: require('../assets/images/2.jpeg') },
@@ -28,6 +29,10 @@ export default {
     height: 512px;
     background-color: #8DD6E0;
   }
+  .home .el-carousel--horizontal {
+    overflow-x: hidden;
+    overflow: hidden;
+  }
   .el-carousel__container{
     height: 512px;
   }
@@ -43,9 +48,6 @@ export default {
   }
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
-  }
-  .home .el-carousel--horizontal {
-    overflow-x: visible;
   }
   .home .el-carousel__indicators--outside {
     position: absolute;

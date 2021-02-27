@@ -116,7 +116,7 @@
     font-size: 12px;
     font-weight: bold;
 }
-.xlk{
+.question .xlk{
     background-color: #F5F5F5;
     position: absolute;
     top: 38px;
@@ -124,17 +124,19 @@
     width: 90px;
     z-index: 100;
 }
-.xlk li{
+.question .xlk li{
     text-align: center;
     border: 1px solid #C6C6C6;
     color: #101010;
     line-height: 32px;
     font-size: 12px;
     cursor: pointer;
+    -webkit-transition: 1s all;
 }
-.xlk li:hover{
-    background-color: #F9F9F9;
-    font-weight: bold;
+.question .xlk li:hover{
+    background-color: #DEDEDE;
+    /*background-color: #F9F9F9;*/
+    /*font-weight: bold;*/
 }
 /*搜索框*/
 .left>input{
@@ -438,11 +440,13 @@
 }
 .hot_ques li a{
     display: inline-block;
+    width: 100%;
 }
 .hot_ques span{
     font-family: "YouYuan";
 }
 .hot_ques p{
+    /*display: inline-block;*/
     width: 96%;
     letter-spacing: 2px;
     white-space: nowrap;
