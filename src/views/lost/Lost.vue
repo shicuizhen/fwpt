@@ -9,13 +9,14 @@
       </h3>
       <div class="marquee-box">
         <ul class="marquee-ul" id="marquee-ul" v-if="socketPush">
-          <li class="marquee-list" v-for='(value,key) in socketPush' v-bind:key="key" v-html="value.data" :id="key==2?'marquee':''"></li>
+          <li class="marquee-list" v-for='(value,key) in socketPush' v-bind:key="key" v-html="value" :id="key==2?'marquee':''"></li>
         </ul>
       </div>
     </div>
     <div class="search">
       <div class="key-search">
         <input type="text" value="搜索" onfocus="if (value == '搜索'){value =''}" onblur="if (value ==''){value='搜索'}">
+        <p @click="search()" class="search_but">搜索</p>
         <p>热门搜索：</p>
         <ul>
           <li><a href="">身份证</a></li>
@@ -72,10 +73,12 @@
         <div class="key">查询类型</div>
         <ul class="value">
           <li>
-            <a>寻物信息</a>
+            <a :class="this.searchBy['1'] == '0' ? 'red' : ''"
+               @click="addSearchBy(1,0)">寻物信息</a>
           </li>
           <li>
-            <a>招领信息</a>
+            <a :class="this.searchBy['1'] == '1' ? 'red' : ''"
+               @click="addSearchBy(1,1)">招领信息</a>
           </li>
         </ul>
         <div style="clear: both"></div>
@@ -83,23 +86,27 @@
       <div class="row">
         <div class="key">物品类型</div>
         <ul class="value">
-          <li><a>银行卡</a></li>
+          <li v-for="kind in kindIds" v-bind:key="kind.id">
+            <a :class="hasSelected(2, kind.id) ? 'red' : ''"
+              @click="addSearchBy(2, kind.id)">{{ kind.name }}</a>
+          </li>
         </ul>
         <div style="clear: both"></div>
       </div>
       <div class="row">
         <div class="key">地点</div>
         <ul class="value">
-          <li><a>操场</a></li>
-          <li><a>教学楼</a></li>
+          <li v-for="place in placeIds" v-bind:key="place.id">
+            <a :class="hasSelected(3, place.id) ? 'red' : ''" @click="addSearchBy(3,place.id)">{{ place.name }}</a>
+          </li>
         </ul>
         <div style="clear: both"></div>
       </div>
       <div class="row">
         <div class="key">时间</div>
         <ul class="value">
-          <input type="date" value="2021-01-01"/>&nbsp;至
-          <input type="date" value="2021-01-01"/>
+          <input type="date" value="2021-01-01" v-model="time1"/>&nbsp;至
+          <input type="date" value="2021-01-01" v-model="time2"/>
         </ul>
         <div style="clear: left"></div>
       </div>
@@ -112,8 +119,9 @@
       <ul class="card">
         <li v-for = "(item) in lostInformation" v-bind:key="item.id">
           <svg t="1613353417192" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="17018" width="200" height="200"><path d="M553 222.3v-32c0-28-16.7-48-40-48-20 0-40 20-40 48v32" fill="#f4ea2a" p-id="17019" data-spm-anchor-id="a313x.7781069.0.i26" class="selected"></path><path d="M563 222.3h-20v-32c0-22.4-12.3-38-30-38s-30 20-30 38v32h-20v-32c0-15.6 5.3-30.2 15-41.1 9.5-10.7 22.2-16.9 35-16.9 29 0 50 24.4 50 58v32z" fill="#6D5346" p-id="17020"></path><path d="M473 402.3v60" fill="#FFF061" p-id="17021"></path><path d="M463 402.3h20v60h-20z" fill="#6D5346" p-id="17022"></path><path d="M553 462.3v-60" fill="#FFF061" p-id="17023"></path><path d="M543 402.3h20v60h-20z" fill="#6D5346" p-id="17024"></path><path d="M473 389.6v492.7h80V389.6" fill="#f4ea2a" p-id="17025" data-spm-anchor-id="a313x.7781069.0.i24" class="selected"></path><path d="M563 892.3H463V389.6h20v482.7h60V389.6h20z" fill="#6D5346" p-id="17026"></path><path d="M771.7 402.3H213l32.5-90.9-32.5-89.1h558.7L893 311.4z" fill="#d81e06" p-id="17027" data-spm-anchor-id="a313x.7781069.0.i22" class=""></path><path d="M775 412.3H198.8l36-100.9-36.1-99.1H775l134.8 99-134.8 101z m-547.8-20h541.2l107.9-80.9-107.8-79.1H227.3l28.8 79-28.9 81z" fill="#6D5346" p-id="17028"></path><path d="M254.3 462.3H813l-32.5 80 32.5 80H254.3l-121.3-80z" fill="#d81e06" p-id="17029" data-spm-anchor-id="a313x.7781069.0.i23" class=""></path><path d="M827.8 632.3H251.3l-136.5-90 136.5-90h576.5l-36.5 90 36.5 90z m-570.5-20h540.8l-28.4-70 28.4-70H257.3l-106.1 70 106.1 70z" fill="#6D5346" p-id="17030"></path></svg>
-          <h3>寻物启事</h3>
-          <h4>{{ item.createBy }}丢失了{{ item.description }}</h4>
+          <h3>{{ item.type2 }}</h3>
+          <h4>{{ item.createBy }}{{ item.type1 }}{{ item.name }}</h4>
+          <p>描述：{{ item.description }}</p>
           <p>类型：{{ item.kindId }}-{{ item.name }}</p>
           <p>时间：{{ item.lostTime }}</p>
           <p>地点：{{ item.placeId }}</p>
@@ -131,26 +139,76 @@ export default {
   name: 'Lost',
   data: function () {
     return {
+      time1: null,
+      time2: null,
       lostInformation: {},
-      socketPush: []
+      socketPush: [],
+      kindIds: {},
+      placeIds: {},
+      searchBy: {
+        1: null,
+        2: null,
+        3: null
+      }
     }
   },
-  // 页面加载时触发的函数
-  mounted: function () {
-    // 延时滚动
-    setTimeout(() => {
-      this.runMarquee()
-    }, 3000)
-    this.loadLostInformation()
-    // 加载轮播滚动中的数据
-    this.loadlunboData()
-  },
   methods: {
+    addSearchBy (type, value) {
+      if (this.searchBy[type] !== null) {
+        // 不为空，就说明已经有选中的，判断当前选中的value和已经存在的是不是一样，
+        if (this.searchBy[type] !== value) {
+          // 如果不同就重新赋值
+          this.$set(this.searchBy, type, value)
+        } else {
+          // 如果相同，就置为null，
+          this.$set(this.searchBy, type, null)
+        }
+      } else {
+        // 当前条件还没有选，赋初值
+        this.$set(this.searchBy, type, value)
+      }
+    },
+    hasSelected (key, value) {
+      if (this.searchBy[key] !== null && this.searchBy[key] === value) {
+        return true
+      } else {
+        return false
+      }
+    },
+    search () {
+      axios({
+        method: 'post',
+        url: 'lostInformation/getSearch',
+        data: {
+          id: 0,
+          type: this.searchBy[1],
+          kind_id: this.searchBy[2],
+          place_id: this.searchBy[3],
+          lost_time1: this.time1,
+          lost_time2: this.time2,
+          pageNo: 5,
+          pageSize: 5
+        }
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          console.log('=======================')
+          console.log(resp.data.data)
+          // _this.lostInformation = resp.data.data
+          this.searchBy = {
+            1: null,
+            2: null,
+            3: null
+          }
+          this.time1 = null
+          this.time2 = null
+        }
+      }).catch(error => error)
+    },
     loadLostInformation () {
       var _this = this
       axios({
         method: 'get',
-        url: 'http://localhost:8180/lostInformation/datas'
+        url: 'lostInformation/datas'
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.lostInformation = resp.data.data
@@ -182,11 +240,63 @@ export default {
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.socketPush = resp.data.data
-          console.log('_this.socketPush:')
-          console.log(_this.socketPush)
+        }
+      }).catch(error => error)
+    },
+    loadKindId () {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'lostKind/datas'
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          _this.kindIds = resp.data.data
+        }
+      }).catch(error => error)
+    },
+    loadPlaceId () {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'lostPlace/datas'
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          _this.placeIds = resp.data.data
         }
       }).catch(error => error)
     }
+  },
+  // 页面加载时触发的函数
+  mounted: function () {
+    // 延时滚动
+    setTimeout(() => {
+      this.runMarquee()
+    }, 3000)
+    this.loadLostInformation()
+    // 加载轮播滚动中的数据
+    this.loadlunboData()
+    // 加载搜索数据
+    this.loadKindId()
+    this.loadPlaceId()
   }
 }
 </script>
+<style>
+.row .value .red{
+  color: #D81E06;
+}
+.row .value .blue{
+  color: blue;
+}
+.search_but{
+  border: 1px solid #767676;
+  padding: 0px 5px;
+  color: #fff;
+  background-color: #000000;
+}
+.search_but:hover{
+  color: #000;
+  background-color: #F1F1F1;
+  border: 1px solid #767676;
+}
+</style>

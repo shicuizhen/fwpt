@@ -197,6 +197,7 @@
 }
 .row .value a:hover{
     color: #42BB85;
+    /*color: #95C4FF;*/
     cursor: pointer;
 }
 .row .value{

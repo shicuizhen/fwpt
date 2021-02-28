@@ -74,9 +74,10 @@ export default {
         if (resp.data.code === 200) {
           // 用户登录完成，进行页面跳转
           localStorage.setItem('id', resp.data.data)
-          const redirect = decodeURIComponent(this.$route.query.redirect || '/home')
-          this.$router.push({ path: redirect })
-          location.reload()
+          // const redirect = decodeURIComponent(this.$route.query.redirect || '/home')
+          // this.$router.push({ path: redirect })
+          this.$router.go(-1)
+          // location.reload()
           this.formData = {
             sno: '',
             password: ''

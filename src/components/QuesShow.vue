@@ -259,9 +259,31 @@ export default {
         return false
       }
     },
+    // 自定义弹框
+    openAlert () {
+      this.$confirm('您还没有登录，请登录', '提示', {
+        confirmButtonText: '好的',
+        cancelButtonText: '稍等',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '请填写学号信息，进行登录!',
+          beforeClose: this.$router.push({ path: '/login' })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '记得登录哦!'
+        })
+      })
+    },
     // 新增点赞，将当前回答id存进数组,并调用后台方法，存入当前回答的用户点赞记录
     addLikeNum (rid) {
-      console.log('变红===================')
+      if (localStorage.getItem('id') == null) {
+        this.openAlert()
+        return
+      }
       document.getElementById('likeIcon').className = 'icon iconfont likeRed'
       this.hasLike.push(rid)
       console.log('新增后的this.hasLike:' + this.hasLike)
@@ -282,7 +304,10 @@ export default {
       }).catch(error => error)
     },
     delLikeNum (rid) {
-      console.log('变灰----------------------')
+      if (localStorage.getItem('id') == null) {
+        this.openAlert()
+        return
+      }
       document.getElementById('likeIcon').className = 'icon iconfont likeNo'
       this.hasLike.pop(rid)
       console.log('删除后的this.hasLike:' + this.hasLike)

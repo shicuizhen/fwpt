@@ -159,10 +159,7 @@ export default {
           beforeClose: this.$router.push({ path: '/login' })
         })
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '记得登录哦!'
-        })
+        this.$router.go(-1)
       })
     },
     loadQuesInformation (qid) {
@@ -333,6 +330,9 @@ export default {
     }
   },
   created () {
+    if (localStorage.getItem('id') == null) {
+      this.openAlert()
+    }
     this.qid = this.$route.query.qid
     this.qid = JSON.parse(localStorage.getItem('qid'))
   },

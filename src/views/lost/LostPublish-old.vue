@@ -12,56 +12,63 @@
         </ul>
       </div>
     </div>
+    <form action="">
+      <h3>发布信息</h3><br/>
+      <div>
+        <label for="xun">信息类型:</label>
 
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-      <h3>发布信息</h3>
-      <el-form-item class="form_type" label="信息类型" prop="type">
-        <el-radio-group v-model="form.type">
-          <el-radio label="1">招领启事</el-radio>
-          <el-radio label="2">寻物启事</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="物品种类" prop="kindId">
-        <el-select v-model="form.kindId" placeholder="请选择物品种类">
-          <el-option :label=item.name :value=item.id v-for="item in kind_ids" v-bind:key="item.id"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="物品名称" prop="name">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="丢失时间" prop="lostTime">
-        <el-col :span="11">
-          <el-form-item>
-            <el-date-picker type="date" placeholder="选择日期" v-model="form.lostTime" style="width: 100%;"></el-date-picker>
-          </el-form-item>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="丢失地点" prop="palceId">
-        <el-select v-model="form.palceId" placeholder="请选择地点">
-          <el-option :label=item.name :value=item.id v-for="item in place_ids" v-bind:key="item.id"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="具体位置" prop="position">
-        <el-input v-model="form.position"></el-input>
-      </el-form-item>
-      <el-form-item label="详细描述" prop="description">
-        <el-input type="textarea" v-model="form.description"></el-input>
-      </el-form-item>
-      <el-form-item label="联系人" prop="username">
-        <el-input v-model="form.username"></el-input>
-      </el-form-item>
-      <el-form-item label="手机号码" prop="telephone">
-        <el-input type="tel" v-model="form.telephone"></el-input>
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input type="email" v-model="form.email"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('form')">提交</el-button>
-        <el-button @click="resetForm('form')">重置</el-button>
-      </el-form-item>
-    </el-form>
+        <label for="xun" v-bind:type="0">寻物启事</label>
+        <input v-model="formData.type" :value="0" name="kind" id="xun" type="radio">
 
+        <label for="zhao" v-bind:type="1">招领启事</label>
+        <input v-model="formData.type" :value="1" name="kind" id="zhao" type="radio">
+        <br/>
+      </div>
+      <div>
+        <label for="kind_id">物品种类：</label>
+        <select v-model="formData.kindId" name="kind_id" id="kind_id">
+          <option v-for="item in kind_ids" :key="item.id" :value="item.id">{{item.name}}</option>
+        </select>
+      </div>
+      <div>
+        <label for="name">物品名称：</label>
+        <input v-model="formData.name" id="name" type="text"><br/>
+      </div>
+      <div>
+        <label for="lost_time">{{ typeName }}时间：</label>
+        <input v-model="formData.lostTime" id="lost_time" value="2021-01-01" type="date"><br/>
+      </div>
+      <div>
+        <label for="place_id">{{ typeName }}地点：</label>
+        <select v-model="formData.placeId" name="place_id" id="place_id">
+          <option v-for="item in place_ids" :key="item.id" :value="item.id">{{item.name}}</option>
+        </select>
+      </div>
+      <div>
+        <label for="position">具体位置：</label>
+        <input v-model="formData.position" id="position" type="text">
+        <br/>
+      </div>
+      <div>
+        <label for="description">详细描述：</label>
+        <input v-model="formData.description" id="description" type="text">
+        <input type="file" @change="getFile($event)" >
+        <br/>
+      </div>
+      <div>
+        <label for="username">联系人：</label>
+        <input v-model="formData.username" id="username" type="text"><br/>
+      </div>
+      <div>
+        <label for="telephone">手机号码：</label>
+        <input v-model="formData.telephone" id="telephone" type="tel"><br/>
+      </div>
+      <div>
+        <label for="email">邮箱：</label>
+        <input v-model="formData.email" id="email" type="email"><br/>
+      </div>
+      <button  @click="submitForm($event)">提交</button>
+    </form>
     <div class="right">
       <div class="zhaohui">
         <h3>失物找回案例</h3>
@@ -110,9 +117,17 @@ export default {
   name: 'LostPublish',
   data () {
     return {
-      form: {
+      socketPush: [
+        // { data: '全球新冠肺炎确诊病例超，死亡人数破<span>2万</span>！' },
+        // { data: '222222222222222222222222222222' },
+        // { data: '333333333333333333333333' }
+      ],
+      kind_ids: [],
+      place_ids: [],
+      typeName: '丢失',
+      formData: {
         type: 0,
-        kindId: null,
+        kindId: 1,
         id: null,
         name: '', // 物品名称
         lostTime: '',
@@ -126,46 +141,6 @@ export default {
         // stateId默认为0
         stateId: 0
       },
-      rules: {
-        type: [
-          { required: true, message: '请选择信息类型', trigger: 'change' }
-        ],
-        kindId: [
-          { required: true, message: '请选择物品种类', trigger: 'change' }
-        ],
-        name: [
-          { required: true, message: '请输入物品名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 2 到 10 个字符', trigger: 'blur' }
-        ],
-        lostTime: [
-          { required: true, message: '请选择时间', trigger: 'change' }
-        ],
-        palceId: [
-          { required: true, message: '请选择地点', trigger: 'change' }
-        ],
-        position: [
-          { required: true, message: '请输入具体位置', trigger: 'blur' },
-          { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
-        ],
-        description: [
-          { required: true, message: '请填写相关物品描述', trigger: 'blur' }
-        ],
-        username: [
-          { required: true, message: '请填写您的姓名', trigger: 'blur' },
-          { min: 1, max: 50, message: '长度在 2 到 5 个字符', trigger: 'blur' }
-        ],
-        telephone: [
-          { required: true, message: '请填写您的手机号码', trigger: 'blur' },
-          { min: 1, max: 50, message: '长度为11个字符', trigger: 'blur' }
-        ],
-        email: [
-          { required: true, message: '请填写您的邮箱', trigger: 'change' }
-        ]
-      },
-      socketPush: [],
-      kind_ids: [],
-      place_ids: [],
-      typeName: '丢失',
       findList: {},
       claimList: {}
     }
@@ -235,56 +210,38 @@ export default {
         })
       })
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
-    },
-    // dateFormat (dateData) {
-    //   var date = new Date(dateData)
-    //   var y = date.getFullYear()
-    //   var m = date.getMonth() + 1
-    //   m = m < 10 ? ('0' + m) : m
-    //   var d = date.getDate()
-    //   d = d < 10 ? ('0' + d) : d
-    //   const time = y + '-' + m + '-' + d
-    //   return time
-    // },
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          // this.form.lostTime = this.dateFormat(this.form.lostTime).toString()
-          console.log(this.form)
-          axios({
-            method: 'post',
-            url: 'lostInformation/add',
-            data: this.form,
-            header: {
-              'Content-Type': 'multipart/form-data',
-              charset: 'UTF-8'
-            }
-          }).then(resp => {
-            if (resp.data.code === 200) {
-              this.form = {
-                type: 0,
-                kindId: 1,
-                id: null,
-                name: '', // 物品名称
-                lostTime: '',
-                placeId: 1, // 丢失/拾遗地点id,对应位置表
-                position: '', // 丢失/拾遗详细位置
-                description: '',
-                username: '', // 失物或拾主姓名
-                telephone: '',
-                email: '',
-                createBy: 0, // 当前用户的id，跳转到该页面的时候传进来的
-                // stateId默认为0
-                stateId: 0
-              }
-            }
-          }).catch(error => error)
-        } else {
-          return false
+    submitForm (event) {
+      console.log('this.formData:')
+      console.log(this.formData)
+      event.preventDefault()
+      axios({
+        method: 'post',
+        url: 'http://localhost:8180/lostInformation',
+        data: this.formData,
+        header: {
+          'Content-Type': 'multipart/form-data',
+          charset: 'UTF-8'
         }
-      })
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          this.formData = {
+            type: 0,
+            kindId: 1,
+            id: null,
+            name: '', // 物品名称
+            lostTime: '',
+            placeId: 1, // 丢失/拾遗地点id,对应位置表
+            position: '', // 丢失/拾遗详细位置
+            description: '',
+            username: '', // 失物或拾主姓名
+            telephone: '',
+            email: '',
+            createBy: 0, // 当前用户的id，跳转到该页面的时候传进来的
+            // stateId默认为0
+            stateId: 0
+          }
+        }
+      }).catch(error => error)
     },
     loadlunboData () {
       var _this = this
@@ -342,7 +299,7 @@ export default {
   border: 1px solid #C9C9C9;
   padding: 10px;
   background-color: #F0FAF0;
-  width: 74%;
+  width: 76%;
 }
 .lost_publish form h3{
   font-weight: 400;
@@ -350,14 +307,17 @@ export default {
   padding-left: 8px;
   height: 34px;
   line-height: 34px;
-  margin-bottom: 10px;
-  /*border-left: 3px solid #BBBBBB;*/
+  border-left: 3px solid #BBBBBB;
 }
 .lost_publish form span{
   font-size: 14px;
   display: inline-block;
   width: 72px;
   margin-left: 20px;
+
+}
+.lost_publish form div{
+  margin-bottom: 20px;
 }
 /*右侧案例*/
 .right {
@@ -376,5 +336,4 @@ export default {
   border: 1px solid #D6D6D6;
   margin-top: 10px;
 }
-
 </style>

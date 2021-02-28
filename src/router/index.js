@@ -35,6 +35,11 @@ const routes = [
     component: Home
   },
   {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
     path: '/lost',
     name: 'Lost',
     component: Lost
