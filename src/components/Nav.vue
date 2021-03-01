@@ -3,16 +3,16 @@
   <div class="nav">
     <div class="cen nav_cen">
       <p>sjzxyshfwpt</p>
-      <ul class="bql">
-        <li><router-link to="/home">首页</router-link></li>
-        <li><router-link to="/question">问题咨询</router-link></li>
-        <li><router-link to="/lost">失物招领</router-link></li>
-        <li><router-link to="/mood">心情话板</router-link></li>
+      <ul class="bql" id="bql">
+        <li @click="bgColor(1)" :class="{selected:1===this.index}"><router-link to="/home">首页</router-link></li>
+        <li @click="bgColor(2)" :class="{selected:2===this.index}"><router-link to="/question">问题咨询</router-link></li>
+        <li @click="bgColor(3)" :class="{selected:3===this.index}"><router-link to="/lost">失物招领</router-link></li>
+        <li @click="bgColor(4)" :class="{selected:4===this.index}"><router-link to="/mood">心情话板</router-link></li>
       </ul>
       <a href="">后台管理</a>
       <div class="xlk_content">
-        <a v-if="uid === null" href="/login">登录</a>
-        <a v-if="uid" style="
+        <a v-if="uid === 'null'" href="/login">登录</a>
+        <a v-if="uid !== 'null'" style="
            width: 23px;
            height: 23px;display: inline;
            position: absolute;
@@ -26,11 +26,11 @@
            right: 0px;
            top: 0px;border-radius: 50%">
         </a>
-        <ul class="xlk" v-if="uid">
+        <ul class="xlk" v-if="uid !== 'null'">
           <span class="el-icon-caret-top" aria-hidden="true"></span>
           <li>
             <i class="el-icon-user" aria-hidden="true"></i>
-            <a href="">我的主页</a>
+            <a href="my_page">我的主页</a>
           </li>
           <li>
             <i class="el-icon-chat-dot-square" aria-hidden="true"></i>
@@ -42,7 +42,7 @@
           </li>
           <li>
             <i class="el-icon-switch-button" aria-hidden="true"></i>
-            <a href="">退出</a>
+            <a href="" @click="exit()">退出</a>
           </li>
         </ul>
       </div>
@@ -56,11 +56,19 @@ export default {
   name: 'Nav',
   data () {
     return {
+      index: null,
       login: '登录',
       uid: null
     }
   },
   methods: {
+    bgColor (index) {
+      this.index = index
+    },
+    exit () {
+      localStorage.setItem('id', null)
+      location.reload()
+    },
     loadUid () {
       console.log('-----id:' + this.uid)
       this.uid = localStorage.getItem('id')
@@ -68,8 +76,10 @@ export default {
     }
   },
   // mounted: function () {
-  //   this.loadUid()
-  // }
+  //   console.log('index:' + localStorage.getItem('index'))
+  //   this.index = localStorage.getItem('index')
+  //   console.log(this.index)
+  // },
   watch: {
     'localStorage.id' () {
       console.log('内存发生变化:')
@@ -83,6 +93,9 @@ export default {
 </script>
 
 <style lang="scss">
+.selected{
+  background-color: #5B5B5B;
+}
 /**中心部分样式*/
 .content{
   margin-top: 56px;
@@ -142,8 +155,6 @@ export default {
 }
 /*登录按钮，个人中心按钮*/
 .nav_cen .xlk_content{
-  //width: 100%;
-  //height: 100%;
   position: relative;
 }
 .nav_cen .xlk_content>a{
@@ -180,7 +191,7 @@ export default {
 }
 .xlk li:hover{
   //background-color: #525252;
-  background-color: red;
+  background-color: #851414;
 }
 .xlk li i{
   color: #fff;

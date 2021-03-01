@@ -162,6 +162,20 @@ export default {
         this.$router.go(-1)
       })
     },
+    openReplyAlert () {
+      this.$confirm('您还没有写任何东西呢', '提示', {
+        confirmButtonText: '去回答',
+        cancelButtonText: '稍等',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '请写下您的想法!'
+        })
+      }).catch(() => {
+        // this.$router.go(-1)
+      })
+    },
     loadQuesInformation (qid) {
       console.log('questiondetail---qid:' + qid)
       var _this = this
@@ -245,7 +259,7 @@ export default {
     submitReply (qid) {
       var _this = this
       if ((_this.reply_data === '写下你关于这个问题的想法吧') || (_this.reply_data.trim() === '')) {
-        this.openAlert()
+        this.openReplyAlert()
         return
       }
       var jsonData = {

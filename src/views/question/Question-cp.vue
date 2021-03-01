@@ -296,14 +296,15 @@ export default {
     },
     // 点赞
     // 初始化点赞信息
-    initLike (uid) {
+    initLike () {
       var _this = this
+      uid
       // 根据当前用户id查询他所有的点赞评论id，并将他的点赞评论id存放到hasLike
       axios({
         method: 'get',
         url: 'quesLike/rid/%7Buid%7D',
         params: {
-          uid: 111
+          uid: localStorage.getItem('id')
         }
       }).then(resp => {
         if (resp.data.code === 200) {
@@ -336,7 +337,7 @@ export default {
           id: null,
           qid: null,
           rid: rid,
-          uid: 111
+          uid: localStorage.getItem('id')
         }
       }).then(resp => {
         if (resp.data.code !== 200) {
@@ -357,7 +358,7 @@ export default {
           id: null,
           qid: null,
           rid: rid,
-          uid: 111
+          uid: localStorage.getItem('id')
         }
       }).then(resp => {
         if (resp.data.code !== 200) {

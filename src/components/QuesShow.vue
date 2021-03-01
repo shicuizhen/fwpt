@@ -1,5 +1,14 @@
 <template>
 <div class="ques_show">
+  <p>{{this.cur_solve}}问题</p>
+  <input type="text" value="关键字" v-model="search_key" onfocus="if (value == '关键字'){value =''}" onblur="if (value ==''){value='关键字'}">
+  <span class="search" @click="searchByKey()">搜索</span>
+  <div class="no_solve butt">
+    {{this.solve}}&nbsp;
+    <el-button @click="searchBySolve(1)" v-if="this.solveNum === 1" type="success" icon="el-icon-check" circle></el-button>
+    <el-button @click="searchBySolve(2)" v-if="this.solveNum === 2" type="primary" icon="el-icon-check" circle></el-button>
+    <el-button @click="searchBySolve(3)" v-if="this.solveNum === 3" type="" icon="el-icon-check" circle></el-button>
+  </div>
   <ul class="ques_detail">
     <li v-for = "(item, index) in quesInformation"
         v-bind:key="index" :qid="item.id"
@@ -70,7 +79,7 @@
             <div>
               <img class="reply_img" src="../assets/images/1.jpeg" alt="">
               <span>{{ item2.createBy }}</span>
-              <span>{{ item2.createTime }}前发布</span>
+              <span>{{ item2.createTime }} 发布</span>
               <p class="likeShow" v-if="item2.likeNum>0">{{ item2.likeNum }}</p>
               <a @click.stop="hasExisted(item2.id) ? delLikeNum(item2.id) : addLikeNum(item2.id)">
                 <i id="likeIcon" class="icon iconfont" :class="hasExisted(item2.id) ? 'likeRed' : 'likeNo'">&#xe61e;</i>
@@ -91,7 +100,10 @@ export default {
   name: 'quesShow',
   data: function () {
     return {
-      inp_val: '搜索',
+      cur_solve: '全部',
+      solve: '未解决问题',
+      solveNum: 1,
+      search_key: '关键字',
       reply_data: '写下你关于这个问题的想法吧',
       showReply: false,
       showReplyDetail: false,
@@ -120,6 +132,109 @@ export default {
     }
   },
   methods: {
+    searchBySolve (num) {
+      var url = ''
+      switch (num) {
+        case 1:
+          url = 'quesInformation/unfinish'
+          this.cur_solve = '未解决'
+          this.solve = '已解决问题'
+          this.solveNum = 2
+          console.log('_this.url:' + url)
+          break
+        case 2:
+          url = 'quesInformation/finish'
+          this.cur_solve = '已解决'
+          this.solve = '全部问题'
+          this.solveNum = 3
+          break
+        case 3:
+          url = 'quesInformation/datas'
+          this.cur_solve = '全部'
+          this.solve = '未解决'
+          this.solveNum = 1
+          break
+      }
+      var _this = this
+      if (_this.sid !== null) {
+        _this.url = url + '/%7Bsid%7D'
+        axios({
+          method: 'get',
+          url: _this.url,
+          params: {
+            sid: _this.sid
+          }
+        }).then(resp => {
+          if (resp.data.code === 200) {
+            _this.quesInformation = resp.data.data
+          }
+        }).catch(error => error)
+      } else {
+        axios({
+          method: 'get',
+          url: _this.url
+        }).then(resp => {
+          if (resp.data.code === 200) {
+            _this.quesInformation = resp.data.data
+          }
+        }).catch(error => error)
+      }
+    },
+    openSearchAlert () {
+      this.$confirm('您要查询什么呢？请写下关键字吧', '提示', {
+        confirmButtonText: '好的',
+        cancelButtonText: '稍等',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '请填写关键字，进行查询!'
+        })
+      })
+    },
+    searchByKey () {
+      // 需要看分类sid=null和solveNum=1 ，只根据key
+      // solveNum=1全部
+      // solveNum=2未解决0
+      // solveNum=3已解决1
+      if (this.search_key === '关键字') {
+        this.openSearchAlert()
+        return
+      }
+      if (this.sid === null && this.solveNum === 1) {
+        axios({
+          method: 'post',
+          url: 'quesInformation/key',
+          params: {
+            sid: this.sid,
+            finish: this.solveNum - 2,
+            key: this.search_key
+          }
+        }).then(resp => {
+          if (resp.data.code === 200) {
+            console.log(resp.data.data)
+            this.quesInformation = resp.data.data
+            this.search_key = '关键字'
+          }
+        }).catch(error => error)
+      } else {
+        axios({
+          method: 'post',
+          url: 'quesInformation/many_search',
+          params: {
+            sid: this.sid,
+            finish: this.solveNum - 2,
+            key: this.search_key
+          }
+        }).then(resp => {
+          if (resp.data.code === 200) {
+            console.log(resp.data.data)
+            this.quesInformation = resp.data.data
+            this.search_key = '关键字'
+          }
+        }).catch(error => error)
+      }
+    },
     // 回答问题的按钮
     reply_btn (id, index) {
       if (this.currentLiIndex.writeReplay !== index) {
@@ -233,18 +348,20 @@ export default {
     },
     // 点赞
     // 初始化点赞信息
-    initLike (uid) {
+    initLike () {
+      var uid = localStorage.getItem('id')
       var _this = this
       // 根据当前用户id查询他所有的点赞评论id，并将他的点赞评论id存放到hasLike
       axios({
         method: 'get',
         url: 'quesLike/rid/%7Buid%7D',
         params: {
-          uid: 111
+          uid: uid
         }
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.hasLike = resp.data.data
+          console.log('_this.hasLike:' + _this.hasLike)
         }
       }).catch(error => error)
     },
@@ -252,10 +369,10 @@ export default {
     hasExisted (rid) {
       var set = new Set(this.hasLike)
       if (set.has(rid)) {
-        console.log('存在')
+        console.log('存在' + rid)
         return true
       } else {
-        console.log('没有')
+        console.log('没有' + rid)
         return false
       }
     },
@@ -280,13 +397,12 @@ export default {
     },
     // 新增点赞，将当前回答id存进数组,并调用后台方法，存入当前回答的用户点赞记录
     addLikeNum (rid) {
+      console.log('add:-rid:' + rid)
       if (localStorage.getItem('id') == null) {
         this.openAlert()
         return
       }
       document.getElementById('likeIcon').className = 'icon iconfont likeRed'
-      this.hasLike.push(rid)
-      console.log('新增后的this.hasLike:' + this.hasLike)
       axios({
         method: 'post',
         url: 'quesLike',
@@ -295,22 +411,23 @@ export default {
           id: null,
           qid: null,
           rid: rid,
-          uid: 111
+          uid: localStorage.getItem('id')
         }
       }).then(resp => {
-        if (resp.data.code !== 200) {
+        if (resp.data.code === 200) {
+          this.initLike()
+        } else {
           alert('没点上，重新支持一下吧！')
         }
       }).catch(error => error)
     },
     delLikeNum (rid) {
+      console.log('del:-rid:' + rid)
       if (localStorage.getItem('id') == null) {
         this.openAlert()
         return
       }
       document.getElementById('likeIcon').className = 'icon iconfont likeNo'
-      this.hasLike.pop(rid)
-      console.log('删除后的this.hasLike:' + this.hasLike)
       axios({
         method: 'post',
         url: 'quesLike/delQuesLike',
@@ -319,17 +436,18 @@ export default {
           id: null,
           qid: null,
           rid: rid,
-          uid: 111
+          uid: localStorage.getItem('id')
         }
       }).then(resp => {
-        if (resp.data.code !== 200) {
+        if (resp.data.code === 200) {
+          this.initLike()
+        } else {
           alert('没点上！')
         }
       }).catch(error => error)
     },
     // 路由跳转
     toQuesDetail (qid) {
-      console.log('qqqqqid:' + qid)
       localStorage.setItem('qid', JSON.stringify(qid))
       this.$router.push({
         path: '/question_detail/' + qid
@@ -351,7 +469,7 @@ export default {
       var _this = this
       axios({
         method: 'get',
-        url: 'quesInformation/sort/%7Bsid%7D',
+        url: 'quesInformation/datas/%7Bsid%7D',
         params: {
           sid: sid
         }

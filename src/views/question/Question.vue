@@ -19,24 +19,6 @@
     </div>
     <div class="center">
       <div class="left">
-        <p>平台最新问题</p>
-        <div class="sort_xlk">
-          <span>选择分类</span>
-          <i @click="icon_down()" class="el-icon-arrow-down" :class="{hidden : downState}" aria-hidden="true"></i>
-          <i @click="icon_up()" class="el-icon-arrow-up" :class="{hidden : state}" aria-hidden="true"></i>
-          <ul :class="{xlk : true, hidden : state}">
-            <span class="el-icon-caret-top" aria-hidden="true"></span>
-            <li>全部</li>
-            <li>生活类问题</li>
-            <li>学习类问题</li>
-            <li>退出</li>
-          </ul>
-        </div>
-        <input type="text" value="搜索" onfocus="if (value == '搜索'){value =''}" onblur="if (value ==''){value='搜索'}">
-        <div class="no_solve butt">
-          仅看未解决&nbsp;
-          <el-button type="success" icon="el-icon-check" circle></el-button>
-        </div>
 <!--1.问题信息展示========================================================================-->
         <QuesShow></QuesShow>
       </div>
@@ -144,6 +126,25 @@ export default {
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.quesSort = resp.data.data
+        }
+      }).catch(error => error)
+    },
+
+    reloadDetailBySort (sid) {
+      console.log('sid:' + sid)
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'quesInformation/datas/%7Bsid%7D',
+        params: {
+          sid: sid
+        }
+      }).then(resp => {
+        if (resp.data.code === 401) {
+          alert('目前该分类下无问题')
+          this.$router.back()
+        } else if (resp.data.code === 200) {
+          _this.quesInformation = resp.data.data
         }
       }).catch(error => error)
     },

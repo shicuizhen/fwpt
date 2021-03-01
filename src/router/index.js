@@ -10,6 +10,7 @@ import SortDetail from '@/views/question/SortDetail'
 import QuesPublish from '@/views/question/QuesPublish'
 import Login from '@/views/login/Login'
 import Register from '@/views/register/Register'
+import MyPage from '@/views/my/MyPage'
 
 Vue.use(VueRouter)
 
@@ -73,6 +74,11 @@ const routes = [
     path: '/ques_publish',
     name: 'QuesPublish',
     component: QuesPublish
+  },
+  {
+    path: '/my_page',
+    name: 'MyPage',
+    component: MyPage
   }
 ]
 

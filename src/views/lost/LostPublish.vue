@@ -141,7 +141,7 @@ export default {
           { required: true, message: '请选择时间', trigger: 'change' }
         ],
         palceId: [
-          { required: true, message: '请选择地点', trigger: 'change' }
+          { required: true, message: '请选择地点', trigger: 'blur' }
         ],
         position: [
           { required: true, message: '请输入具体位置', trigger: 'blur' },
@@ -159,7 +159,7 @@ export default {
           { min: 1, max: 50, message: '长度为11个字符', trigger: 'blur' }
         ],
         email: [
-          { required: true, message: '请填写您的邮箱', trigger: 'change' }
+          { required: true, message: '请填写您的邮箱', trigger: 'blur' }
         ]
       },
       socketPush: [],
