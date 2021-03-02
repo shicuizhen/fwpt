@@ -275,7 +275,7 @@ export default {
                 username: '', // 失物或拾主姓名
                 telephone: '',
                 email: '',
-                createBy: 0, // 当前用户的id，跳转到该页面的时候传进来的
+                createBy: localStorage.getItem('id'), // 当前用户的id，跳转到该页面的时候传进来的
                 // stateId默认为0
                 stateId: 0
               }

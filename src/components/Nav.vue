@@ -11,8 +11,8 @@
       </ul>
       <a href="">后台管理</a>
       <div class="xlk_content">
-        <a v-if="uid === 'null'" href="/login">登录</a>
-        <a v-if="uid !== 'null'" style="
+        <a v-if="this.uid === null" href="/login">登录</a>
+        <a v-if="this.uid !== null" style="
            width: 23px;
            height: 23px;display: inline;
            position: absolute;
@@ -26,7 +26,7 @@
            right: 0px;
            top: 0px;border-radius: 50%">
         </a>
-        <ul class="xlk" v-if="uid !== 'null'">
+        <ul class="xlk" v-if="this.uid !== null">
           <span class="el-icon-caret-top" aria-hidden="true"></span>
           <li>
             <i class="el-icon-user" aria-hidden="true"></i>
@@ -73,6 +73,7 @@ export default {
       console.log('-----id:' + this.uid)
       this.uid = localStorage.getItem('id')
       console.log('id:' + this.uid)
+      // location.reload()
     }
   },
   // mounted: function () {

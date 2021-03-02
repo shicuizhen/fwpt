@@ -140,7 +140,6 @@ export default {
           this.cur_solve = '未解决'
           this.solve = '已解决问题'
           this.solveNum = 2
-          console.log('_this.url:' + url)
           break
         case 2:
           url = 'quesInformation/finish'
@@ -156,6 +155,7 @@ export default {
           break
       }
       var _this = this
+      _this.url = url
       if (_this.sid !== null) {
         _this.url = url + '/%7Bsid%7D'
         axios({

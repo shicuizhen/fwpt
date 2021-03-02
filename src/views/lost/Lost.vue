@@ -152,10 +152,58 @@ export default {
         1: null,
         2: null,
         3: null
-      }
+      },
+      websock: null
+    }
+  },
+  destroyed () {
+    // 页面销毁时关闭ws连接
+    if (this.websock) {
+      this.websock.close() // 关闭websocket
     }
   },
   methods: {
+    // 初始化weosocket
+    initWebSocket () {
+      if (typeof (WebSocket) === 'undefined') {
+        alert('您的浏览器不支持WebSocket')
+        return false
+      }
+      var id = localStorage.getItem('id')
+      if (id === null) {
+        id = '未知用户'
+      }
+      const wsuri = 'ws://localhost:8180/webSocket/' + id // websocket地址
+      console.log('wsuri:' + wsuri)
+      this.websock = new WebSocket(wsuri)
+      this.websock.onopen = this.websocketonopen
+      this.websock.onmessage = this.websocketonmessage
+      this.websock.onerror = this.websocketonerror
+      this.websock.onclose = this.websocketclose
+    },
+    // 连接成功
+    websocketonopen () {
+      console.log('WebSocket连接成功')
+    },
+    // 接收后端返回的数据
+    websocketonmessage (e) {
+      console.log('e:')
+      console.log(e)
+      console.log('后台发过来的数据：')
+      console.log(e.data)
+      this.socketPush.push(e.data)
+    },
+    // 连接建立失败重连
+    websocketonerror (e) {
+      console.log('连接失败的信息：', e)
+      this.initWebSocket() // 连接失败后尝试重新连接
+    },
+    // 关闭连接
+    websocketclose (e) {
+      console.log('断开连接', e)
+    },
+
+    // 对热门搜索进行搜索
     toSearch (key) {
       this.search_key = key
       this.search()
@@ -289,6 +337,9 @@ export default {
     // 加载搜索数据
     this.loadKindId()
     this.loadPlaceId()
+  },
+  created () {
+    this.initWebSocket()
   }
 }
 </script>
