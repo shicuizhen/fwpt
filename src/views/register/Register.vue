@@ -18,9 +18,6 @@
           <el-radio label="1">女</el-radio>
         </el-radio-group>
       </el-form-item>
-<!--      <el-form-item label="生日" prop="birthday">-->
-<!--        <el-input v-model="form.birthday"></el-input>-->
-<!--      </el-form-item>-->
       <el-form-item label="生日" prop="birthday">
         <el-col :span="11">
           <el-form-item>
@@ -37,6 +34,12 @@
         <el-select v-model="form.major" placeholder="请选择专业">
           <el-option :label=item.name :value=item.name v-for="item in majors" v-bind:key="item.name"></el-option>
         </el-select>
+      </el-form-item>
+      <el-form-item label="手机号码" prop="phone">
+        <el-input type="tel" v-model="form.phone"></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email">
+        <el-input type="email" v-model="form.email"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input type="password" v-model="form.password"></el-input>
@@ -79,15 +82,13 @@ export default {
         nick: '',
         sex: -1,
         birthday: '',
-        photoAddress: '',
+        photoAddress: null,
         grade: '',
         major: '',
         phone: '',
         email: '',
         createdBy: null,
-        createTime: '',
-        updateBy: null,
-        updateTime: ''
+        createTime: ''
       },
       rules: {
         sno: [
@@ -143,24 +144,10 @@ export default {
             data: this.form
           }).then(resp => {
             if (resp.data.code === 200) {
-              // 添加用户完成，将默认数据置空
-              this.form = {
-                sno: '',
-                name: '',
-                password: '',
-                nick: '',
-                sex: -1,
-                birthday: '',
-                photoAddress: '',
-                grade: -1,
-                major: '',
-                phone: '',
-                email: '',
-                createdBy: null,
-                createTime: '',
-                updateBy: null,
-                updateTime: ''
-              }
+              this.$router.push({ path: '/login' })
+            } else {
+              location.reload()
+              alert('该用户已注册！')
             }
           }).catch(error => error)
         } else {

@@ -11,7 +11,8 @@
       </ul>
       <a href="">后台管理</a>
       <div class="xlk_content">
-        <a v-if="this.uid === null" href="/login">登录</a>
+        <a class="login" v-if="this.uid === null" href="/login">登录</a>
+        <a class="register" v-if="this.uid === null" href="/register">注册</a>
         <a v-if="this.uid !== null" style="
            width: 23px;
            height: 23px;display: inline;
@@ -67,6 +68,7 @@ export default {
     },
     exit () {
       localStorage.setItem('id', null)
+      localStorage.clear()
       location.reload()
     },
     loadUid () {
@@ -160,17 +162,19 @@ export default {
 }
 .nav_cen .xlk_content>a{
   position: absolute;
-  right: 36px;
   top: 0;
   color: #F9F9F9;
 }
+.nav_cen .xlk_content .login{
+  right: 36px;
+}
 /*公共部分---下拉框开始*/
 .xlk_content>a{
-  //position: absolute;
-  //right: 0;
-  //top: 0;
   line-height: 56px;
   font-size: 14px;
+}
+.nav_cen .xlk_content .register{
+  right: -8px;
 }
 .nav .xlk{
   display: none;

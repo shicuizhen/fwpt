@@ -345,6 +345,8 @@ export default {
         }
       }).catch(error => error)
       this.reply_data = ''
+      location.reload()
+      alert('提交成功')
     },
     // 点赞
     // 初始化点赞信息

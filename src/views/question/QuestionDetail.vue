@@ -279,6 +279,8 @@ export default {
         }
       }).catch(error => error)
       this.reply_data = ''
+      location.reload()
+      alert('提交成功')
     },
     // 新增点赞，将当前回答id存进数组,并调用后台方法，存入当前回答的用户点赞记录
     addLikeNum (rid) {
