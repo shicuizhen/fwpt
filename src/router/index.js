@@ -11,6 +11,7 @@ import QuesPublish from '@/views/question/QuesPublish'
 import Login from '@/views/login/Login'
 import Register from '@/views/register/Register'
 import MyPage from '@/views/my/MyPage'
+import EditMy from '@/views/my/EditMy'
 
 Vue.use(VueRouter)
 
@@ -79,6 +80,11 @@ const routes = [
     path: '/my_page',
     name: 'MyPage',
     component: MyPage
+  },
+  {
+    path: '/edit_my',
+    name: 'EditMy',
+    component: EditMy
   }
 ]
 

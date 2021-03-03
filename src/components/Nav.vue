@@ -30,7 +30,7 @@
           <span class="el-icon-caret-top" aria-hidden="true"></span>
           <li>
             <i class="el-icon-user" aria-hidden="true"></i>
-            <a href="my_page">我的主页</a>
+            <a href="/my_page">我的主页</a>
           </li>
           <li>
             <i class="el-icon-chat-dot-square" aria-hidden="true"></i>

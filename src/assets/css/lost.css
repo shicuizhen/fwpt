@@ -18,7 +18,7 @@
     padding: 10px 12px;
     width: 16.9%;
     float: left;
-    border: 1px solid #000;
+    border: 1px solid #938383;
     border-radius: 5px;
     margin-right: 8px;
     margin-bottom: 10px;
@@ -54,8 +54,9 @@
     font-family: "微软雅黑";
 }
 .card li p{
-    font-size: 13px;
-    margin-top: 5px;
+    color: #5B5B5B;
+    font-size: 12px;
+    margin-top: 8px;
 }
 /*轮播*/
 .lunbo{

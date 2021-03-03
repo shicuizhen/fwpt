@@ -1,7 +1,7 @@
 <template>
-  <div class="register">
+  <div class="edit_my">
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-      <h3>用户注册</h3>
+      <h3>用户信息修改</h3>
       <el-form-item label="学号" prop="sno">
         <el-input v-model="form.sno"></el-input>
       </el-form-item>
@@ -18,9 +18,6 @@
           <el-radio label="1">女</el-radio>
         </el-radio-group>
       </el-form-item>
-<!--      <el-form-item label="生日" prop="birthday">-->
-<!--        <el-input v-model="form.birthday"></el-input>-->
-<!--      </el-form-item>-->
       <el-form-item label="生日" prop="birthday">
         <el-col :span="11">
           <el-form-item>
@@ -50,10 +47,9 @@
 </template>
 
 <script>
-import '../../assets/css/lost.css'
 import axios from 'axios'
 export default {
-  name: 'Register',
+  name: 'EditMy',
   data () {
     return {
       sexs: {
@@ -167,18 +163,39 @@ export default {
           return false
         }
       })
+    },
+    // 加载当前用户数据
+    loadMy () {
+      var _this = this
+      axios({
+        method: 'post',
+        url: 'users/datas/uid',
+        params: {
+          uid: localStorage.getItem('id')
+        }
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          console.log('用户信息')
+          console.log(resp.data.data)
+          _this.form = resp.data.data
+          _this.form.sex = -1
+        }
+      }).catch(error => error)
     }
+  },
+  mounted: function () {
+    this.loadMy()
   }
 }
 </script>
 
 <style scoped>
-.register{
+.edit_my{
   padding-top: 20px;
   padding-left: 20px;
   width: 60%;
 }
-.register h3{
+.edit_my h3{
   padding-left: 10px;
   margin-bottom: 20px;
 }

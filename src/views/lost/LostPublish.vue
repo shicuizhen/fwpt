@@ -18,7 +18,7 @@
       <el-form-item class="form_type" label="信息类型" prop="type">
         <el-radio-group v-model="form.type">
           <el-radio label="1">招领启事</el-radio>
-          <el-radio label="2">寻物启事</el-radio>
+          <el-radio label="0">寻物启事</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="物品种类" prop="kindId">
@@ -111,7 +111,7 @@ export default {
   data () {
     return {
       form: {
-        type: 0,
+        type: -1,
         kindId: null,
         id: null,
         name: '', // 物品名称
@@ -265,7 +265,7 @@ export default {
             if (resp.data.code === 200) {
               this.form = {
                 type: 0,
-                kindId: 1,
+                kindId: -1,
                 id: null,
                 name: '', // 物品名称
                 lostTime: '',
