@@ -235,7 +235,8 @@ export default {
       console.log('time2:' + this.time2)
       axios({
         method: 'post',
-        url: 'lostInformation/getSearch',
+        // url: 'lostInformation/getSearch',
+        url: 'lostInformation/mybatisSearch',
         data: {
           id: 0,
           type: this.searchBy[1],
@@ -249,7 +250,7 @@ export default {
         }
       }).then(resp => {
         if (resp.data.code === 200) {
-          this.lostInformation = resp.data.data
+          this.lostInformation = resp.data.data.content
           console.log('=======================')
           console.log(resp.data.data)
           // _this.lostInformation = resp.data.data

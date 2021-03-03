@@ -26,7 +26,6 @@ export default {
         sno: '',
         password: ''
       },
-      error: '',
       rules: {
         sno: [
           {
@@ -95,7 +94,7 @@ export default {
               console.log('------------')
             } else {
               // 提示用户登录信息错误
-              this.error = resp.data.data
+              alert(resp.data.data)
             }
           }).catch(error => error)
         } else {

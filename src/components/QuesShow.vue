@@ -1,96 +1,99 @@
 <template>
-<div class="ques_show">
-  <p>{{this.cur_solve}}问题</p>
-  <input type="text" value="关键字" v-model="search_key" onfocus="if (value == '关键字'){value =''}" onblur="if (value ==''){value='关键字'}">
-  <span class="search" @click="searchByKey()">搜索</span>
-  <div class="no_solve butt">
-    {{this.solve}}&nbsp;
-    <el-button @click="searchBySolve(1)" v-if="this.solveNum === 1" type="success" icon="el-icon-check" circle></el-button>
-    <el-button @click="searchBySolve(2)" v-if="this.solveNum === 2" type="primary" icon="el-icon-check" circle></el-button>
-    <el-button @click="searchBySolve(3)" v-if="this.solveNum === 3" type="" icon="el-icon-check" circle></el-button>
-  </div>
-  <ul class="ques_detail">
-    <li v-for = "(item, index) in quesInformation"
-        v-bind:key="index" :qid="item.id"
-        @click="toQuesDetail(item.id)">
-      <!--            :onclick="() => toQuesDetail(item.id)">-->
-      <div class="det_show">
-        <h3>{{item.title}}</h3>
-        <div>
-          <img src="../assets/images/1.jpeg" alt="">
-          <!--                <img src="file:///F:/images/1.jpeg" alt="">-->
-          <!--                <img src="require('../assets/images/'+'F:/图片/8180.jpg')"  width="112" height="112">-->
-          <span>{{item.createBy}}</span>
-          <span>{{ item.createTime }}前发布</span>
-          <span>{{ item.sortName }}</span>
-          <i class="icon iconfont" style="color: #000000;right: 18px;">&#xe638;</i>
-          <p class="likeShow">{{ item.replyNum }}</p>
-        </div>
-        <p>{{ item.content }}</p>
-        <!--button对应的是class="reply"部分-->
-        <button class="reply_btn" @click.stop="reply_btn(item.id, index)">回答</button>
-        <!--div展开对应的是ul class="reply_detail"-->
-        <a @click.stop="reply_detail(item.id, index)" class="open">
-          <span>展开</span>
-          <svg t="1612623150622" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4154" width="200" height="200"><path d="M927.804 352.193l-415.804 415.632-415.803-415.632 63.616-63.445 352.209 352.017 352.102-352.017z" p-id="4155"></path></svg>
-        </a>
+  <div>
+    <div v-if="this.sortName" class="sort_name">当前分类：{{this.sortName}}</div>
+    <div class="ques_show">
+      <p>{{this.cur_solve}}问题</p>
+      <input type="text" value="关键字" v-model="search_key" onfocus="if (value == '关键字'){value =''}" onblur="if (value ==''){value='关键字'}">
+      <span class="search" @click="searchByKey()">搜索</span>
+      <div class="no_solve butt">
+        {{this.solve}}&nbsp;
+        <el-button @click="searchBySolve(1)" v-if="this.solveNum === 1" type="success" icon="el-icon-check" circle></el-button>
+        <el-button @click="searchBySolve(2)" v-if="this.solveNum === 2" type="primary" icon="el-icon-check" circle></el-button>
+        <el-button @click="searchBySolve(3)" v-if="this.solveNum === 3" type="" icon="el-icon-check" circle></el-button>
       </div>
-      <!--   点击回答问题按钮出现-----开始----======================================================-->
-      <!--以下部分一开始不存在，点击后才显示-->
-      <div class="reply" v-if="currentLiIndex.writeReplay === index">
-        <span class="el-icon-caret-top" aria-hidden="true"></span>
-        <textarea @scroll="areaOnScroll()" rows="5"
-                  v-model="reply_data"
-                  onfocus="if (value == '写下你关于这个问题的想法吧'){value =''}"
-                  onblur="if (value ==''){value='写下你关于这个问题的想法吧'}"
-                  @click.stop=""
-        ></textarea>
-        <!--              <div :onclick="submitReply(item.id)">提交</div>-->
-        <button @click.stop="submitReply(item.id)">提交</button>
-        <!-- 图片上传及预览=======开始=========================================================-->
-        <!--
-                      <el-upload
-                        action="http://localhost:8180/imgUpload"
-                        list-type="picture-card"
-                        accept="image/*"
-                        :limit="imgLimit"
-                        :file-list="productImgs"
-                        :multiple="isMultiple"
-                        :on-preview="handlePictureCardPreview"
-                        :on-remove="handleRemove"
-                        :on-success="handleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload"
-                        :on-exceed="handleExceed"
-                        :on-error="imgUploadError">
-                        <i class="el-icon-plus"></i>
-                      </el-upload>
-                      <el-dialog :visible.sync="dialogVisible">
-                        <img width="100%" :src="dialogImageUrl" alt="dialogImageUrl">
-                      </el-dialog>
-                        -->
-        <!-- 图片上传及预览=====结束===========================================================-->
-      </div>
-      <!--    点击回答问题按钮出现-----结束----======================================================-->
-      <!--2.回答信息展示----点击“展开”按钮就显示----===========================================================-->
-      <ul class="reply_detail" v-if="currentLiIndex.replay === index">
-        <li v-for="(item2) in quesReply" v-bind:key="item2.id">
+      <ul class="ques_detail">
+        <li v-for = "(item, index) in quesInformation"
+            v-bind:key="index" :qid="item.id"
+            @click="toQuesDetail(item.id)">
+          <!--            :onclick="() => toQuesDetail(item.id)">-->
           <div class="det_show">
-            <p>{{ item2.content }}</p>
+            <h3>{{item.title}}</h3>
             <div>
-              <img class="reply_img" src="../assets/images/1.jpeg" alt="">
-              <span>{{ item2.createBy }}</span>
-              <span>{{ item2.createTime }} 发布</span>
-              <p class="likeShow" v-if="item2.likeNum>0">{{ item2.likeNum }}</p>
-              <a @click.stop="hasExisted(item2.id) ? delLikeNum(item2.id) : addLikeNum(item2.id)">
-                <i id="likeIcon" class="icon iconfont" :class="hasExisted(item2.id) ? 'likeRed' : 'likeNo'">&#xe61e;</i>
-              </a>
+              <img src="../assets/images/1.jpeg" alt="">
+              <!--                <img src="file:///F:/images/1.jpeg" alt="">-->
+              <!--                <img src="require('../assets/images/'+'F:/图片/8180.jpg')"  width="112" height="112">-->
+              <span>{{item.createBy}}</span>
+              <span>{{ item.createTime }}前发布</span>
+              <span>{{ item.sortName }}</span>
+              <i class="icon iconfont" style="color: #000000;right: 18px;">&#xe638;</i>
+              <p class="likeShow">{{ item.replyNum }}</p>
             </div>
+            <p>{{ item.content }}</p>
+            <!--button对应的是class="reply"部分-->
+            <button class="reply_btn" @click.stop="reply_btn(item.id, index)">回答</button>
+            <!--div展开对应的是ul class="reply_detail"-->
+            <a @click.stop="reply_detail(item.id, index)" class="open">
+              <span>展开</span>
+              <svg t="1612623150622" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4154" width="200" height="200"><path d="M927.804 352.193l-415.804 415.632-415.803-415.632 63.616-63.445 352.209 352.017 352.102-352.017z" p-id="4155"></path></svg>
+            </a>
           </div>
+          <!--   点击回答问题按钮出现-----开始----======================================================-->
+          <!--以下部分一开始不存在，点击后才显示-->
+          <div class="reply" v-if="currentLiIndex.writeReplay === index">
+            <span class="el-icon-caret-top" aria-hidden="true"></span>
+            <textarea @scroll="areaOnScroll()" rows="5"
+                      v-model="reply_data"
+                      onfocus="if (value == '写下你关于这个问题的想法吧'){value =''}"
+                      onblur="if (value ==''){value='写下你关于这个问题的想法吧'}"
+                      @click.stop=""
+            ></textarea>
+            <!--              <div :onclick="submitReply(item.id)">提交</div>-->
+            <button @click.stop="submitReply(item.id)">提交</button>
+            <!-- 图片上传及预览=======开始=========================================================-->
+            <!--
+                          <el-upload
+                            action="http://localhost:8180/imgUpload"
+                            list-type="picture-card"
+                            accept="image/*"
+                            :limit="imgLimit"
+                            :file-list="productImgs"
+                            :multiple="isMultiple"
+                            :on-preview="handlePictureCardPreview"
+                            :on-remove="handleRemove"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload"
+                            :on-exceed="handleExceed"
+                            :on-error="imgUploadError">
+                            <i class="el-icon-plus"></i>
+                          </el-upload>
+                          <el-dialog :visible.sync="dialogVisible">
+                            <img width="100%" :src="dialogImageUrl" alt="dialogImageUrl">
+                          </el-dialog>
+                            -->
+            <!-- 图片上传及预览=====结束===========================================================-->
+          </div>
+          <!--    点击回答问题按钮出现-----结束----======================================================-->
+          <!--2.回答信息展示----点击“展开”按钮就显示----===========================================================-->
+          <ul class="reply_detail" v-if="currentLiIndex.replay === index">
+            <li v-for="(item2) in quesReply" v-bind:key="item2.id">
+              <div class="det_show">
+                <p>{{ item2.content }}</p>
+                <div>
+                  <img class="reply_img" src="../assets/images/1.jpeg" alt="">
+                  <span>{{ item2.createBy }}</span>
+                  <span>{{ item2.createTime }} 发布</span>
+                  <p class="likeShow" v-if="item2.likeNum>0">{{ item2.likeNum }}</p>
+                  <a @click.stop="hasExisted(item2.id) ? delLikeNum(item2.id) : addLikeNum(item2.id)">
+                    <i id="likeIcon" class="icon iconfont" :class="hasExisted(item2.id) ? 'likeRed' : 'likeNo'">&#xe61e;</i>
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ul>
         </li>
       </ul>
-    </li>
-  </ul>
-</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -100,6 +103,7 @@ export default {
   name: 'quesShow',
   data: function () {
     return {
+      sortName: null,
       cur_solve: '全部',
       solve: '未解决问题',
       solveNum: 1,
@@ -481,6 +485,9 @@ export default {
           this.$router.back()
         } else if (resp.data.code === 200) {
           _this.quesInformation = resp.data.data
+          _this.sortName = resp.data.data[0].sortName
+          console.log('_this.sortName:')
+          console.log(_this.sortName)
         }
       }).catch(error => error)
     }
@@ -501,5 +508,19 @@ export default {
 </script>
 
 <style scoped>
-
+.ques_show{
+  position: relative;
+}
+.sort_name{
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  margin: 5px 0 20px 5px;
+  padding-left: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: YouYuan;
+  color: #000;
+  border-left: 3px solid #67C23A;
+}
 </style>
