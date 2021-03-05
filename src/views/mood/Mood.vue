@@ -85,16 +85,6 @@
           >
           </vue-baberrage>
         </div>
-<!--        仪表盘-->
-<!--        <div class="ybp">-->
-<!--          <el-progress type="dashboard" :percentage="percentage" :color="colors"></el-progress>-->
-<!--          <div>-->
-<!--            <el-button-group>-->
-<!--              <el-button icon="el-icon-minus" @click="decrease"></el-button>-->
-<!--              <el-button icon="el-icon-plus" @click="increase"></el-button>-->
-<!--            </el-button-group>-->
-<!--          </div>-->
-<!--        </div>-->
       </div>
     </div>
   </div>
