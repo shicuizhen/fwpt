@@ -86,7 +86,8 @@ export default {
               const redirect = decodeURIComponent(this.$route.query.redirect || '/home')
               this.$router.push({ path: redirect })
               // this.$router.go(-1)
-              // location.reload()
+              // 修改右上角注册登录，显示用户头像
+              location.reload()
               this.form = {
                 sno: '',
                 password: ''

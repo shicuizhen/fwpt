@@ -153,13 +153,13 @@ export default {
         2: null,
         3: null
       },
-      websock: null
+      websocket: null
     }
   },
   destroyed () {
     // 页面销毁时关闭ws连接
-    if (this.websock) {
-      this.websock.close() // 关闭websocket
+    if (this.websocket) {
+      this.websocket.close() // 关闭websocket
     }
   },
   methods: {
@@ -174,12 +174,11 @@ export default {
         id = '未知用户'
       }
       const wsuri = 'ws://localhost:8180/webSocket/' + id // websocket地址
-      console.log('wsuri:' + wsuri)
-      this.websock = new WebSocket(wsuri)
-      this.websock.onopen = this.websocketonopen
-      this.websock.onmessage = this.websocketonmessage
-      this.websock.onerror = this.websocketonerror
-      this.websock.onclose = this.websocketclose
+      this.websocket = new WebSocket(wsuri)
+      this.websocket.onopen = this.websocketonopen
+      this.websocket.onmessage = this.websocketonmessage
+      this.websocket.onerror = this.websocketonerror
+      this.websocket.onclose = this.websocketclose
     },
     // 连接成功
     websocketonopen () {
@@ -254,14 +253,14 @@ export default {
           console.log('=======================')
           console.log(resp.data.data)
           // _this.lostInformation = resp.data.data
-          this.searchBy = {
-            1: null,
-            2: null,
-            3: null
-          }
-          this.time1 = null
-          this.time2 = null
         }
+        this.searchBy = {
+          1: null,
+          2: null,
+          3: null
+        }
+        this.time1 = null
+        this.time2 = null
       }).catch(error => error)
     },
     loadLostInformation () {
@@ -331,7 +330,7 @@ export default {
     // 延时滚动
     setTimeout(() => {
       this.runMarquee()
-    }, 3000)
+    }, 1000)
     this.loadLostInformation()
     // 加载轮播滚动中的数据
     this.loadlunboData()
