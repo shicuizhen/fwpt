@@ -1,7 +1,7 @@
 <template>
   <div class="ques_publish center">
     <el-form :model="formData" :rules="rules" ref="formData" label-width="100px" class="demo-ruleForm">
-      <h3>发布信息</h3>
+      <h3>问题咨询-发布信息</h3>
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title"></el-input>
       </el-form-item>
@@ -122,10 +122,12 @@ export default {
 
 <style scoped>
 .ques_publish {
+  height: 600px;
   padding-top: 20px;
   position: relative;
 }
 .ques_publish form{
+  margin: auto;
   margin-top: 18px;
   border: 1px solid #C9C9C9;
   padding: 10px;

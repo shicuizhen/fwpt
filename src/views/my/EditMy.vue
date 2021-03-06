@@ -1,7 +1,7 @@
 <template>
   <div class="edit_my">
     <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
-      <h3>用户信息修改</h3>
+      <h3>{{ form.name }}信息修改</h3>
       <el-form-item label="学号" prop="sno">
         <el-input v-model="form.sno"></el-input>
       </el-form-item>
@@ -191,12 +191,13 @@ export default {
 
 <style scoped>
 .edit_my{
+  margin: auto;
+  height: 800px;
   padding-top: 20px;
-  padding-left: 20px;
   width: 60%;
 }
 .edit_my h3{
-  padding-left: 10px;
+  padding: 10px 20px;
   margin-bottom: 20px;
 }
 </style>

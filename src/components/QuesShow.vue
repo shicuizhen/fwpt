@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ques">
     <div v-if="this.sortName" class="sort_name">当前分类：{{this.sortName}}</div>
     <div class="ques_show">
       <p>{{this.cur_solve}}问题</p>
@@ -12,7 +12,7 @@
         <el-button @click="searchBySolve(3)" v-if="this.solveNum === 3" type="" icon="el-icon-check" circle></el-button>
       </div>
       <ul class="ques_detail">
-        <li v-for = "(item, index) in quesInformation"
+        <li v-for = "(item, index) in quesInformationPage"
             v-bind:key="index" :qid="item.id"
             @click="toQuesDetail(item.id)">
           <!--            :onclick="() => toQuesDetail(item.id)">-->
@@ -93,6 +93,9 @@
         </li>
       </ul>
     </div>
+    <el-button @click="getPage(index-1)">上一页</el-button>
+    <span style="padding: 0 20px; font-size: 14px;color: #ADADAD">共有{{this.pageNum}}页；当前为第{{this.index+1}}页</span>
+    <el-button @click="getPage(index+1)">下一页</el-button>
   </div>
 </template>
 
@@ -112,10 +115,13 @@ export default {
       showReply: false,
       showReplyDetail: false,
       showCommDetail: false,
+      index: 0,
+      pageNum: 0,
       formData: new FormData(),
       imgs: {},
       imgLen: 0,
       quesInformation: {},
+      quesInformationPage: {},
       quesReply: {},
       currentLiIndex: [
         { replay: -1 },
@@ -136,6 +142,28 @@ export default {
     }
   },
   methods: {
+    // 0    1       2
+    // 0-5  5-10   10-15
+    getPageNum () {
+      if (this.quesInformation.length / 5 === 0) {
+        this.pageNum = this.quesInformation.length / 5
+      } else {
+        this.pageNum = Math.ceil(this.quesInformation.length / 5)
+      }
+      console.log('this.pageNum')
+      console.log(this.pageNum)
+    },
+    getPage (index) {
+      console.log('index:' + index)
+      console.log('this.pageNum:' + this.pageNum)
+      if (index > 0 && index < this.pageNum) {
+        console.log('fuhe')
+        this.index = index
+        this.quesInformationPage = this.quesInformation.slice(index * 5, index * 5 + 5)
+      } else {
+        console.log('bufuhe')
+      }
+    },
     searchBySolve (num) {
       var url = ''
       switch (num) {
@@ -171,6 +199,9 @@ export default {
         }).then(resp => {
           if (resp.data.code === 200) {
             _this.quesInformation = resp.data.data
+            _this.quesInformationPage = _this.quesInformation.slice(0, 5)
+            _this.index = 0
+            _this.getPageNum()
           }
         }).catch(error => error)
       } else {
@@ -180,6 +211,9 @@ export default {
         }).then(resp => {
           if (resp.data.code === 200) {
             _this.quesInformation = resp.data.data
+            _this.quesInformationPage = _this.quesInformation.slice(0, 5)
+            _this.index = 0
+            _this.getPageNum()
           }
         }).catch(error => error)
       }
@@ -219,6 +253,9 @@ export default {
             console.log(resp.data.data)
             this.quesInformation = resp.data.data
             this.search_key = '关键字'
+            this.quesInformationPage = this.quesInformation.slice(0, 5)
+            this.index = 0
+            this.getPageNum()
           }
         }).catch(error => error)
       } else {
@@ -235,6 +272,9 @@ export default {
             console.log(resp.data.data)
             this.quesInformation = resp.data.data
             this.search_key = '关键字'
+            this.quesInformationPage = this.quesInformation.slice(0, 5)
+            this.index = 0
+            this.getPageNum()
           }
         }).catch(error => error)
       }
@@ -467,6 +507,9 @@ export default {
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.quesInformation = resp.data.data
+          _this.quesInformationPage = _this.quesInformation.slice(0, 5)
+          _this.index = 0
+          _this.getPageNum()
         }
       }).catch(error => error)
     },
@@ -485,9 +528,10 @@ export default {
           this.$router.back()
         } else if (resp.data.code === 200) {
           _this.quesInformation = resp.data.data
+          _this.quesInformationPage = _this.quesInformation.slice(0, 5)
+          _this.index = 0
+          _this.getPageNum()
           _this.sortName = resp.data.data[0].sortName
-          console.log('_this.sortName:')
-          console.log(_this.sortName)
         }
       }).catch(error => error)
     }

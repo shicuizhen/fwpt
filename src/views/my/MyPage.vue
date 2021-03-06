@@ -461,6 +461,7 @@ export default {
 /*我发布的内容*/
 .myPublish{
   padding-top: 28px;
+  height: 600px;
 }
 /*表格样式*/
 .el-tabs--left, .el-tabs--right {

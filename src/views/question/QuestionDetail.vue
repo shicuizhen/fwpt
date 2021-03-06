@@ -363,6 +363,7 @@ export default {
 
 <style scoped>
 .question_detail{
+  height: 1100px;
   margin-top: 0;
   padding-top: 10px;
 }

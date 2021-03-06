@@ -115,6 +115,9 @@ export default {
 </script>
 
 <style scoped>
+.sort_detail{
+  height: 1100px;
+}
 .left {
   width: 76%;
   position: relative;

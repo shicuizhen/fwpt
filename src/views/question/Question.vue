@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-    <div class="bottom"></div>
+<!--    <div class="bottom"></div>-->
   </div>
 </template>
 <script>
@@ -234,8 +234,7 @@ export default {
 .font-btn:last-child {
   position: relative;
 }
-.icon-fangda,
-.icon-shanchu {
+.icon-fangda,.icon-shanchu {
   font-size: 22px;
   color: #fff;
 }

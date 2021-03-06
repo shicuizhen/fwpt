@@ -12,6 +12,7 @@ import Login from '@/views/login/Login'
 import Register from '@/views/register/Register'
 import MyPage from '@/views/my/MyPage'
 import EditMy from '@/views/my/EditMy'
+import Approve from '@/views/approve/approve'
 
 Vue.use(VueRouter)
 
@@ -85,6 +86,11 @@ const routes = [
     path: '/edit_my',
     name: 'EditMy',
     component: EditMy
+  },
+  {
+    path: '/approve',
+    name: 'Approve',
+    component: Approve
   }
 ]
 

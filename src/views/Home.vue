@@ -26,8 +26,8 @@ export default {
 </script>
 <style>
   .home{
-    height: 512px;
-    background-color: #8DD6E0;
+    height: 612px;
+    /*background-color: #8DD6E0;*/
   }
   .home .el-carousel--horizontal {
     overflow-x: hidden;

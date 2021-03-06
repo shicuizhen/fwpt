@@ -117,7 +117,7 @@
         <h3>信息展示</h3>
       </div>
       <ul class="card">
-        <li v-for = "(item) in lostInformation" v-bind:key="item.id">
+        <li v-for = "(item) in lostInformationPage" v-bind:key="item.id">
           <i style="font-weight: 800; color:#FFF743; font-size: 24px;" class="icon iconfont" v-if="item.typeId === 0">&#xe66a;</i>
           <i style="font-weight: 400; color:#71AFFF; font-size: 20px;" class="icon iconfont" v-if="item.typeId === 1">&#xe634;</i>
 <!--          <svg t="1613353417192" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="17018" width="200" height="200"><path d="M553 222.3v-32c0-28-16.7-48-40-48-20 0-40 20-40 48v32" fill="#f4ea2a" p-id="17019" data-spm-anchor-id="a313x.7781069.0.i26" class="selected"></path><path d="M563 222.3h-20v-32c0-22.4-12.3-38-30-38s-30 20-30 38v32h-20v-32c0-15.6 5.3-30.2 15-41.1 9.5-10.7 22.2-16.9 35-16.9 29 0 50 24.4 50 58v32z" fill="#6D5346" p-id="17020"></path><path d="M473 402.3v60" fill="#FFF061" p-id="17021"></path><path d="M463 402.3h20v60h-20z" fill="#6D5346" p-id="17022"></path><path d="M553 462.3v-60" fill="#FFF061" p-id="17023"></path><path d="M543 402.3h20v60h-20z" fill="#6D5346" p-id="17024"></path><path d="M473 389.6v492.7h80V389.6" fill="#f4ea2a" p-id="17025" data-spm-anchor-id="a313x.7781069.0.i24" class="selected"></path><path d="M563 892.3H463V389.6h20v482.7h60V389.6h20z" fill="#6D5346" p-id="17026"></path><path d="M771.7 402.3H213l32.5-90.9-32.5-89.1h558.7L893 311.4z" fill="#d81e06" p-id="17027" data-spm-anchor-id="a313x.7781069.0.i22" class=""></path><path d="M775 412.3H198.8l36-100.9-36.1-99.1H775l134.8 99-134.8 101z m-547.8-20h541.2l107.9-80.9-107.8-79.1H227.3l28.8 79-28.9 81z" fill="#6D5346" p-id="17028"></path><path d="M254.3 462.3H813l-32.5 80 32.5 80H254.3l-121.3-80z" fill="#d81e06" p-id="17029" data-spm-anchor-id="a313x.7781069.0.i23" class=""></path><path d="M827.8 632.3H251.3l-136.5-90 136.5-90h576.5l-36.5 90 36.5 90z m-570.5-20h540.8l-28.4-70 28.4-70H257.3l-106.1 70 106.1 70z" fill="#6D5346" p-id="17030"></path></svg>-->
@@ -131,6 +131,9 @@
         </li>
         <div style="clear: both"></div>
       </ul>
+      <el-button @click="getPage(index-1)">上一页</el-button>
+      <span style="padding: 0 20px; font-size: 14px;color: #ADADAD">共有{{this.pageNum}}页；当前为第{{this.index+1}}页</span>
+      <el-button @click="getPage(index+1)">下一页</el-button>
     </div>
   </div>
 </template>
@@ -153,7 +156,10 @@ export default {
         2: null,
         3: null
       },
-      websocket: null
+      websocket: null,
+      lostInformationPage: {},
+      index: 0,
+      pageNum: 0
     }
   },
   destroyed () {
@@ -163,6 +169,25 @@ export default {
     }
   },
   methods: {
+    // 0    1       2
+    // 0-10  10-20   20-30
+    getPageNum () {
+      if (this.lostInformation.length / 10 === 0) {
+        this.pageNum = this.lostInformation.length / 10
+      } else {
+        this.pageNum = Math.ceil(this.lostInformation.length / 10)
+      }
+    },
+    getPage (index) {
+      console.log('index:' + index)
+      console.log('this.pageNum:' + this.pageNum)
+      if (index > 0 && index < this.pageNum) {
+        this.index = index
+        console.log('index:')
+        console.log(index)
+        this.lostInformationPage = this.lostInformation.slice(index * 10, index * 10 + 10)
+      }
+    },
     // 初始化weosocket
     initWebSocket () {
       if (typeof (WebSocket) === 'undefined') {
@@ -250,9 +275,9 @@ export default {
       }).then(resp => {
         if (resp.data.code === 200) {
           this.lostInformation = resp.data.data.content
-          console.log('=======================')
-          console.log(resp.data.data)
-          // _this.lostInformation = resp.data.data
+          this.lostInformationPage = this.lostInformation.slice(0, 10)
+          this.index = 0
+          this.getPageNum()
         }
         this.searchBy = {
           1: null,
@@ -271,6 +296,9 @@ export default {
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.lostInformation = resp.data.data
+          _this.lostInformationPage = _this.lostInformation.slice(0, 10)
+          _this.index = 0
+          _this.getPageNum()
         }
       }).catch(error => error)
     },
@@ -327,19 +355,17 @@ export default {
   },
   // 页面加载时触发的函数
   mounted: function () {
-    // 延时滚动
-    setTimeout(() => {
-      this.runMarquee()
-    }, 1000)
+    this.initWebSocket()
     this.loadLostInformation()
     // 加载轮播滚动中的数据
     this.loadlunboData()
     // 加载搜索数据
     this.loadKindId()
     this.loadPlaceId()
-  },
-  created () {
-    this.initWebSocket()
+    // 延时滚动
+    setTimeout(() => {
+      this.runMarquee()
+    }, 1000)
   }
 }
 </script>
@@ -353,17 +379,17 @@ export default {
 .search_but{
   border: 1px solid #767676;
   padding: 0px 5px;
-  /*color: #fff;*/
-  /*background-color: #000000;*/
 }
 .search_but:hover{
   cursor: pointer;
   border: 1px solid #000000;
   color: #000;
   background-color: #F1F1F1;
-  /*border: 1px solid #767676;*/
 }
 .key-search li{
   cursor: pointer;
+}
+.show{
+  height: 600px;
 }
 </style>
