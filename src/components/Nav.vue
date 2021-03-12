@@ -2,7 +2,7 @@
   <!--顶部标签栏-->
   <div class="nav">
     <div class="cen nav_cen">
-      <p>sjzxyshfwpt</p>
+      <p>石家庄学院生活服务平台</p>
       <ul class="bql" id="bql">
         <li @click="bgColor(1)" :class="{selected:1===this.index}"><router-link to="/home">首页</router-link></li>
         <li @click="bgColor(2)" :class="{selected:2===this.index}"><router-link to="/question">问题咨询</router-link></li>
@@ -19,7 +19,7 @@
            position: absolute;
            right: 40px;
            top: 18px;">
-          <img src="../assets/images/1.jpeg" alt="" style="
+          <img :src="imgItem()" alt="" style="
            width: 23px;
            height: 23px;
            display: inline-block;
@@ -53,29 +53,51 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { exportImgUrl } from '../main'
 export default {
   name: 'Nav',
   data () {
     return {
       index: null,
       login: '登录',
-      uid: null
+      uid: null,
+      photo: ''
     }
   },
   methods: {
+    imgItem () {
+      var photo = this.photo
+      if (photo !== '' && photo !== null) {
+        var str = photo.replace(exportImgUrl, '')
+        return require('@/assets/' + str)
+      }
+      return null
+    },
     bgColor (index) {
       this.index = index
     },
     exit () {
       localStorage.setItem('id', null)
       localStorage.clear()
+      const redirect = decodeURIComponent('/home')
+      this.$router.push({ path: redirect })
       location.reload()
     },
     loadUid () {
-      console.log('-----id:' + this.uid)
       this.uid = localStorage.getItem('id')
-      console.log('id:' + this.uid)
-      // location.reload()
+      var _this = this
+      axios({
+        method: 'post',
+        url: 'users/datas/uid',
+        params: {
+          uid: localStorage.getItem('id')
+        }
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          _this.photo = resp.data.data.photoAddress
+        }
+      }).catch(error => error)
     }
   },
   // mounted: function () {
@@ -128,12 +150,12 @@ export default {
   width: 50%;
   line-height: 56px;
   color: #F9F9F9;
-  font-size: 22px;
+  font-size: 20px;
 }
 /*中间标签栏bql*/
 .nav .bql{
   position: absolute;
-  right: 50%;
+  right: 38%;
   top: 0;
   height: 56px;
 }

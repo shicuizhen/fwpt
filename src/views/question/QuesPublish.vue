@@ -55,6 +55,26 @@ export default {
     }
   },
   methods: {
+    // 自定义弹框
+    openAlert () {
+      console.log('自定义弹框')
+      this.$confirm('您还没有登录，请登录', '提示', {
+        confirmButtonText: '好的',
+        cancelButtonText: '稍等',
+        type: 'warning'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '请填写学号信息，进行登录!',
+          beforeClose: this.$router.push({ path: '/login' })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '记得登录哦!'
+        })
+      })
+    },
     getSortData () {
       axios({
         method: 'get',

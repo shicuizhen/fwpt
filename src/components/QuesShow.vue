@@ -15,13 +15,10 @@
         <li v-for = "(item, index) in quesInformationPage"
             v-bind:key="index" :qid="item.id"
             @click="toQuesDetail(item.id)">
-          <!--            :onclick="() => toQuesDetail(item.id)">-->
           <div class="det_show">
             <h3>{{item.title}}</h3>
             <div>
-              <img src="../assets/images/1.jpeg" alt="">
-              <!--                <img src="file:///F:/images/1.jpeg" alt="">-->
-              <!--                <img src="require('../assets/images/'+'F:/图片/8180.jpg')"  width="112" height="112">-->
+              <img :src="imgItem(item.photo)" alt="">
               <span>{{item.createBy}}</span>
               <span>{{ item.createTime }}前发布</span>
               <span>{{ item.sortName }}</span>
@@ -49,28 +46,6 @@
             ></textarea>
             <!--              <div :onclick="submitReply(item.id)">提交</div>-->
             <button @click.stop="submitReply(item.id)">提交</button>
-            <!-- 图片上传及预览=======开始=========================================================-->
-            <!--
-                          <el-upload
-                            action="http://localhost:8180/imgUpload"
-                            list-type="picture-card"
-                            accept="image/*"
-                            :limit="imgLimit"
-                            :file-list="productImgs"
-                            :multiple="isMultiple"
-                            :on-preview="handlePictureCardPreview"
-                            :on-remove="handleRemove"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload"
-                            :on-exceed="handleExceed"
-                            :on-error="imgUploadError">
-                            <i class="el-icon-plus"></i>
-                          </el-upload>
-                          <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="dialogImageUrl">
-                          </el-dialog>
-                            -->
-            <!-- 图片上传及预览=====结束===========================================================-->
           </div>
           <!--    点击回答问题按钮出现-----结束----======================================================-->
           <!--2.回答信息展示----点击“展开”按钮就显示----===========================================================-->
@@ -79,7 +54,7 @@
               <div class="det_show">
                 <p>{{ item2.content }}</p>
                 <div>
-                  <img class="reply_img" src="../assets/images/1.jpeg" alt="">
+                  <img class="reply_img" :src="imgItem(item2.photo)" alt="">
                   <span>{{ item2.createBy }}</span>
                   <span>{{ item2.createTime }} 发布</span>
                   <p class="likeShow" v-if="item2.likeNum>0">{{ item2.likeNum }}</p>
@@ -101,6 +76,7 @@
 
 <script>
 import '../assets/css/question.css'
+import { exportImgUrl } from '../main'
 const axios = require('axios')
 export default {
   name: 'quesShow',
@@ -128,22 +104,18 @@ export default {
         { comm: -1 },
         { writeReplay: -1 }
       ],
-      // 图片上传
-      dialogImageUrl: '',
-      dialogVisible: false,
-      productImgs: [],
-      isMultiple: true,
-      imgLimit: 3,
-      // 图片上传结束
-      imgUrlStr: '',
       // 存放点赞后的回答id
-      hasLike: [],
-      QuesDetailURL: 'http://localhost:8080/question_detail'
+      hasLike: []
     }
   },
   methods: {
-    // 0    1       2
-    // 0-5  5-10   10-15
+    imgItem (photo) {
+      if (photo !== '' && photo !== null) {
+        var str = photo.replace(exportImgUrl, '')
+        return require('@/assets/' + str)
+      }
+      return null
+    },
     getPageNum () {
       if (this.quesInformation.length / 5 === 0) {
         this.pageNum = this.quesInformation.length / 5
@@ -156,8 +128,7 @@ export default {
     getPage (index) {
       console.log('index:' + index)
       console.log('this.pageNum:' + this.pageNum)
-      if (index > 0 && index < this.pageNum) {
-        console.log('fuhe')
+      if (index >= 0 && index < this.pageNum) {
         this.index = index
         this.quesInformationPage = this.quesInformation.slice(index * 5, index * 5 + 5)
       } else {
@@ -331,40 +302,6 @@ export default {
         }
       }).catch(error => error)
     },
-    // 图片上传及预览--------------------开始----------------------------------------
-    handleRemove (file, fileList) { // 移除图片
-      console.log(file, fileList)
-    },
-    handlePictureCardPreview (file) { // 预览图片时调用
-      console.log(file)
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
-    },
-    beforeAvatarUpload (file) { // 文件上传之前调用做一些拦截限制
-      console.log(file)
-      const isJPG = true
-      const isLt2M = file.size / 1024 / 1024 < 2
-      if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
-    },
-    handleAvatarSuccess (res, file) { // 图片上传成功
-      console.log('this.imgUrlStr:' + this.imgUrlStr)
-      this.imgUrlStr = ';' + res.data
-      console.log('this.imgUrlStr----:' + this.imgUrlStr)
-      this.imageUrl = URL.createObjectURL(file.raw)
-      console.log('imageUrl:' + this.imageUrl)
-    },
-    handleExceed (files, fileList) { // 图片上传超过数量限制
-      this.$message.error('上传图片不能超过3张!')
-      console.log(files, fileList)
-    },
-    imgUploadError (err, file, fileList) { // 图片上传失败调用
-      console.log(err)
-      this.$message.error('上传图片失败!')
-    },
-    // 图片上传及预览----------结束-------------------------
     // 提交回答
     submitReply (qid) {
       var _this = this

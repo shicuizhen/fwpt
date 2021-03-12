@@ -181,7 +181,7 @@ export default {
     getPage (index) {
       console.log('index:' + index)
       console.log('this.pageNum:' + this.pageNum)
-      if (index > 0 && index < this.pageNum) {
+      if (index >= 0 && index < this.pageNum) {
         this.index = index
         console.log('index:')
         console.log(index)

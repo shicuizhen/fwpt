@@ -8,7 +8,7 @@
           <h3>{{quesInformation.title}}</h3>
           <p>{{quesInformation.content}}</p>
           <div>
-            <img src="../../assets/images/1.jpeg" alt="">
+            <img :src="imgItem(quesInformation.photo)" alt="">
             <span>{{ quesInformation.createBy }}</span>
             <span>{{ quesInformation.createTime }}前发布</span>
             <span>{{ quesInformation.sortName }}</span>
@@ -66,7 +66,7 @@
             <div class="det_show">
               <p>{{ item.content }}</p>
               <div>
-                <img class="reply_img" src="../../assets/images/1.jpeg" alt="">
+                <img class="reply_img" :src="imgItem(item.photo)" alt="">
                 <span>{{ item.createBy }}</span>
                 <span>{{ item.createTime }}前发布</span>
                 <p class="likeShow" v-if="item.likeNum>0">{{ item.likeNum }}</p>
@@ -125,6 +125,7 @@
 
 <script>
 import '../../assets/css/question.css'
+import { exportImgUrl } from '@/main'
 const axios = require('axios')
 export default {
   name: 'QuestionDetail',
@@ -343,6 +344,13 @@ export default {
       this.$router.push({
         path: '/sort_detail/' + sid
       })
+    },
+    imgItem (photo) {
+      if (photo !== '' && photo !== null) {
+        var str = photo.replace(exportImgUrl, '')
+        return require('@/assets/' + str)
+      }
+      return null
     }
   },
   created () {

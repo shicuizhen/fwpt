@@ -19,7 +19,7 @@ module.exports = {
       '/api': {
         target: 'http://localhost:8180/',
         changeOrigin: true
-      },
+      }
     }
   }
 }

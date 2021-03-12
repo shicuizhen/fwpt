@@ -27,3 +27,5 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+
+export const exportImgUrl = 'F:\\bishe\\fwpt\\src\\assets\\'

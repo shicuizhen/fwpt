@@ -2,10 +2,10 @@
   <my-marquee :lists="lists"></my-marquee>
 </template>
 <script>
-import LostDetail from './my-marquee'
+// import LostDetail from './my-marquee'
 export default {
   name: 'LostDetail',
-  data (){
+  data () {
     return {
       lists: [
         '连雨不知春去',

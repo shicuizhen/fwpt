@@ -1,7 +1,7 @@
 <template>
 <div class="my_page center">
   <div class="my">
-    <img src="../../assets/images/3.jpeg" alt="">
+    <img :src="imgUrl" alt="">
     <div class="data">
       <div class="nick">
         <h3>{{ mime.nick }}</h3>
@@ -27,16 +27,6 @@
           :data="QuesData"
           style="width: 100%"
           :default-sort = "{prop: 'date', order: 'descending'}">
-<!--          <el-table-column-->
-<!--            prop="date"-->
-<!--            label="创建时间"-->
-<!--            sortable-->
-<!--            width="180">-->
-<!--            <template slot-scope="scope">-->
-<!--              <i class="el-icon-time"></i>-->
-<!--              <span style="margin-left: 10px">{{ scope.row.date }}</span>-->
-<!--            </template>-->
-<!--          </el-table-column>-->
           <el-table-column
             prop="createTime"
             label="创建时间"
@@ -63,9 +53,6 @@
 
           <el-table-column label="操作">
             <template slot-scope="scope">
-<!--              <el-button-->
-<!--                size="mini"-->
-<!--                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
               <el-button
                 size="mini"
                 type="danger"
@@ -148,9 +135,6 @@
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <!--              <el-button-->
-              <!--                size="mini"-->
-              <!--                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
               <el-button
                 size="mini"
                 type="danger"
@@ -197,9 +181,6 @@
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <!--              <el-button-->
-              <!--                size="mini"-->
-              <!--                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>-->
               <el-button
                 size="mini"
                 type="danger"
@@ -208,13 +189,43 @@
           </el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane label="我的话板">我的话板</el-tab-pane>
+      <el-tab-pane label="我的话板">
+        <el-table
+          :data="MoodData"
+          style="width: 100%"
+          :default-sort = "{prop: 'date', order: 'descending'}">
+          <el-table-column
+            prop="createTime"
+            label="创建时间"
+            sortable
+            width="280">
+          </el-table-column>
+          <el-table-column
+            prop="content"
+            label="内容"
+            sortable>
+          </el-table-column>
+          <el-table-column
+            prop="nick"
+            label="昵称">
+          </el-table-column>
+          <el-table-column label="操作">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                type="danger"
+                @click="handleDeleteMood(scope.$index, scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </div>
 </template>
 <script>
 import axios from 'axios'
+import { exportImgUrl } from '../../main'
 export default {
   name: 'MyPage',
   data () {
@@ -224,7 +235,9 @@ export default {
       QuesData: [],
       ReplyData: [],
       LostData: [],
-      GetData: []
+      GetData: [],
+      MoodData: [],
+      imgUrl: ''
     }
   },
   methods: {
@@ -305,6 +318,22 @@ export default {
         }
       }).catch(error => error)
     },
+    handleDeleteMood (index, row) {
+      console.log('index-row')
+      console.log(row.id)
+      var id = row.id
+      axios({
+        method: 'delete',
+        url: 'mood/del/%7Bid%7D',
+        params: {
+          id: id
+        }
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          this.loadMoodData()
+        }
+      }).catch(error => error)
+    },
     formatter (row, column) {
       return row.address
     },
@@ -321,6 +350,8 @@ export default {
         if (resp.data.code === 200) {
           console.log(resp.data.data)
           _this.mime = resp.data.data
+          var str = resp.data.data.photoAddress.replace(exportImgUrl, '')
+          _this.imgUrl = require('@/assets/' + str)
         }
       }).catch(error => error)
     },
@@ -387,6 +418,20 @@ export default {
           console.log(_this.GetData)
         }
       }).catch(error => error)
+    },
+    loadMoodData () {
+      var _this = this
+      axios({
+        method: 'get',
+        url: 'mood/%7Buid%7D',
+        params: {
+          uid: localStorage.getItem('id')
+        }
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          _this.MoodData = resp.data.data
+        }
+      }).catch(error => error)
     }
   },
   mounted: function () {
@@ -395,6 +440,7 @@ export default {
     this.loadReplyData()
     this.loadLostData()
     this.loadGetData()
+    this.loadMoodData()
   }
 }
 </script>

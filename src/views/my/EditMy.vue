@@ -11,8 +11,25 @@
       <el-form-item label="昵称" prop="nick">
         <el-input v-model="form.nick"></el-input>
       </el-form-item>
-
-      <el-form-item class="form_type" label="性别" prop="sex">
+      <el-form-item label="头像">
+        <div class="form-group">
+          <div class="control-form">
+            <p class="help-block">(建议图片格式为：JPEG/BMP/PNG/GIF，大小不超过5M)</p>
+            <ul class="upload-imgs">
+              <li v-if="imgLen>=1 ? false : true">
+                <input type="file" class="upload" @change="addImg" ref="inputer" multiple accept="image/png,image/jpeg,image/gif,image/jpg"/>
+                <a class="add">
+                  <i class="iconfont icon-plus"></i><p>点击上传</p>
+                </a>
+              </li>
+              <li v-for='(value, key) in imgs' v-bind:key="key">
+                <p class="img"><img :src="getObjectURL(value)"><a class="close" @click="delImg(key)">×</a></p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </el-form-item>
+      <el-form-item class="form_type" label="性别" v-model="sex" prop="sex">
         <el-radio-group v-model="form.sex">
           <el-radio label="0">男</el-radio>
           <el-radio label="1">女</el-radio>
@@ -68,23 +85,7 @@ export default {
         { name: '2' },
         { name: '3' }
       ],
-      form: {
-        sno: '',
-        name: '',
-        password: '',
-        nick: '',
-        sex: -1,
-        birthday: '',
-        photoAddress: '',
-        grade: '',
-        major: '',
-        phone: '',
-        email: '',
-        createdBy: null,
-        createTime: '',
-        updateBy: null,
-        updateTime: ''
-      },
+      form: {},
       rules: {
         sno: [
           { required: true, message: '请填写学号信息', trigger: 'blur' },
@@ -99,7 +100,7 @@ export default {
           { min: 1, max: 8, message: '长度为1-8位', trigger: 'blur' }
         ],
         sex: [
-          { required: true, message: '请选择性别', trigger: 'change' }
+          { required: true, message: '请选择性别', trigger: 'blur' }
         ],
         birthday: [
           { required: true, message: '请选择出生年月日', trigger: 'change' }
@@ -121,7 +122,16 @@ export default {
           { required: true, message: '请填写密码', trigger: 'blur' },
           { min: 6, max: 6, message: '长度为6位', trigger: 'blur' }
         ]
-      }
+      },
+      // 图片上传
+      imageUrl: '',
+      // 图片上传，回显
+      formData: new FormData(),
+      imgs: {},
+      imgLen: 0,
+      // 图片base64编码
+      baseData: '',
+      baseResultUrl: ''
     }
   },
   methods: {
@@ -129,6 +139,7 @@ export default {
       this.$refs[formName].resetFields()
     },
     submitForm (formName) {
+      this.form.photoAddress = this.baseResultUrl
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // this.form.lostTime = this.dateFormat(this.form.lostTime).toString()
@@ -139,24 +150,9 @@ export default {
             data: this.form
           }).then(resp => {
             if (resp.data.code === 200) {
-              // 添加用户完成，将默认数据置空
-              this.form = {
-                sno: '',
-                name: '',
-                password: '',
-                nick: '',
-                sex: -1,
-                birthday: '',
-                photoAddress: '',
-                grade: -1,
-                major: '',
-                phone: '',
-                email: '',
-                createdBy: null,
-                createTime: '',
-                updateBy: null,
-                updateTime: ''
-              }
+              console.log('-============================')
+              const redirect = decodeURIComponent('/my_page')
+              this.$router.push({ path: redirect })
             }
           }).catch(error => error)
         } else {
@@ -175,12 +171,65 @@ export default {
         }
       }).then(resp => {
         if (resp.data.code === 200) {
-          console.log('用户信息')
-          console.log(resp.data.data)
           _this.form = resp.data.data
-          _this.form.sex = -1
         }
       }).catch(error => error)
+    },
+    // 图片上传
+    addImg (event) {
+      var _this = this
+      var reader = new FileReader()
+      const inputDOM = this.$refs.inputer
+      // 通过DOM取文件数据
+      this.fil = inputDOM.files
+      // 使用该对象读取file文件
+      reader.readAsDataURL(this.fil[0])
+
+      // 校验图片
+      const oldLen = this.imgLen
+      const len = this.fil.length + oldLen
+      if (len > 1) {
+        alert('最多可上传1张')
+        return false
+      }
+      for (let i = 0; i < this.fil.length; i++) {
+        const size = Math.floor(this.fil[i].size / 1024)
+        if (size > 5 * 1024 * 1024) {
+          alert('请选择5M以内的图片！')
+          return false
+        }
+        this.imgLen++
+        this.$set(this.imgs, this.fil[i].name + '?' + new Date().getTime() + i, this.fil[i])
+      }
+      // 读取文件成功后执行的方法函数
+      reader.onload = function (e) {
+        _this.baseData = e.target.result
+        axios.post('users/img', {
+          baseData: _this.baseData
+        }, {
+          'Content-Type': 'application/json', charset: 'UTF-8'
+        }).then(resp => {
+          if (resp.data.code === 200) {
+            _this.baseResultUrl = resp.data.data
+          }
+        })
+      }
+    },
+    getObjectURL (file) {
+      var url = null
+      if (window.createObjectURL !== undefined) { // basic
+        url = window.createObjectURL(file)
+      } else if (window.URL !== undefined) { // mozilla(firefox)
+        url = window.URL.createObjectURL(file)
+      } else if (window.webkitURL !== undefined) { // webkit or chrome
+        url = window.webkitURL.createObjectURL(file)
+      }
+      // url是http动态地址
+      return url
+    },
+    delImg (key) {
+      this.$delete(this.imgs, key)
+      this.imgLen--
     }
   },
   mounted: function () {

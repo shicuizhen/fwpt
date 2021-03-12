@@ -92,7 +92,6 @@ export default {
                 sno: '',
                 password: ''
               }
-              console.log('------------')
             } else {
               // 提示用户登录信息错误
               alert(resp.data.data)
@@ -118,6 +117,7 @@ export default {
     font-size: 18px;
   }
   .login{
+    height: 600px;
     padding-top: 20px;
     padding-left: 20px;
     width: 60%;

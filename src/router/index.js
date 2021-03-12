@@ -12,7 +12,7 @@ import Login from '@/views/login/Login'
 import Register from '@/views/register/Register'
 import MyPage from '@/views/my/MyPage'
 import EditMy from '@/views/my/EditMy'
-import Approve from '@/views/approve/approve'
+import Report from '@/views/report/report'
 
 Vue.use(VueRouter)
 
@@ -88,9 +88,9 @@ const routes = [
     component: EditMy
   },
   {
-    path: '/approve',
-    name: 'Approve',
-    component: Approve
+    path: '/report',
+    name: 'Report',
+    component: Report
   }
 ]
 

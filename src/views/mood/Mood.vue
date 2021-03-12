@@ -89,7 +89,6 @@
   </div>
 </template>
 <script>
-import '../../assets/fonts/iconfont.js'
 import Vue from 'vue'
 import { vueBaberrage, MESSAGE_TYPE } from 'vue-baberrage'
 Vue.use(vueBaberrage)
@@ -320,7 +319,7 @@ icon_font svg{
 }
 .block h3{
   font-size: 24px;
-  padding: 40px 0 20px 0;
+  padding: 10px 0 20px 0;
   font-family: 隶书;
   color: #7CD0A4;
 }
