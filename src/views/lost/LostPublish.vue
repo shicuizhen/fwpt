@@ -135,7 +135,7 @@ export default {
         ],
         name: [
           { required: true, message: '请输入物品名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+          { min: 2, max: 5, message: '长度在 2 到 10 个字符', trigger: 'blur' }
         ],
         lostTime: [
           { required: true, message: '请选择时间', trigger: 'change' }
@@ -171,6 +171,45 @@ export default {
     }
   },
   methods: {
+    // 初始化weosocket
+    initWebSocket () {
+      if (typeof (WebSocket) === 'undefined') {
+        alert('您的浏览器不支持WebSocket')
+        return false
+      }
+      var id = localStorage.getItem('id')
+      if (id === null) {
+        id = '未知用户'
+      }
+      const wsuri = 'ws://localhost:8180/webSocket/' + id // websocket地址
+      this.websocket = new WebSocket(wsuri)
+      this.websocket.onopen = this.websocketonopen
+      this.websocket.onmessage = this.websocketonmessage
+      this.websocket.onerror = this.websocketonerror
+      this.websocket.onclose = this.websocketclose
+    },
+    // 连接成功
+    websocketonopen () {
+      console.log('WebSocket连接成功')
+    },
+    // 接收后端返回的数据
+    websocketonmessage (e) {
+      console.log('e:')
+      console.log(e)
+      console.log('后台发过来的数据：')
+      console.log(e.data)
+      this.socketPush.push(e.data)
+    },
+    // 连接建立失败重连
+    websocketonerror (e) {
+      console.log('连接失败的信息：', e)
+      this.initWebSocket() // 连接失败后尝试重新连接
+    },
+    // 关闭连接
+    websocketclose (e) {
+      console.log('断开连接', e)
+    },
+
     loadKindIds () {
       var _this = this
       axios({
@@ -255,7 +294,7 @@ export default {
             if (resp.data.code === 200) {
               this.form = {
                 type: 0,
-                kindId: -1,
+                kindId: null,
                 id: null,
                 name: '', // 物品名称
                 lostTime: '',
@@ -297,6 +336,7 @@ export default {
   },
   // 页面加载时触发的函数
   mounted: function () {
+    this.initWebSocket()
     this.loadKindIds()
     this.loadPlaceIds()
     // 延时滚动
