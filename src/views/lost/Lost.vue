@@ -9,7 +9,7 @@
       </h3>
       <div class="marquee-box">
         <ul class="marquee-ul" id="marquee-ul" v-if="socketPush">
-          <li class="marquee-list" v-for='(value,key) in socketPush' v-bind:key="key" v-html="value" :id="key==2?'marquee':''"></li>
+          <li class="marquee-list" v-for='(value,key) in socketPush' v-bind:key="key" v-html="value.str" :id="key==2?'marquee':''"></li>
         </ul>
       </div>
     </div>
@@ -170,10 +170,6 @@ export default {
     },
     // 接收后端返回的数据
     websocketonmessage (e) {
-      console.log('e:')
-      console.log(e)
-      console.log('后台发过来的数据：')
-      console.log(e.data)
       this.socketPush.push(e.data)
     },
     // 连接建立失败重连
@@ -214,11 +210,8 @@ export default {
       }
     },
     search () {
-      console.log('time1:' + this.time1)
-      console.log('time2:' + this.time2)
       axios({
         method: 'post',
-        // url: 'lostInformation/getSearch',
         url: 'lostInformation/mybatisSearch',
         data: {
           id: 0,
@@ -285,7 +278,9 @@ export default {
         url: 'lostInformation/lunbodata'
       }).then(resp => {
         if (resp.data.code === 200) {
+          console.log('---------------------------------------------------------')
           _this.socketPush = resp.data.data
+          console.log(_this.socketPush)
         }
       }).catch(error => error)
     },

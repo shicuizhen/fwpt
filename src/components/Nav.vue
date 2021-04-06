@@ -39,7 +39,7 @@
           </li>
           <li>
             <i class="el-icon-setting" aria-hidden="true"></i>
-            <a href="">个人设置</a>
+            <a href="/edit_my">个人设置</a>
           </li>
           <li>
             <i class="el-icon-switch-button" aria-hidden="true"></i>

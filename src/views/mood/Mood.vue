@@ -115,7 +115,7 @@ export default {
         ]
       },
       // 弹幕
-      msg: '马优晨就是个辣鸡~',
+      msg: '~',
       barrageIsShow: true,
       messageHeight: 40,
       boxHeight: 280,
@@ -245,10 +245,6 @@ export default {
               type: MESSAGE_TYPE.NORMAL
               // barrageStyle: v.barrageStyle
             })
-          })
-          _this.barrageList.forEach((v) => {
-            console.log('barrageList:')
-            console.log(v)
           })
         }
       }).catch(error => error)
