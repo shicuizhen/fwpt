@@ -29,7 +29,7 @@
           </div>
         </div>
       </el-form-item>
-      <el-form-item class="form_type" label="性别" v-model="sex" prop="sex">
+      <el-form-item class="form_type" label="性别" prop="sex">
         <el-radio-group v-model="form.sex">
           <el-radio label="0">男</el-radio>
           <el-radio label="1">女</el-radio>
@@ -69,10 +69,6 @@ export default {
   name: 'EditMy',
   data () {
     return {
-      sexs: {
-        0: '男',
-        1: '女'
-      },
       grades: [
         { name: '17' },
         { name: '18' },
@@ -165,7 +161,7 @@ export default {
       var _this = this
       axios({
         method: 'post',
-        url: 'users/datas/uid',
+        url: 'users/datas/%7Buid%7D',
         params: {
           uid: localStorage.getItem('id')
         }

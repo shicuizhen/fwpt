@@ -311,7 +311,7 @@ export default {
       }
       var jsonData = {
         content: _this.reply_data,
-        createBy: 0, // 当前用户id
+        createBy: localStorage.getItem('id'), // 当前用户id
         qid: qid,
         createTime: null,
         id: null

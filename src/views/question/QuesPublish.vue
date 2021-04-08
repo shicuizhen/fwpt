@@ -124,7 +124,7 @@ export default {
                 title: '',
                 content: '',
                 isFinish: 0,
-                createBy: 0 // 当前用户id
+                createBy: localStorage.getItem('id') // 当前用户id
               }
             }
           }).catch(error => error)

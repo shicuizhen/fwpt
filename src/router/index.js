@@ -6,6 +6,7 @@ import Mood from '../views/mood/Mood.vue'
 import Question from '../views/question/Question'
 import QuestionDetail from '../views/question/QuestionDetail'
 import LostPublish from '@/views/lost/LostPublish'
+import LostEdit from '@/views/lost/LostEdit'
 import SortDetail from '@/views/question/SortDetail'
 import QuesPublish from '@/views/question/QuesPublish'
 import Login from '@/views/login/Login'
@@ -71,6 +72,11 @@ const routes = [
     path: '/lost_publish',
     name: 'LostPublish',
     component: LostPublish
+  },
+  {
+    path: '/lost_edit/:lid',
+    name: 'LostEdit',
+    component: LostEdit
   },
   {
     path: '/ques_publish',

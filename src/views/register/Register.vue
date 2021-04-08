@@ -11,13 +11,12 @@
       <el-form-item label="昵称" prop="nick">
         <el-input v-model="form.nick"></el-input>
       </el-form-item>
-<!--      -->
       <el-form-item label="头像">
         <div class="form-group">
           <div class="control-form">
             <p class="help-block">(建议图片格式为：JPEG/BMP/PNG/GIF，大小不超过5M)</p>
             <ul class="upload-imgs">
-              <li v-if="imgLen>=1 ? false : true">
+              <li v-if="imgLen>1 || imgLen===1 ? false : true">
                 <input type="file" class="upload" @change="addImg" ref="inputer" multiple accept="image/png,image/jpeg,image/gif,image/jpg"/>
                 <a class="add">
                   <i class="iconfont icon-plus"></i><p>点击上传</p>
@@ -30,7 +29,6 @@
           </div>
         </div>
       </el-form-item>
-<!--      -->
       <el-form-item class="form_type" label="性别" prop="sex">
         <el-radio-group v-model="form.sex">
           <el-radio label="0">男</el-radio>
@@ -49,9 +47,14 @@
           <el-option :label=item.name :value=item.name v-for="item in grades" v-bind:key="item.name"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="专业" prop="major">
+      <el-form-item label="院系" prop="college">
+        <el-select v-model="form.college" placeholder="请选择院系">
+          <el-option :label=item.college :value=item.id v-for="item in colleges" v-bind:key="item.college"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="form.college" label="专业" prop="major">
         <el-select v-model="form.major" placeholder="请选择专业">
-          <el-option :label=item.name :value=item.name v-for="item in majors" v-bind:key="item.name"></el-option>
+          <el-option :label=item.major :value=item.id v-for="item in majors" v-bind:key="item.major"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="手机号码" prop="phone">
@@ -78,22 +81,13 @@ export default {
   name: 'Register',
   data () {
     return {
-      sexs: {
-        0: '男',
-        1: '女'
-      },
       grades: [
         { name: '17' },
         { name: '18' },
         { name: '19' },
         { name: '20' }
       ],
-      majors: [
-        { name: '软件工程' },
-        { name: '计算机科学与技术' },
-        { name: '2' },
-        { name: '3' }
-      ],
+      majors: {},
       form: {
         sno: '',
         name: '',
@@ -103,6 +97,7 @@ export default {
         birthday: '',
         photoAddress: null,
         grade: '',
+        college: null,
         major: '',
         phone: '',
         email: '',
@@ -131,6 +126,9 @@ export default {
         grade: [
           { required: true, message: '请选择年级', trigger: 'change' }
         ],
+        college: [
+          { required: true, message: '请选择院系', trigger: 'change' }
+        ],
         major: [
           { required: true, message: '请选择专业', trigger: 'change' }
         ],
@@ -154,7 +152,8 @@ export default {
       imgLen: 0,
       // 图片base64编码
       baseData: '',
-      baseResultUrl: ''
+      baseResultUrl: '',
+      colleges: null
     }
   },
   methods: {
@@ -243,7 +242,7 @@ export default {
             if (resp.data.code === 200) {
               this.$router.push({ path: '/login' })
             } else {
-              location.reload()
+              // location.reload()
               alert('该用户已注册！')
             }
           }).catch(error => error)
@@ -268,6 +267,50 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
       }
       return isJPG && isLt2M
+    },
+    loadColleges () {
+      axios({
+        method: 'get',
+        url: 'college/datas',
+        data: this.form
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          this.colleges = resp.data.data
+          console.log('------------------')
+          console.log(this.colleges)
+        }
+      }).catch(error => error)
+    },
+    loadMajor () {
+      console.log('loadmajor: ')
+      console.log(this.form.college)
+      if (this.form.college !== null) {
+        var _this = this
+        axios({
+          method: 'get',
+          url: 'major/datas/%7Bcid%7D',
+          params: {
+            cid: this.form.college
+          }
+        }).then(resp => {
+          if (resp.data.code === 200) {
+            _this.majors = resp.data.data
+            console.log('_this.majors:' + _this.majors)
+            console.log(_this.majors)
+          }
+        }).catch(error => error)
+      } else {
+        alert('您还没有选择院系呢！')
+      }
+    }
+  },
+  mounted: function () {
+    this.loadColleges()
+  },
+  watch: {
+    'form.college' () {
+      this.form.major = ''
+      this.loadMajor()
     }
   }
 }

@@ -85,19 +85,21 @@ export default {
       location.reload()
     },
     loadUid () {
-      this.uid = localStorage.getItem('id')
-      var _this = this
-      axios({
-        method: 'post',
-        url: 'users/datas/uid',
-        params: {
-          uid: localStorage.getItem('id')
-        }
-      }).then(resp => {
-        if (resp.data.code === 200) {
-          _this.photo = resp.data.data.photoAddress
-        }
-      }).catch(error => error)
+      if (localStorage.getItem('id') !== null) {
+        this.uid = localStorage.getItem('id')
+        var _this = this
+        axios({
+          method: 'post',
+          url: 'users/datas/%7Buid%7D',
+          params: {
+            uid: localStorage.getItem('id')
+          }
+        }).then(resp => {
+          if (resp.data.code === 200) {
+            _this.photo = resp.data.data.photoAddress
+          }
+        }).catch(error => error)
+      }
     }
   },
   // mounted: function () {
@@ -118,7 +120,7 @@ export default {
 </script>
 
 <style lang="scss">
-.selected{
+.nav .selected{
   background-color: #5B5B5B;
 }
 /**中心部分样式*/

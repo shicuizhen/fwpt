@@ -10,11 +10,13 @@
         <a href="/edit_my">编辑个人资料</a>
       </div>
       <div class="name">
-        <div>姓名：{{ mime.name }}</div>
-        <p>学号：{{ mime.sno }}</p>
+<!--        <div>姓名：{{ mime.name }}</div>-->
+        <p>姓名：{{ mime.name }}</p>
         <p>年级：{{ mime.grade }}级</p>
-        <p>专业：{{ mime.major }}</p>
+        <p>学号：{{ mime.sno }}</p>
+        <p>院系：{{ mime.college }}</p>
         <p>生日：{{ mime.birthday }}</p>
+        <p>专业：{{ mime.major }}</p>
         <p>手机号：{{ mime.phone }}</p>
         <p>邮箱：{{ mime.email }}</p>
       </div>
@@ -50,7 +52,6 @@
             prop="is_finish2"
             label="是否解决">
           </el-table-column>
-
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
@@ -77,6 +78,7 @@
             label="对应问题"
             sortable
             @click="toQuesDetail(this.prop)">
+            <a href="http://localhost:8180/quesInformation/data/%7Bqid%7D?qid=1"></a>
           </el-table-column>
           <el-table-column
             prop="content"
@@ -106,7 +108,7 @@
             prop="createTime"
             label="创建时间"
             sortable
-            width="180">
+            width="160">
           </el-table-column>
           <el-table-column
             prop="name"
@@ -133,12 +135,22 @@
             prop="telephone"
             label="手机号">
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column
+            prop="stateName"
+            label="状态">
+          </el-table-column>
+          <el-table-column label="操作" width="180">
             <template slot-scope="scope">
               <el-button
+                class="mybut"
                 size="mini"
                 type="danger"
                 @click="handleDeleteLost(scope.$index, scope.row)">删除</el-button>
+              <el-button
+                class="mybut"
+                size="mini"
+                type="danger"
+                @click="handleEditLost(scope.$index, scope.row)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -152,7 +164,7 @@
             prop="createTime"
             label="创建时间"
             sortable
-            width="180">
+            width="160">
           </el-table-column>
           <el-table-column
             prop="name"
@@ -179,12 +191,22 @@
             prop="telephone"
             label="手机号">
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column
+            prop="stateName"
+            label="状态">
+          </el-table-column>
+          <el-table-column label="操作" width="180">
             <template slot-scope="scope">
               <el-button
+                class="mybut"
                 size="mini"
                 type="danger"
                 @click="handleDeleteGet(scope.$index, scope.row)">删除</el-button>
+              <el-button
+                class="mybut"
+                size="mini"
+                type="danger"
+                @click="handleEditLost(scope.$index, scope.row)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -194,12 +216,12 @@
           :data="MoodData"
           style="width: 100%"
           :default-sort = "{prop: 'date', order: 'descending'}">
-          <el-table-column
-            prop="createTime"
-            label="创建时间"
-            sortable
-            width="280">
-          </el-table-column>
+<!--          <el-table-column-->
+<!--            prop="createTime"-->
+<!--            label="创建时间"-->
+<!--            sortable-->
+<!--            width="280">-->
+<!--          </el-table-column>-->
           <el-table-column
             prop="content"
             label="内容"
@@ -237,14 +259,13 @@ export default {
       LostData: [],
       GetData: [],
       MoodData: [],
-      imgUrl: ''
+      imgUrl: '',
+      state: '未找回'
     }
   },
   methods: {
     // 路由跳转
     toQuesDetail (qid) {
-      console.log('qid:')
-      console.log(qid)
       localStorage.setItem('qid', JSON.stringify(qid))
       this.$router.push({
         path: '/question_detail/' + qid
@@ -287,8 +308,6 @@ export default {
       }).catch(error => error)
     },
     handleDeleteLost (index, row) {
-      console.log('index-row')
-      console.log(row.id)
       var id = row.id
       axios({
         method: 'delete',
@@ -301,6 +320,19 @@ export default {
           this.loadLostData()
         }
       }).catch(error => error)
+    },
+    handleEditLost (index, row) {
+      if (row.stateId === 1) {
+        alert('已完成，不可修改！！！')
+      } else {
+        console.log(row)
+        var lid = row.id
+        // 页面跳转
+        localStorage.setItem('lid', JSON.stringify(lid))
+        this.$router.push({
+          path: '/lost_edit/' + lid
+        })
+      }
     },
     handleDeleteGet (index, row) {
       console.log('index-row')
@@ -339,21 +371,23 @@ export default {
     },
     // 加载当前用户数据
     loadMy () {
-      var _this = this
-      axios({
-        method: 'post',
-        url: 'users/datas/uid',
-        params: {
-          uid: localStorage.getItem('id')
-        }
-      }).then(resp => {
-        if (resp.data.code === 200) {
-          console.log(resp.data.data)
-          _this.mime = resp.data.data
-          var str = resp.data.data.photoAddress.replace(exportImgUrl, '')
-          _this.imgUrl = require('@/assets/' + str)
-        }
-      }).catch(error => error)
+      if (localStorage.getItem('id') !== null) {
+        var _this = this
+        axios({
+          method: 'post',
+          url: 'users/datas/%7Buid%7D',
+          params: {
+            uid: localStorage.getItem('id')
+          }
+        }).then(resp => {
+          if (resp.data.code === 200) {
+            console.log(resp.data.data)
+            _this.mime = resp.data.data
+            var str = resp.data.data.photoAddress.replace(exportImgUrl, '')
+            _this.imgUrl = require('@/assets/' + str)
+          }
+        }).catch(error => error)
+      }
     },
     loadQuesData () {
       var _this = this
@@ -382,8 +416,6 @@ export default {
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.ReplyData = resp.data.data
-          console.log('_this.ReplyData:' + _this.ReplyData)
-          console.log(_this.ReplyData)
         }
       }).catch(error => error)
     },
@@ -398,8 +430,6 @@ export default {
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.LostData = resp.data.data
-          console.log('_this.LostData:' + _this.LostData)
-          console.log(_this.LostData)
         }
       }).catch(error => error)
     },
@@ -434,7 +464,7 @@ export default {
       }).catch(error => error)
     }
   },
-  mounted: function () {
+  created () {
     this.loadMy()
     this.loadQuesData()
     this.loadReplyData()
@@ -499,7 +529,7 @@ export default {
   margin-bottom: 12px;
 }
 .name p{
-  width: 200px;
+  width: 50%;
   float: left;
   font-size: 13px;
   margin-bottom: 12px;
@@ -518,5 +548,8 @@ export default {
 }
 .myPublish .el-table th {
   text-align: center;
+}
+.myPublish .mybut{
+  padding: 7px 8px;
 }
 </style>
