@@ -1,12 +1,12 @@
 <template>
   <div class="edit_my">
-    <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
+    <el-form :model="form" ref="form" label-width="100px" class="demo-ruleForm">
       <h3>{{ form.name }}信息修改</h3>
       <el-form-item label="学号" prop="sno">
-        <el-input v-model="form.sno"></el-input>
+        <div>{{form.sno}}</div>
       </el-form-item>
       <el-form-item label="姓名" prop="name">
-        <el-input v-model="form.name"></el-input>
+        <div>{{form.name}}</div>
       </el-form-item>
       <el-form-item label="昵称" prop="nick">
         <el-input v-model="form.nick"></el-input>
@@ -14,9 +14,9 @@
       <el-form-item label="头像">
         <div class="form-group">
           <div class="control-form">
-            <p class="help-block">(建议图片格式为：JPEG/BMP/PNG/GIF，大小不超过5M)</p>
+            <p class="help-block" style="padding-bottom: 20px;">(建议图片格式为：JPEG/BMP/PNG/GIF，大小不超过5M)</p>
             <ul class="upload-imgs">
-              <li v-if="imgLen>=1 ? false : true">
+              <li v-if="imgLen>1 || imgLen===1 ? false : true">
                 <input type="file" class="upload" @change="addImg" ref="inputer" multiple accept="image/png,image/jpeg,image/gif,image/jpg"/>
                 <a class="add">
                   <i class="iconfont icon-plus"></i><p>点击上传</p>
@@ -30,10 +30,8 @@
         </div>
       </el-form-item>
       <el-form-item class="form_type" label="性别" prop="sex">
-        <el-radio-group v-model="form.sex">
-          <el-radio label="0">男</el-radio>
-          <el-radio label="1">女</el-radio>
-        </el-radio-group>
+        <div v-if="form.sex === 0">男</div>
+        <div v-if="form.sex === 1">女</div>
       </el-form-item>
       <el-form-item label="生日" prop="birthday">
         <el-col :span="11">
@@ -43,14 +41,13 @@
         </el-col>
       </el-form-item>
       <el-form-item label="年级" prop="grade">
-        <el-select v-model="form.grade" placeholder="请选择年级">
-          <el-option :label=item.name :value=item.name v-for="item in grades" v-bind:key="item.name"></el-option>
-        </el-select>
+        <div>{{form.grade}}</div>
+      </el-form-item>
+      <el-form-item label="院系" prop="college">
+        <div>{{college}}</div>
       </el-form-item>
       <el-form-item label="专业" prop="major">
-        <el-select v-model="form.major" placeholder="请选择专业">
-          <el-option :label=item.name :value=item.name v-for="item in majors" v-bind:key="item.name"></el-option>
-        </el-select>
+        <div>{{major}}</div>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input type="password" v-model="form.password"></el-input>
@@ -58,6 +55,9 @@
       <el-form-item>
         <el-button type="primary" @click="submitForm('form')">提交</el-button>
         <el-button @click="resetForm('form')">重置</el-button>
+      </el-form-item>
+      <el-form-item>
+        <div>不可编辑的信息请由管理员核对信息后进行修改</div>
       </el-form-item>
     </el-form>
   </div>
@@ -75,49 +75,8 @@ export default {
         { name: '19' },
         { name: '20' }
       ],
-      majors: [
-        { name: '软件工程' },
-        { name: '1' },
-        { name: '2' },
-        { name: '3' }
-      ],
-      form: {},
-      rules: {
-        sno: [
-          { required: true, message: '请填写学号信息', trigger: 'blur' },
-          { min: 11, max: 11, message: '长度为11位', trigger: 'blur' }
-        ],
-        name: [
-          { required: true, message: '请填写姓名', trigger: 'blur' },
-          { min: 2, max: 4, message: '长度为2-4位', trigger: 'blur' }
-        ],
-        nick: [
-          { required: true, message: '请填写昵称', trigger: 'blur' },
-          { min: 1, max: 8, message: '长度为1-8位', trigger: 'blur' }
-        ],
-        sex: [
-          { required: true, message: '请选择性别', trigger: 'blur' }
-        ],
-        birthday: [
-          { required: true, message: '请选择出生年月日', trigger: 'change' }
-        ],
-        grade: [
-          { required: true, message: '请选择年级', trigger: 'change' }
-        ],
-        major: [
-          { required: true, message: '请选择专业', trigger: 'change' }
-        ],
-        phone: [
-          { required: true, message: '请填写您的手机号码', trigger: 'blur' },
-          { min: 11, max: 11, message: '长度为11个字符', trigger: 'blur' }
-        ],
-        email: [
-          { required: true, message: '请填写您的邮箱', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: '请填写密码', trigger: 'blur' },
-          { min: 6, max: 6, message: '长度为6位', trigger: 'blur' }
-        ]
+      form: {
+        sex: null
       },
       // 图片上传
       imageUrl: '',
@@ -127,7 +86,9 @@ export default {
       imgLen: 0,
       // 图片base64编码
       baseData: '',
-      baseResultUrl: ''
+      baseResultUrl: '',
+      college: '',
+      major: ''
     }
   },
   methods: {
@@ -139,14 +100,15 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // this.form.lostTime = this.dateFormat(this.form.lostTime).toString()
+          console.log('提交修改============form')
           console.log(this.form)
           axios({
             method: 'post',
-            url: 'users',
+            url: 'users/edit',
             data: this.form
           }).then(resp => {
             if (resp.data.code === 200) {
-              console.log('-============================')
+              console.log('提交修改成功')
               const redirect = decodeURIComponent('/my_page')
               this.$router.push({ path: redirect })
             }
@@ -168,6 +130,10 @@ export default {
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.form = resp.data.data
+          _this.major = _this.form.major.major
+          _this.form.major = _this.form.major.id
+          console.log(_this.form)
+          this.loadCollegeName()
         }
       }).catch(error => error)
     },
@@ -211,6 +177,19 @@ export default {
         })
       }
     },
+    loadCollegeName () {
+      axios({
+        method: 'get',
+        url: 'college/datas/%7Bmid%7D',
+        params: {
+          mid: this.form.major
+        }
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          this.college = resp.data.data.college
+        }
+      }).catch(error => error)
+    },
     getObjectURL (file) {
       var url = null
       if (window.createObjectURL !== undefined) { // basic
@@ -237,7 +216,7 @@ export default {
 <style scoped>
 .edit_my{
   margin: auto;
-  height: 800px;
+  height: 980px;
   padding-top: 20px;
   width: 60%;
 }

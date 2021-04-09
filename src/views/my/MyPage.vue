@@ -14,9 +14,9 @@
         <p>姓名：{{ mime.name }}</p>
         <p>年级：{{ mime.grade }}级</p>
         <p>学号：{{ mime.sno }}</p>
-        <p>院系：{{ mime.college }}</p>
+        <p>院系：{{ college }}</p>
         <p>生日：{{ mime.birthday }}</p>
-        <p>专业：{{ mime.major }}</p>
+        <p>专业：{{ major }}</p>
         <p>手机号：{{ mime.phone }}</p>
         <p>邮箱：{{ mime.email }}</p>
       </div>
@@ -260,10 +260,25 @@ export default {
       GetData: [],
       MoodData: [],
       imgUrl: '',
-      state: '未找回'
+      state: '未找回',
+      college: null,
+      major: null
     }
   },
   methods: {
+    loadCollegeName () {
+      axios({
+        method: 'get',
+        url: 'college/datas/%7Bmid%7D',
+        params: {
+          mid: this.mime.major
+        }
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          this.college = resp.data.data.college
+        }
+      }).catch(error => error)
+    },
     // 路由跳转
     toQuesDetail (qid) {
       localStorage.setItem('qid', JSON.stringify(qid))
@@ -271,13 +286,7 @@ export default {
         path: '/question_detail/' + qid
       })
     },
-    // 表格展示
-    handleEdit (index, row) {
-      console.log(index, row)
-    },
     handleDeleteQues (index, row) {
-      console.log('index-row')
-      console.log(row.id)
       var qid = row.id
       axios({
         method: 'delete',
@@ -292,8 +301,6 @@ export default {
       }).catch(error => error)
     },
     handleDeleteReply (index, row) {
-      console.log('index-row')
-      console.log(row.id)
       var rid = row.id
       axios({
         method: 'delete',
@@ -325,7 +332,6 @@ export default {
       if (row.stateId === 1) {
         alert('已完成，不可修改！！！')
       } else {
-        console.log(row)
         var lid = row.id
         // 页面跳转
         localStorage.setItem('lid', JSON.stringify(lid))
@@ -335,8 +341,6 @@ export default {
       }
     },
     handleDeleteGet (index, row) {
-      console.log('index-row')
-      console.log(row.id)
       var id = row.id
       axios({
         method: 'delete',
@@ -351,8 +355,6 @@ export default {
       }).catch(error => error)
     },
     handleDeleteMood (index, row) {
-      console.log('index-row')
-      console.log(row.id)
       var id = row.id
       axios({
         method: 'delete',
@@ -381,10 +383,12 @@ export default {
           }
         }).then(resp => {
           if (resp.data.code === 200) {
-            console.log(resp.data.data)
             _this.mime = resp.data.data
+            _this.major = _this.mime.major.major
+            _this.mime.major = _this.mime.major.id
             var str = resp.data.data.photoAddress.replace(exportImgUrl, '')
             _this.imgUrl = require('@/assets/' + str)
+            this.loadCollegeName()
           }
         }).catch(error => error)
       }
@@ -400,8 +404,6 @@ export default {
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.QuesData = resp.data.data
-          console.log('_this.QuesData:' + _this.QuesData)
-          console.log(_this.QuesData)
         }
       }).catch(error => error)
     },
@@ -444,8 +446,6 @@ export default {
       }).then(resp => {
         if (resp.data.code === 200) {
           _this.GetData = resp.data.data
-          console.log('_this.QuesData:' + _this.GetData)
-          console.log(_this.GetData)
         }
       }).catch(error => error)
     },
