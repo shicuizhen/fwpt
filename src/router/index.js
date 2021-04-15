@@ -14,15 +14,12 @@ import Register from '@/views/register/Register'
 import MyPage from '@/views/my/MyPage'
 import EditMy from '@/views/my/EditMy'
 import Report from '@/views/report/report'
+// import Manage from '@/views/Manage'
+import Main from '@/views/Main'
 
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Vue',
-  //   component: Vue
-  // },
   {
     path: '/login',
     name: 'Login',
@@ -34,15 +31,25 @@ const routes = [
     component: Register
   },
   {
+    path: '/main',
+    name: 'Main',
+    component: Main
+  },
+  {
     path: '/home',
     name: 'Home',
     component: Home
   },
   {
-    path: '/',
+    path: '/', // 斜杠代表router-view默认显示的部分
     name: 'Home',
     component: Home
   },
+  // {
+  //   path: '/manage',
+  //   name: 'Manage',
+  //   component: Manage
+  // },
   {
     path: '/lost',
     name: 'Lost',

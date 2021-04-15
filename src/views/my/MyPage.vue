@@ -55,9 +55,19 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <el-button
+                class="mybut"
                 size="mini"
                 type="danger"
                 @click="handleDeleteQues(scope.$index, scope.row)">删除</el-button>
+              <el-button
+                class="mybut"
+                size="mini"
+                type="danger"
+                @click="handleEditQues(scope.$index, scope.row)">已解决</el-button>
+<!--              <el-button-->
+<!--                size="mini"-->
+<!--                type="danger"-->
+<!--                @click="handleDeleteQues(scope.$index, scope.row)">删除</el-button>-->
             </template>
           </el-table-column>
         </el-table>
@@ -266,6 +276,32 @@ export default {
     }
   },
   methods: {
+    handleEditQues (index, row) {
+      if (row.is_finish === 0) {
+        var ques = {}
+        ques.id = row.id
+        ques.content = row.content
+        ques.createBy = row.createById
+        ques.isFinish = 1
+        ques.sortId = row.sortId
+        ques.title = row.title
+        axios({
+          method: 'post',
+          url: 'quesInformation',
+          data: ques,
+          header: {
+            'Content-Type': 'multipart/form-data',
+            charset: 'UTF-8'
+          }
+        }).then(resp => {
+          if (resp.data.code === 200) {
+            this.loadQuesData()
+          }
+        }).catch(error => error)
+      } else {
+        alert('该问题已解决，不可更改！')
+      }
+    },
     loadCollegeName () {
       axios({
         method: 'get',

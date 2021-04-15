@@ -122,8 +122,6 @@ export default {
       } else {
         this.pageNum = Math.ceil(this.quesInformation.length / 5)
       }
-      console.log('this.pageNum')
-      console.log(this.pageNum)
     },
     getPage (index) {
       console.log('index:' + index)
@@ -210,45 +208,48 @@ export default {
         this.openSearchAlert()
         return
       }
-      if (this.sid === null && this.solveNum === 1) {
-        axios({
-          method: 'post',
-          url: 'quesInformation/key',
-          params: {
-            sid: this.sid,
-            finish: this.solveNum - 2,
-            key: this.search_key
-          }
-        }).then(resp => {
-          if (resp.data.code === 200) {
-            console.log(resp.data.data)
-            this.quesInformation = resp.data.data
-            this.search_key = '关键字'
-            this.quesInformationPage = this.quesInformation.slice(0, 5)
-            this.index = 0
-            this.getPageNum()
-          }
-        }).catch(error => error)
-      } else {
-        axios({
-          method: 'post',
-          url: 'quesInformation/many_search',
-          params: {
-            sid: this.sid,
-            finish: this.solveNum - 2,
-            key: this.search_key
-          }
-        }).then(resp => {
-          if (resp.data.code === 200) {
-            console.log(resp.data.data)
-            this.quesInformation = resp.data.data
-            this.search_key = '关键字'
-            this.quesInformationPage = this.quesInformation.slice(0, 5)
-            this.index = 0
-            this.getPageNum()
-          }
-        }).catch(error => error)
-      }
+      // if (this.sid === null && this.solveNum === 1) {
+      //   axios({
+      //     method: 'post',
+      //     url: 'quesInformation/key',
+      //     params: {
+      //       sid: this.sid,
+      //       finish: this.solveNum - 2,
+      //       key: this.search_key
+      //     }
+      //   }).then(resp => {
+      //     if (resp.data.code === 200) {
+      //       console.log(resp.data.data)
+      //       this.quesInformation = resp.data.data
+      //       this.search_key = '关键字'
+      //       this.quesInformationPage = this.quesInformation.slice(0, 5)
+      //       this.index = 0
+      //       this.getPageNum()
+      //     }
+      //   }).catch(error => error)
+      // } else {
+
+      console.log('this.solveNum')
+      console.log(this.solveNum)
+      axios({
+        method: 'post',
+        url: 'quesInformation/many_search',
+        params: {
+          sid: this.sid,
+          finish: this.solveNum - 2,
+          key: this.search_key
+        }
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          console.log(resp.data.data)
+          this.quesInformation = resp.data.data
+          this.search_key = '关键字'
+          this.quesInformationPage = this.quesInformation.slice(0, 5)
+          this.index = 0
+          this.getPageNum()
+        }
+      }).catch(error => error)
+      // }
     },
     // 回答问题的按钮
     reply_btn (id, index) {

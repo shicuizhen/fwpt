@@ -9,7 +9,7 @@
         <li @click="bgColor(3)" :class="{selected:3===this.index}"><router-link to="/lost">失物招领</router-link></li>
         <li @click="bgColor(4)" :class="{selected:4===this.index}"><router-link to="/mood">心情话板</router-link></li>
       </ul>
-      <a href="">后台管理</a>
+      <a @click="toManage()" class="manage">后台管理</a>
       <div class="xlk_content">
         <a class="login" v-if="this.uid === null" href="/login">登录</a>
         <a class="register" v-if="this.uid === null" href="/register">注册</a>
@@ -47,7 +47,6 @@
           </li>
         </ul>
       </div>
-
     </div>
   </div>
 </template>
@@ -66,6 +65,23 @@ export default {
     }
   },
   methods: {
+    toManage () {
+      axios({
+        method: 'get',
+        url: 'manager/datas/%7Buid%7D',
+        params: {
+          uid: localStorage.getItem('id')
+        }
+      }).then(resp => {
+        if (resp.data.code === 200) {
+          localStorage.setItem('manage', 1)
+          this.$router.go(-1)
+          location.reload()
+        } else {
+          alert('您没有管理员权限')
+        }
+      }).catch(error => error)
+    },
     imgItem () {
       var photo = this.photo
       if (photo !== '' && photo !== null) {
@@ -102,11 +118,6 @@ export default {
       }
     }
   },
-  // mounted: function () {
-  //   console.log('index:' + localStorage.getItem('index'))
-  //   this.index = localStorage.getItem('index')
-  //   console.log(this.index)
-  // },
   watch: {
     'localStorage.id' () {
       console.log('内存发生变化:')
@@ -236,4 +247,7 @@ export default {
   display: block;
 }
 /*下拉框结束*/
+.manage{
+  cursor: pointer;
+}
 </style>

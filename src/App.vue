@@ -1,24 +1,27 @@
 <template>
   <div id="app">
-    <Nav></Nav>
-    <router-view></router-view>
-    <Bottom></Bottom>
+    <Main v-if="manage === null"></Main>
+    <Manage v-if="manage !== null"></Manage>
   </div>
 </template>
 <script>
-import Nav from './components/Nav'
-import Bottom from '@/components/Bottom'
+import Manage from '@/views/Manage'
+import Main from '@/views/Main'
 export default {
   name: 'App',
   data: function () {
     return {
+      manage: null
     }
   },
   components: {
-    Nav,
-    Bottom
+    Main,
+    Manage
   },
   methods: {
+  },
+  mounted: function () {
+    this.manage = JSON.parse(localStorage.getItem('manage'))
   }
 }
 </script>
