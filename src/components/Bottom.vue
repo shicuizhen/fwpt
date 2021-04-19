@@ -8,7 +8,7 @@
     </li>
     <li class="contact">
       <p><a href="http://localhost:8080/">返回首页</a></p>
-      <p><a href="" @click="contact()">联系我！</a></p>
+      <p @click="contact()"><a>联系我！</a></p>
     </li>
     <li>
       <p>更多链接</p>
@@ -43,7 +43,9 @@ export default {
 
     },
     contact () {
-      alert('如有需要请发送邮件至17692151418@163.com！')
+      this.$alert('如有需要请发送邮件至17692151418@163.com！', '提示', {
+        confirmButtonText: '确定'
+      })
     }
   }
 }

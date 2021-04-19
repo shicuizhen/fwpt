@@ -125,11 +125,18 @@ export default {
       barrageList: [],
       // websocket
       websocket: null,
-      imgs: ['https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1019207699,3806058069&fm=26&gp=0.jpg',
+      imgs: [
+        'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1019207699,3806058069&fm=26&gp=0.jpg',
         'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3129262305,2392924864&fm=26&gp=0.jpg',
         'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2359958300,2229951978&fm=26&gp=0.jpg',
         'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=162702653,2316796194&fm=26&gp=0.jpg',
-        'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2821695739,3437580128&fm=26&gp=0.jpg'
+        'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2821695739,3437580128&fm=26&gp=0.jpg',
+        'https://img0.baidu.com/it/u=3421514359,2859620907&fm=26&fmt=auto&gp=0.jpg',
+        'https://img2.baidu.com/it/u=865305118,3803061221&fm=26&fmt=auto&gp=0.jpg',
+        'https://img0.baidu.com/it/u=1255382257,1144220258&fm=26&fmt=auto&gp=0.jpg',
+        'https://img2.baidu.com/it/u=1600989884,1983752460&fm=26&fmt=auto&gp=0.jpg',
+        'https://img1.baidu.com/it/u=1584706964,2643801962&fm=26&fmt=auto&gp=0.jpg',
+        'https://img2.baidu.com/it/u=3928208779,2717995127&fm=26&fmt=auto&gp=0.jpg'
       ]
     }
   },
@@ -239,7 +246,8 @@ export default {
             _this.barrageList.push({
               barrageStyle: 'red',
               id: v.id,
-              avatar: _this.imgs[v.id % 4],
+              // 图片数组中有几个元素，这里就对几取余
+              avatar: _this.imgs[v.id % 11],
               msg: v.nick + ':' + v.content,
               time: (v.id * 7) % 10 + 10,
               type: MESSAGE_TYPE.NORMAL

@@ -58,11 +58,14 @@
         </el-select>
       </el-form-item>
       <el-form-item label="手机号码" prop="phone">
-        <el-input type="tel" v-model="form.phone"></el-input>
+        <el-input type="tel" v-model.number="form.phone"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input type="email" v-model="form.email"></el-input>
       </el-form-item>
+<!--      <el-form-item label="邮箱" prop="email">-->
+<!--        <el-input type="email" v-model.number="form.email"></el-input>-->
+<!--      </el-form-item>-->
       <el-form-item label="密码" prop="password">
         <el-input type="password" v-model="form.password"></el-input>
       </el-form-item>
@@ -77,6 +80,26 @@
 <script>
 import '../../assets/css/lost.css'
 import axios from 'axios'
+// , isvalidEmail
+import { isvalidPhone } from '../../config/validate'
+var validPhone = (rule, value, callback) => {
+  if (!value) {
+    callback(new Error('请输入电话号码'))
+  } else if (!isvalidPhone(value)) {
+    callback(new Error('请输入正确的11位手机号码'))
+  } else {
+    callback()
+  }
+}
+// var validEmail = (rule, value, callback) => {
+//   if (!value) {
+//     callback(new Error('请输入邮箱'))
+//   } else if (!isvalidEmail(value)) {
+//     callback(new Error('请输入正确格式的邮箱信息'))
+//   } else {
+//     callback()
+//   }
+// }
 export default {
   name: 'Register',
   data () {
@@ -133,11 +156,11 @@ export default {
           { required: true, message: '请选择专业', trigger: 'change' }
         ],
         phone: [
-          { required: true, message: '请填写您的手机号码', trigger: 'blur' },
-          { min: 11, max: 11, message: '长度为11个字符', trigger: 'blur' }
+          { required: true, trigger: 'blur', validator: validPhone }
         ],
         email: [
-          { required: true, message: '请填写您的邮箱', trigger: 'blur' }
+          { required: true, message: '请输入您的邮箱', trigger: 'blur' }
+          // { required: true, trigger: 'blur', validator: validEmail }
         ],
         password: [
           { required: true, message: '请填写密码', trigger: 'blur' },

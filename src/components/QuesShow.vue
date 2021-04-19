@@ -228,9 +228,6 @@ export default {
       //     }
       //   }).catch(error => error)
       // } else {
-
-      console.log('this.solveNum')
-      console.log(this.solveNum)
       axios({
         method: 'post',
         url: 'quesInformation/many_search',

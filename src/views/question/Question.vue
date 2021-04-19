@@ -92,7 +92,7 @@ export default {
       }
     },
     left () {
-      if (this.currentOffset === -(this.quesSort.length - 5)) {
+      if (this.currentOffset === -(this.quesSort.length - 5) + 1) {
         return
       }
       this.currentOffset = this.currentOffset - 1
@@ -247,5 +247,8 @@ export default {
   width: 1px;
   height: 20px;
   background: #fff;
+}
+.sort{
+  overflow: hidden;
 }
 </style>

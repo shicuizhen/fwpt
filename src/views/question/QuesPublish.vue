@@ -126,6 +126,9 @@ export default {
                 isFinish: 0,
                 createBy: localStorage.getItem('id') // 当前用户id
               }
+              this.$router.push({
+                path: '/question'
+              })
             }
           }).catch(error => error)
         } else {

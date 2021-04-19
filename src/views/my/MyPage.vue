@@ -63,7 +63,7 @@
                 class="mybut"
                 size="mini"
                 type="danger"
-                @click="handleEditQues(scope.$index, scope.row)">已解决</el-button>
+                @click="handleEditQues(scope.$index, scope.row)">修改状态</el-button>
 <!--              <el-button-->
 <!--                size="mini"-->
 <!--                type="danger"-->
@@ -299,7 +299,9 @@ export default {
           }
         }).catch(error => error)
       } else {
-        alert('该问题已解决，不可更改！')
+        this.$alert('该问题已解决，状态不可更改', '提示', {
+          confirmButtonText: '确定'
+        })
       }
     },
     loadCollegeName () {
@@ -366,7 +368,9 @@ export default {
     },
     handleEditLost (index, row) {
       if (row.stateId === 1) {
-        alert('已完成，不可修改！！！')
+        this.$alert('该失物招领过程已结束，信息不可更改', '提示', {
+          confirmButtonText: '确定'
+        })
       } else {
         var lid = row.id
         // 页面跳转

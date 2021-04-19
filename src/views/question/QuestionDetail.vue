@@ -15,7 +15,7 @@
             <i class="icon iconfont" style="color: #000000;right: 18px;">&#xe638;</i>
             <p class="likeShow">{{ quesInformation.replyNum }}</p>
           </div>
-          <p>{{ quesInformation.content }}</p>
+          <p style="height: 15px;"></p>
           <!--button对应的是class="reply"部分-->
           <button class="reply_btn" @click.stop="reply_btn(quesInformation.id)">回答</button>
           <!--div展开对应的是ul class="reply_detail"-->
@@ -74,6 +74,15 @@
                   <i id="likeIcon" class="icon iconfont" :class="hasExisted(item.id) ? 'likeRed' : 'likeNo'">&#xe61e;</i>
                 </a>
               </div>
+<!--              <div>-->
+<!--                <img class="reply_img" :src="imgItem(item2.photo)" alt="">-->
+<!--                <span>{{ item2.createBy }}</span>-->
+<!--                <span>{{ item2.createTime }} 发布</span>-->
+<!--                <p class="likeShow" v-if="item2.likeNum>0">{{ item2.likeNum }}</p>-->
+<!--                <a @click.stop="hasExisted(item2.id) ? delLikeNum(item2.id) : addLikeNum(item2.id)">-->
+<!--                  <i id="likeIcon" class="icon iconfont" :class="hasExisted(item2.id) ? 'likeRed' : 'likeNo'">&#xe61e;</i>-->
+<!--                </a>-->
+<!--              </div>-->
             </div>
           </li>
         </ul>
@@ -258,6 +267,7 @@ export default {
     },
     // 提交回答
     submitReply (qid) {
+      var uid = localStorage.getItem('id')
       var _this = this
       if ((_this.reply_data === '写下你关于这个问题的想法吧') || (_this.reply_data.trim() === '')) {
         this.openReplyAlert()
@@ -265,7 +275,7 @@ export default {
       }
       var jsonData = {
         content: _this.reply_data,
-        createBy: 0, // 当前用户id
+        createBy: uid, // 当前用户id
         qid: qid,
         createTime: null,
         id: null
@@ -291,7 +301,6 @@ export default {
       }
       document.getElementById('likeIcon').className = 'icon iconfont likeRed'
       this.hasLike.push(rid)
-      console.log('新增后的this.hasLike:' + this.hasLike)
       axios({
         method: 'post',
         url: 'quesLike',
@@ -304,18 +313,21 @@ export default {
         }
       }).then(resp => {
         if (resp.data.code !== 200) {
-          alert('没点上，重新支持一下吧！')
+          this.$alert('没点上，重新支持一下吧', '提示', {
+            confirmButtonText: '确定'
+          })
         }
       }).catch(error => error)
     },
     delLikeNum (rid) {
       if (localStorage.getItem('id') == null) {
-        alert('未登录')
+        this.$alert('未登录', '提示', {
+          confirmButtonText: '确定'
+        })
         return
       }
       document.getElementById('likeIcon').className = 'icon iconfont likeNo'
       this.hasLike.pop(rid)
-      console.log('删除后的this.hasLike:' + this.hasLike)
       axios({
         method: 'post',
         url: 'quesLike/delQuesLike',

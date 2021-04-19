@@ -51,11 +51,14 @@
         <el-input v-model="form.username"></el-input>
       </el-form-item>
       <el-form-item label="手机号码" prop="telephone">
-        <el-input type="tel" v-model="form.telephone"></el-input>
+        <el-input type="tel" v-model.number="form.telephone"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input type="email" v-model="form.email"></el-input>
       </el-form-item>
+<!--      <el-form-item label="邮箱" prop="email">-->
+<!--        <el-input type="email" v-model.number="form.email"></el-input>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" @click="submitForm('form')">提交</el-button>
         <el-button @click="resetForm('form')">重置</el-button>
@@ -67,6 +70,26 @@
 <script>
 import axios from 'axios'
 import '../../assets/css/lost.css'
+// isvalidEmail
+import { isvalidPhone } from '../../config/validate'
+var validPhone = (rule, value, callback) => {
+  if (!value) {
+    callback(new Error('请输入电话号码'))
+  } else if (!isvalidPhone(value)) {
+    callback(new Error('请输入正确的11位手机号码'))
+  } else {
+    callback()
+  }
+}
+// var validEmail = (rule, value, callback) => {
+//   if (!value) {
+//     callback(new Error('请输入邮箱'))
+//   } else if (!isvalidEmail(value)) {
+//     callback(new Error('请输入正确格式的邮箱信息'))
+//   } else {
+//     callback()
+//   }
+// }
 export default {
   name: 'LostPublish',
   data () {
@@ -96,7 +119,7 @@ export default {
         ],
         name: [
           { required: true, message: '请输入物品名称', trigger: 'blur' },
-          { min: 2, max: 5, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+          { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
         ],
         lostTime: [
           { required: true, message: '请选择时间', trigger: 'change' }
@@ -116,11 +139,12 @@ export default {
           { min: 1, max: 50, message: '长度在 2 到 5 个字符', trigger: 'blur' }
         ],
         telephone: [
-          { required: true, message: '请填写您的手机号码', trigger: 'blur' },
-          { min: 1, max: 50, message: '长度为11个字符', trigger: 'blur' }
+          { required: true, trigger: 'blur', validator: validPhone } // 这里需要用到全局变量
+          // { required: true, message: '请填写您的手机号码', trigger: 'blur' },
         ],
         email: [
           { required: true, message: '请填写您的邮箱', trigger: 'blur' }
+          // { required: true, trigger: 'blur', validator: validEmail }
         ]
       },
       socketPush: [],
@@ -270,6 +294,9 @@ export default {
                 stateId: 0
               }
             }
+            this.$router.push({
+              path: '/lost'
+            })
           }).catch(error => error)
         } else {
           return false

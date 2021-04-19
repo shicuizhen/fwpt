@@ -64,7 +64,7 @@
       <el-form-item class="form_stateId" label="当前状态" prop="stateId">
         <el-radio-group v-model="form.stateId">
           <el-radio label="1">已完成</el-radio>
-          <el-radio label="0">未完成</el-radio>
+<!--          <el-radio label="0">未完成</el-radio>-->
         </el-radio-group>
         <div class="old_data">{{desc.stateId}}</div>
       </el-form-item>
