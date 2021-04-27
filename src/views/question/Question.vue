@@ -3,7 +3,8 @@
     <div class="top">
       <a href="http://localhost:8080/ques_publish">我要提问</a>
       <div class="sort_lbt center">
-        <ul class="sort" :style="{transform:'translateX('+currentOffset*226+'px)'}">
+        <ul class="sort" :style="{transform:'translateX('+currentOffset*223+'px)'}">
+<!--        <ul class="sort" :style="{transform:'translateX('+currentOffset*246+'px)'}">-->
           <li v-for = "(item) in quesSort" v-bind:key="item.name">
             <a @click="toSortDetail (item.id)">
               <span>分类</span>

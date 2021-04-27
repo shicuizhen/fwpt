@@ -26,6 +26,8 @@
                 <p class="img"><img :src="getObjectURL(value)"><a class="close" @click="delImg(key)">×</a></p>
               </li>
             </ul>
+<!--            <img class="pic" :src="imgUrlReq" alt="">-->
+<!--            <img class="pic" :src="imgUrl" alt="">-->
           </div>
         </div>
       </el-form-item>
@@ -65,6 +67,7 @@
 
 <script>
 import axios from 'axios'
+import { exportImgUrl } from '@/main'
 export default {
   name: 'EditMy',
   data () {
@@ -88,7 +91,10 @@ export default {
       baseData: '',
       baseResultUrl: '',
       college: '',
-      major: ''
+      major: '',
+      imgUrlReq: '',
+      imgUrl: '',
+      formImg: ''
     }
   },
   methods: {
@@ -96,12 +102,15 @@ export default {
       this.$refs[formName].resetFields()
     },
     submitForm (formName) {
-      this.form.photoAddress = this.baseResultUrl
+      if (this.baseResultUrl !== '') {
+        this.form.photoAddress = this.baseResultUrl
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // this.form.lostTime = this.dateFormat(this.form.lostTime).toString()
           console.log('提交修改============form')
           console.log(this.form)
+          this.form.createTime = ''
           axios({
             method: 'post',
             url: 'users/edit',
@@ -132,6 +141,15 @@ export default {
           _this.form = resp.data.data
           _this.major = _this.form.major.major
           _this.form.major = _this.form.major.id
+          _this.formImg = _this.form.photoAddress
+          console.log('运行了loadmy')
+
+          var str = resp.data.data.photoAddress.replace(exportImgUrl, '')
+          console.log('str')
+          console.log(str)
+          _this.imgUrl = str
+          // _this.imgUrl = require('@/assets/' + str)
+
           console.log(_this.form)
           this.loadCollegeName()
         }
@@ -139,6 +157,8 @@ export default {
     },
     // 图片上传
     addImg (event) {
+      console.log('event')
+      console.log(event)
       var _this = this
       var reader = new FileReader()
       const inputDOM = this.$refs.inputer
@@ -172,7 +192,9 @@ export default {
           'Content-Type': 'application/json', charset: 'UTF-8'
         }).then(resp => {
           if (resp.data.code === 200) {
+            // baseResultUrl是图片路径，该方法是调用后台方法将图片以base64编码的格式存储到数据库中的操作
             _this.baseResultUrl = resp.data.data
+            console.log(_this.baseResultUrl)
           }
         })
       }
@@ -204,12 +226,26 @@ export default {
     },
     delImg (key) {
       this.$delete(this.imgs, key)
+      this.baseResultUrl = ''
       this.imgLen--
     }
   },
   mounted: function () {
     this.loadMy()
+    const unwatch = this.$watch('imgUrl', function (newValue, oldValue) {
+      // this.imgUrlReq = require('../../assets/' + this.imgUrl)
+      console.log('发生了监听')
+      console.log(newValue)
+      unwatch()
+    })
   }
+  // watch: {
+  //   imgUrl: {
+  //     handler (newName, oldName) {
+  //       this.imgUrlReq = require('../../assets/' + this.imgUrl)
+  //     }
+  //   }
+  // }
 }
 </script>
 
@@ -223,5 +259,13 @@ export default {
 .edit_my h3{
   padding: 10px 20px;
   margin-bottom: 20px;
+}
+.pic{
+  border: 3px solid #D3D3D3;
+  position: absolute;
+  top: 45px;
+  right: 280px;
+  width: 130px;
+  height: 130px;
 }
 </style>

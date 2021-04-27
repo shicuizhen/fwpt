@@ -51,8 +51,9 @@
 .sort li{
     float: left;
     background-color: #FFFFFF;
-    height: 90px;
-    width: 9.8%;
+    height: 89px;
+    width: 9.78%;
+    /*width: 11%;*/
     /*width: 176px;*/
     margin-right: 1.3%;
     border: 1px solid #C1C1C1;

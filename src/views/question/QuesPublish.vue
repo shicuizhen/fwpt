@@ -126,6 +126,9 @@ export default {
                 isFinish: 0,
                 createBy: localStorage.getItem('id') // 当前用户id
               }
+              this.$alert('提交成功！', '提示', {
+                confirmButtonText: '确定'
+              })
               this.$router.push({
                 path: '/question'
               })

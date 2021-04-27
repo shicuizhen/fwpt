@@ -252,7 +252,9 @@ export default {
     // 回答问题的输入框
     areaOnScroll () {
       this.reply_data = this.reply_data.slice(0, 200)
-      alert('请在4行内输入')
+      this.$alert('请在4行内输入', '提示', {
+        confirmButtonText: '确定'
+      })
     },
     // 将回答id作为参数传入，判断当前回答id是否在该数组中
     hasExisted (rid) {
@@ -291,7 +293,16 @@ export default {
       }).catch(error => error)
       this.reply_data = ''
       location.reload()
-      alert('提交成功')
+      alert('提交成功！')
+      // this.$alert('这是一段内容', '标题名称', {
+      //   confirmButtonText: '确定',
+      //   callback: action => {
+      //     this.$message({
+      //       type: 'info'
+      //       // message: `action: ${ action }`
+      //     })
+      //   }
+      // })
     },
     // 新增点赞，将当前回答id存进数组,并调用后台方法，存入当前回答的用户点赞记录
     addLikeNum (rid) {
@@ -340,7 +351,9 @@ export default {
         }
       }).then(resp => {
         if (resp.data.code !== 200) {
-          alert('没点上！')
+          this.$alert('没点上，别取消了吧', '提示', {
+            confirmButtonText: '确定'
+          })
         }
       }).catch(error => error)
     },

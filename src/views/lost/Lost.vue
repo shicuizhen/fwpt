@@ -278,9 +278,7 @@ export default {
         url: 'lostInformation/lunbodata'
       }).then(resp => {
         if (resp.data.code === 200) {
-          console.log('---------------------------------------------------------')
           _this.socketPush = resp.data.data
-          console.log(_this.socketPush)
         }
       }).catch(error => error)
     },

@@ -264,7 +264,9 @@ export default {
     // 回答问题的输入框
     areaOnScroll () {
       this.reply_data = this.reply_data.slice(0, 200)
-      alert('请在4行内输入')
+      this.$alert('请在4行内输入', '提示', {
+        confirmButtonText: '确定'
+      })
     },
     // 回答信息展示--------点击“展开”按钮
     reply_detail (qid, index) {
@@ -304,7 +306,9 @@ export default {
     submitReply (qid) {
       var _this = this
       if ((_this.reply_data === '写下你关于这个问题的想法吧') || (_this.reply_data.trim() === '')) {
-        alert('您还没有给出任何建议呢！')
+        this.$alert('您还没有给出任何建议呢！', '提示', {
+          confirmButtonText: '确定'
+        })
         return
       }
       var jsonData = {
@@ -320,12 +324,16 @@ export default {
         data: jsonData
       }).then(resp => {
         if (resp.data.code !== 200) {
-          alert('出现了一点小问题，请重新给出建议！')
+          this.$alert('出现了一点小问题，请重新给出建议！', '提示', {
+            confirmButtonText: '确定'
+          })
         }
       }).catch(error => error)
       this.reply_data = ''
       location.reload()
-      alert('提交成功')
+      this.$alert('提交成功！', '提示', {
+        confirmButtonText: '感谢您的宝贵回答！'
+      })
     },
     // 点赞
     // 初始化点赞信息
@@ -459,7 +467,9 @@ export default {
         }
       }).then(resp => {
         if (resp.data.code === 401) {
-          alert('目前该分类下无问题')
+          this.$alert('目前该分类下无问题！', '提示', {
+            confirmButtonText: '确定'
+          })
           this.$router.back()
         } else if (resp.data.code === 200) {
           _this.quesInformation = resp.data.data

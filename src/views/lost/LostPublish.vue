@@ -294,6 +294,9 @@ export default {
                 stateId: 0
               }
             }
+            this.$alert('提交成功！', '提示', {
+              confirmButtonText: '确定'
+            })
             this.$router.push({
               path: '/lost'
             })

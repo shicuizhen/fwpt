@@ -23,10 +23,10 @@
     </div>
   </div>
   <div class="myPublish">
-    <el-tabs :tab-position="tabPosition" style="height: 200px;">
+    <el-tabs @tab-click="handleClick" :tab-position="tabPosition" slot="append" style="height: 200px;">
       <el-tab-pane label="我的提问">
         <el-table
-          :data="QuesData"
+          :data="QuesData.slice((this.page - 1) * this.size, (this.page - 1) * this.size + this.size)"
           style="width: 100%"
           :default-sort = "{prop: 'date', order: 'descending'}">
           <el-table-column
@@ -71,10 +71,20 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          class="pagination"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="page"
+          :page-sizes="[2, 5, 8, 10]"
+          :page-size="size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.QuesData.length">
+        </el-pagination>
       </el-tab-pane>
       <el-tab-pane label="我的回答">
         <el-table
-          :data="ReplyData"
+          :data="ReplyData.slice((this.page - 1) * this.size, (this.page - 1) * this.size + this.size)"
           style="width: 100%"
           :default-sort = "{prop: 'date', order: 'descending'}">
           <el-table-column
@@ -108,10 +118,20 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          class="pagination"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="page"
+          :page-sizes="[2, 5, 8, 10]"
+          :page-size="size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.ReplyData.length">
+        </el-pagination>
       </el-tab-pane>
       <el-tab-pane label="失物信息">
         <el-table
-          :data="LostData"
+          :data="LostData.slice((this.page - 1) * this.size, (this.page - 1) * this.size + this.size)"
           style="width: 100%"
           :default-sort = "{prop: 'date', order: 'descending'}">
           <el-table-column
@@ -164,10 +184,20 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          class="pagination"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="page"
+          :page-sizes="[2, 5, 8, 10]"
+          :page-size="size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.LostData.length">
+        </el-pagination>
       </el-tab-pane>
       <el-tab-pane label="招领信息">
         <el-table
-          :data="GetData"
+          :data="GetData.slice((this.page - 1) * this.size, (this.page - 1) * this.size + this.size)"
           style="width: 100%"
           :default-sort = "{prop: 'date', order: 'descending'}">
           <el-table-column
@@ -220,10 +250,20 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          class="pagination"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="page"
+          :page-sizes="[2, 5, 8, 10]"
+          :page-size="size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.GetData.length">
+        </el-pagination>
       </el-tab-pane>
       <el-tab-pane label="我的话板">
         <el-table
-          :data="MoodData"
+          :data="MoodData.slice((this.page - 1) * this.size, (this.page - 1) * this.size + this.size)"
           style="width: 100%"
           :default-sort = "{prop: 'date', order: 'descending'}">
 <!--          <el-table-column-->
@@ -250,6 +290,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          class="pagination"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="page"
+          :page-sizes="[2, 5, 8, 10]"
+          :page-size="size"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.MoodData.length">
+        </el-pagination>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -272,10 +322,25 @@ export default {
       imgUrl: '',
       state: '未找回',
       college: null,
-      major: null
+      major: null,
+      //  分页
+      page: 1,
+      size: 5
     }
   },
   methods: {
+    // 分页开始
+    handleClick (tab) {
+      this.page = 1
+      this.size = 5
+    },
+    handleSizeChange (val) {
+      this.size = val
+    },
+    handleCurrentChange (val) {
+      this.page = val
+    },
+    // 分页结束
     handleEditQues (index, row) {
       if (row.is_finish === 0) {
         var ques = {}
@@ -591,5 +656,9 @@ export default {
 }
 .myPublish .mybut{
   padding: 7px 8px;
+}
+/*分页*/
+.pagination{
+  margin-top: 20px;
 }
 </style>

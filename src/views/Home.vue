@@ -16,7 +16,7 @@
               <span>{{ item.num }}</span>
             </div>
             <p class="tit">{{ item.title }}</p>
-            <p>{{ item.content }}</p>
+            <p class="cont">{{ item.content }}</p>
           </a>
         </li>
       </ul>
@@ -229,5 +229,20 @@ export default {
   }
   .h_mood li:hover{
     box-shadow: 1px 0px 5px #FFDE8B;
+  }
+  .cont{
+    /**
+    思路：
+    1.设置inline-block属相
+    2.强制不换行
+    3.固定高度
+    4.隐藏超出部分
+    5.显示“……”
+    */
+    display: inline-block;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow:ellipsis;
   }
 </style>

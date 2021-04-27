@@ -14,18 +14,18 @@
       <p>更多链接</p>
     </li>
     <li class="more">
-      <a href="https://user.qzone.qq.com/3317202871?p_skey=eZsJgAuJqXOlycfsFFT05yOFY2lC1XjcrSYoRjzEPJU_&p_skey=eZsJgAuJqXOlycfsFFT05yOFY2lC1XjcrSYoRjzEPJU_&_t_=0.5056334310294486">青春石院</a>
-      <a href="https://github.com/shicuizhen/fwpt-server">github</a>
-      <a href="https://www.iconfont.cn/search/index?searchType=icon&q=%E5%B1%95%E7%A4%BA&page=2">iconfont</a>
+      <a target="_blank" href="https://user.qzone.qq.com/3317202871?p_skey=eZsJgAuJqXOlycfsFFT05yOFY2lC1XjcrSYoRjzEPJU_&p_skey=eZsJgAuJqXOlycfsFFT05yOFY2lC1XjcrSYoRjzEPJU_&_t_=0.5056334310294486">青春石院</a>
+      <a target="_blank" href="https://github.com/shicuizhen/fwpt-server">github</a>
+      <a target="_blank" href="https://www.iconfont.cn/search/index?searchType=icon&q=%E5%B1%95%E7%A4%BA&page=2">iconfont</a>
     </li>
     <li class="more">
-      <a href="https://www.cnblogs.com/clsl/p/12950791.html">Vue点赞</a>
-      <a href="https://blog.csdn.net/qq_33322074/article/details/92026571">Jpa模糊</a>
-      <a href="http://localhost:15672/#/">RabbitMQ</a>
+      <a target="_blank" href="https://www.cnblogs.com/clsl/p/12950791.html">Vue点赞</a>
+      <a target="_blank" href="https://blog.csdn.net/qq_33322074/article/details/92026571">Jpa模糊</a>
+      <a target="_blank" href="http://localhost:15672/#/">RabbitMQ</a>
     </li>
     <li class="more">
-      <a href="https://element.eleme.cn/#/zh-CN">Element</a>
-      <a href="https://www.jb51.net/article/172830.htm">Vue弹幕</a>
+      <a target="_blank" href="https://element.eleme.cn/#/zh-CN">Element</a>
+      <a target="_blank" href="https://www.jb51.net/article/172830.htm">Vue弹幕</a>
     </li>
   </ul>
 </div>
