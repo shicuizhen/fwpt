@@ -34,12 +34,12 @@
             <a href="/my_page">我的主页</a>
           </li>
           <li>
-            <i class="el-icon-chat-dot-square" aria-hidden="true"></i>
-            <a href="">我的消息</a>
-          </li>
-          <li>
             <i class="el-icon-setting" aria-hidden="true"></i>
             <a href="/edit_my">个人设置</a>
+          </li>
+          <li>
+            <i class="el-icon-chat-dot-square" aria-hidden="true"></i>
+            <a href="/home">返回首页</a>
           </li>
           <li>
             <i class="el-icon-switch-button" aria-hidden="true"></i>
